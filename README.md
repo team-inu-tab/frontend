@@ -31,4 +31,4 @@ Git Commit Message Convention</br>
 5. git push origin main
 
 
-<li>작업 결과물 push하기 전 팀원에게 연락하여 어떤 작업을 했는지 설명</li>
+<li>작업 결과물 push하기 전 팀원에게 연락하여 어떤 작업을 했는지 보고 후 push</li>
