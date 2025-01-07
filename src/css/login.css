@@ -1,0 +1,115 @@
+.symbolLogo{
+    position: absolute;
+    width: 12%;
+    height: 12%;
+    left: 18%;
+    top: 15%;
+}
+
+.nameInputField{
+    position: absolute;
+    left: 18%;
+    top: 28%;
+    width: 65%;
+    height: 8%;
+    border-top: 1px;
+    border-left: 1px;
+    border-right: 1px;
+    outline: none;
+    font-size: 16px;
+}
+
+.mailInputField{
+    position: absolute;
+    left: 18%;
+    top: 36%;
+    width: 65%;
+    height: 8%;
+    border-bottom: 1px;
+    border-left: 1px;
+    border-right: 1px;
+    outline: none;
+    font-size: 16px;
+}
+
+.pwInputField{
+    position: absolute;
+    left: 18%;
+    top: 46%;
+    width: 65%;
+    height: 8%;
+    border-top: 1px;
+    border-left: 1px;
+    border-right: 1px;
+    outline: none;
+    font-size: 16px;
+}
+
+.pwCheckInputField{
+    position: absolute;
+    left: 18%;
+    top: 54%;
+    width: 65%;
+    height: 8%;
+    border-bottom: 1px;
+    border-left: 1px;
+    border-right: 1px;
+    outline: none;
+    font-size: 16px;
+}
+
+.hpInputField{
+    position: absolute;
+    left: 18%;
+    top: 64%;
+    width: 65%;
+    height: 8%;
+    border-top: 1px;
+    border-left: 1px;
+    border-right: 1px;
+    outline: none;
+    font-size: 16px;
+}
+
+.hpCheckInputField{
+    position: absolute;
+    left: 18%;
+    top: 72%;
+    width: 65%;
+    height: 8%;
+    border-bottom: 1px;
+    border-left: 1px;
+    border-right: 1px;
+    outline: none;
+    font-size: 16px;
+}
+
+.inputDot1{
+    position: absolute;
+    width: 1.5%;
+    height: 1.5%;
+    top: 35.4%;
+    right: 15%;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.inputDot2{
+    position: absolute;
+    width: 1.5%;
+    height: 1.5%;
+    top: 53.4%;
+    right: 15%;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.inputDot3{
+    position: absolute;
+    width: 1.5%;
+    height: 1.5%;
+    top: 71.4%;
+    right: 15%;
+    background-color: black;
+    border-radius: 50%;
+}
