@@ -1,87 +1,87 @@
 .symbolLogo{
     position: absolute;
-    width: 12%;
-    height: 12%;
-    left: 18%;
+    width: 10%;
+    height: 10%;
+    left: 21%;
     top: 15%;
 }
 
 .nameInputField{
     position: absolute;
-    left: 18%;
+    left: 21%;
     top: 28%;
-    width: 65%;
+    width: 60%;
     height: 8%;
     border-top: 1px;
     border-left: 1px;
     border-right: 1px;
     outline: none;
-    font-size: 16px;
+    font-size: 0.9em;
 }
 
 .mailInputField{
     position: absolute;
-    left: 18%;
+    left: 21%;
     top: 36%;
-    width: 65%;
+    width: 60%;
     height: 8%;
     border-bottom: 1px;
     border-left: 1px;
     border-right: 1px;
     outline: none;
-    font-size: 16px;
+    font-size: 0.9em;
 }
 
 .pwInputField{
     position: absolute;
-    left: 18%;
+    left: 21%;
     top: 46%;
-    width: 65%;
+    width: 60%;
     height: 8%;
     border-top: 1px;
     border-left: 1px;
     border-right: 1px;
     outline: none;
-    font-size: 16px;
+    font-size: 0.9em;
 }
 
 .pwCheckInputField{
     position: absolute;
-    left: 18%;
+    left: 21%;
     top: 54%;
-    width: 65%;
+    width: 60%;
     height: 8%;
     border-bottom: 1px;
     border-left: 1px;
     border-right: 1px;
     outline: none;
-    font-size: 16px;
+    font-size: 0.9em;
 }
 
 .hpInputField{
     position: absolute;
-    left: 18%;
+    left: 21%;
     top: 64%;
-    width: 65%;
+    width: 60%;
     height: 8%;
     border-top: 1px;
     border-left: 1px;
     border-right: 1px;
     outline: none;
-    font-size: 16px;
+    font-size: 0.9em;
 }
 
 .hpCheckInputField{
     position: absolute;
-    left: 18%;
+    left: 21%;
     top: 72%;
-    width: 65%;
+    width: 60%;
     height: 8%;
     border-bottom: 1px;
     border-left: 1px;
     border-right: 1px;
     outline: none;
-    font-size: 16px;
+    font-size: 0.9em;
 }
 
 .inputDot1{
@@ -89,7 +89,7 @@
     width: 1.5%;
     height: 1.5%;
     top: 35.4%;
-    right: 15%;
+    right: 17%;
     background-color: black;
     border-radius: 50%;
 }
@@ -99,7 +99,7 @@
     width: 1.5%;
     height: 1.5%;
     top: 53.4%;
-    right: 15%;
+    right: 17%;
     background-color: black;
     border-radius: 50%;
 }
@@ -109,7 +109,7 @@
     width: 1.5%;
     height: 1.5%;
     top: 71.4%;
-    right: 15%;
+    right: 17%;
     background-color: black;
     border-radius: 50%;
 }
