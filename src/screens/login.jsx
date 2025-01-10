@@ -1,7 +1,7 @@
 import '@css/login.css'
 import symbolLogo from '@assets/images/symbolLogo.svg'
-import Circle from '@components/circle.jsx'
-import Container from '@components/parentContainer.jsx'
+import Circle from '@components/signin/circle.jsx'
+import Container from '@components/signin/parentContainer.jsx'
 
 function Login() {
   return (
