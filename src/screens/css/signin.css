@@ -1,0 +1,73 @@
+.symbolLogo{
+    position: absolute;
+    width: 10%;
+    height: 10%;
+    left: 21%;
+    top: 15%;
+}
+
+.nameInput{
+    position: absolute;
+    left: 21%;
+    top: 28%;
+}
+
+.mailInput{
+    position: absolute;
+    left: 21%;
+    top: 36%;
+}
+
+.pwInput{
+    position: absolute;
+    left: 21%;
+    top: 46%;
+}
+
+.pwCheckInput{
+    position: absolute;
+    left: 21%;
+    top: 54%;
+}
+
+.hpInput{
+    position: absolute;
+    left: 21%;
+    top: 64%;
+}
+
+.hpCheckInput{
+    position: absolute;
+    left: 21%;
+    top: 72%;
+}
+
+.inputDot1{
+    position: absolute;
+    width: 1.5%;
+    height: 1.5%;
+    top: 35.4%;
+    right: 17%;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.inputDot2{
+    position: absolute;
+    width: 1.5%;
+    height: 1.5%;
+    top: 53.4%;
+    right: 17%;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.inputDot3{
+    position: absolute;
+    width: 1.5%;
+    height: 1.5%;
+    top: 71.4%;
+    right: 17%;
+    background-color: black;
+    border-radius: 50%;
+}

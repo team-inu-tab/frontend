@@ -34,7 +34,6 @@ export const Circle = styled.div`
     min-height: 170px;
   }
 
-  /* 추가적인 반응형 조정이 필요할 경우 */
   @media (max-width: 768px) {
     width: 40vw;
     height: 40vw;
