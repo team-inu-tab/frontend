@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  react:
+    container_name: react
+    image: cubric0223/capstone-front
+    ports:
+      - 3000:3000
+    volumes:
+      - /var/log/:/logs/
