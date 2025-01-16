@@ -12,5 +12,5 @@ RUN npm run build
 # FROM nginx:latest
 
 EXPOSE 3000
-CMD ["npm", "run", "build"]
+CMD ["npm", "run", "dev"]
 
