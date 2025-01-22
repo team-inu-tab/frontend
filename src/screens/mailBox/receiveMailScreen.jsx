@@ -1,27 +1,27 @@
 import SenderGroupedList from "../../components/mailBox/senderGroupedList";
 
 // test
-const groupedMails = [
+const senderGroupedMails = [
   {
     sender: "John Doe",
     mailItems: [
       {
         id: "1",
-        hasAttachment: true,
+        title: "Meeting Reminder",
+        content: "내용1",
         sender: "John Doe",
-        subject: "Meeting Reminder",
-        timestamp: "2025-01-22 10:00",
-        isChecked: false,
-        onCheck: (checked) => console.log("Mail 1 checked:", checked),
+        receiveAt: "2025-01-22 10:00",
+        isImportant: false,
+        isFileExist: true,
       },
       {
         id: "2",
-        hasAttachment: false,
+        title: "Project Update",
+        content: "내용2",
         sender: "John Doe",
-        subject: "Project Update",
-        timestamp: "2025-01-22 11:00",
-        isChecked: false,
-        onCheck: (checked) => console.log("Mail 2 checked:", checked),
+        receiveAt: "2025-01-22 11:00",
+        isImportant: false,
+        isFileExist: false,
       },
     ],
   },
@@ -30,12 +30,12 @@ const groupedMails = [
     mailItems: [
       {
         id: "3",
-        hasAttachment: true,
+        title: "Budget Report",
+        content: "내용3",
         sender: "Jane Smith",
-        subject: "Budget Report",
-        timestamp: "2025-01-21 09:00",
-        isChecked: false,
-        onCheck: (checked) => console.log("Mail 3 checked:", checked),
+        receiveAt: "2025-01-21 09:00",
+        isImportant: false,
+        isFileExist: true,
       },
     ],
   },
@@ -44,28 +44,75 @@ const groupedMails = [
     mailItems: [
       {
         id: "4",
-        hasAttachment: false,
+        title: "Weekly Newsletter",
+        content: "내용4",
         sender: "Alice Brown",
-        subject: "Weekly Newsletter",
-        timestamp: "2025-01-20 14:30",
-        isChecked: false,
-        onCheck: (checked) => console.log("Mail 4 checked:", checked),
+        receiveAt: "2025-01-20 14:30",
+        isImportant: false,
+        isFileExist: false,
       },
       {
         id: "5",
-        hasAttachment: true,
+        title: "New Opportunities",
+        content: "내용5",
         sender: "Alice Brown",
-        subject: "New Opportunities",
-        timestamp: "2025-01-20 16:00",
-        isChecked: false,
-        onCheck: (checked) => console.log("Mail 5 checked:", checked),
+        receiveAt: "2025-01-20 16:00",
+        isImportant: false,
+        isFileExist: true,
       },
     ],
   },
 ];
+const timeSortedMails = [
+  {
+    id: 1,
+    title: "Meeting Reminder",
+    content: "내용1",
+    sender: "John Doe",
+    receiveAt: "2025-01-22 10:00",
+    isImportant: false,
+    isFileExist: true,
+  },
+  {
+    id: 2,
+    title: "Project Update",
+    content: "내용2",
+    sender: "John Doe",
+    receiveAt: "2025-01-22 11:00",
+    isImportant: false,
+    isFileExist: false,
+  },
+  {
+    id: 3,
+    title: "Budget Report",
+    content: "내용3",
+    sender: "Jane Smith",
+    receiveAt: "2025-01-21 09:00",
+    isImportant: false,
+    isFileExist: true,
+  },
+  {
+    id: 4,
+    title: "Weekly Newsletter",
+    content: "내용4",
+    sender: "Alice Brown",
+    receiveAt: "2025-01-20 14:30",
+    isImportant: false,
+    isFileExist: false,
+  },
+  {
+    id: 5,
+    title: "New Opportunities",
+    content: "내용5",
+    sender: "Alice Brown",
+    receiveAt: "2025-01-20 16:00",
+    isImportant: false,
+    isFileExist: true,
+  },
+];
 
 const ReceiveMailScreen = () => {
-  return <SenderGroupedList groupedMails={groupedMails} />;
+  return <SenderGroupedList Mails={senderGroupedMails} />;
 };
 
 export default ReceiveMailScreen;

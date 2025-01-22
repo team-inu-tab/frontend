@@ -38,7 +38,7 @@
   margin-right: 0.5rem;
 }
 
-.mailItem-subject-container {
+.mailItem-title-container {
   width: 8.625rem;
   margin-right: 0.38rem;
 }
@@ -46,7 +46,7 @@
   margin-right: 0.25rem;
 }
 
-.mailItem-subject {
+.mailItem-title {
   color: #2F3438;
   font-family: "Pretendard Variable";
   font-size: 0.6875rem;
@@ -58,7 +58,7 @@
   text-overflow: ellipsis;
 }
 
-.mailItem-timestamp {
+.mailItem-receiveAt {
   color: rgba(114, 114, 114, 0.60);
   font-family: "Pretendard Variable";
   font-size: 0.5rem;

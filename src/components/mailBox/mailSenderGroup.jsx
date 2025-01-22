@@ -20,10 +20,10 @@ const MailSenderGroup = ({ sender, mailItems }) => {
         {mailItems.map((mail) => (
           <MailItem
             key={mail.id}
-            hasAttachment={mail.hasAttachment}
+            isFileExist={mail.isFileExist}
             sender={mail.sender}
-            subject={mail.subject}
-            timestamp={mail.timestamp}
+            title={mail.title}
+            receiveAt={mail.receiveAt}
             isChecked={mail.isChecked}
             onCheck={mail.onCheck}
           />

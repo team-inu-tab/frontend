@@ -1,10 +1,10 @@
 import "@components/mailBox/css/mailItem.css";
 
 const MailItem = ({
-  hasAttachment,
+  isFileExist,
   sender,
-  subject,
-  timestamp,
+  title,
+  receiveAt,
   isChecked,
   onCheck,
 }) => {
@@ -18,17 +18,17 @@ const MailItem = ({
       />
       <div className="mailItem-mailInfo">
         <span className="mailItem-sender">{sender}</span>
-        <div className="mailItem-subject-container">
-          {hasAttachment && (
+        <div className="mailItem-title-container">
+          {isFileExist && (
             <img
               className="mailItem-attachment"
               src="/src/assets/icons/attachment.svg"
               alt="Attachment icon for email"
             />
           )}
-          <span className="mailItem-subject">{subject}</span>
+          <span className="mailItem-title">{title}</span>
         </div>
-        <span className="mailItem-timestamp">{timestamp}</span>
+        <span className="mailItem-receiveAt">{receiveAt}</span>
       </div>
     </div>
   );
