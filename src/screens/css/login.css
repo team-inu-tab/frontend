@@ -1,0 +1,45 @@
+.symbolLogo{
+    position: absolute;
+    width: 10%;
+    height: 10%;
+    left: 21%;
+    top: 15%;
+}
+
+.mailInputField{
+    position: absolute;
+    left: 21%;
+    top: 32%;
+}
+
+.pwInputField{
+    position: absolute;
+    left: 21%;
+    top: 52%;
+}
+
+.completeButton{
+    position: absolute;
+    left: 21%;
+    top: 72%;
+}
+
+.inputDot1{
+    position: absolute;
+    width: 1.2%;
+    height: 1.2%;
+    top: 39.9%;
+    right: 17.2%;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.inputDot2{
+    position: absolute;
+    width: 1.2%;
+    height: 1.2%;
+    top: 59.9%;
+    right: 17.2%;
+    background-color: black;
+    border-radius: 50%;
+}
