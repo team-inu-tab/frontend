@@ -38,6 +38,10 @@
   margin-right: 0.5rem;
 }
 
+.mailItem-subject-container {
+  width: 8.625rem;
+  margin-right: 0.38rem;
+}
 .mailItem-attachment {
   margin-right: 0.25rem;
 }
@@ -52,8 +56,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 8.625rem;
-  margin-right: 0.38rem;
 }
 
 .mailItem-timestamp {
