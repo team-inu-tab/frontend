@@ -48,7 +48,7 @@
     height: 1.5%;
     top: 35.4%;
     right: 17%;
-    background-color: black;
+    background-color: #000000;
     border-radius: 50%;
 }
 
@@ -56,9 +56,9 @@
     position: absolute;
     width: 1.5%;
     height: 1.5%;
-    top: 53.4%;
+    top: 40%;
     right: 17%;
-    background-color: black;
+    background-color: #000000;
     border-radius: 50%;
 }
 
@@ -68,6 +68,6 @@
     height: 1.5%;
     top: 71.4%;
     right: 17%;
-    background-color: black;
+    background-color: #000000;
     border-radius: 50%;
 }
