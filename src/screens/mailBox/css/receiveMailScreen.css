@@ -1,0 +1,9 @@
+.receiveMailScreen-wrapper {
+  display: flex;
+  padding: 1rem;
+  justify-content: center;
+  gap: 2rem;
+  align-self: stretch;
+  border-radius: 0rem 0rem 1.0625rem 0rem;
+  background: conic-gradient(from 133deg at 53.57% 50%, #D7E1F5 147.15027809143066deg, #CAD9F0 231.97685480117798deg, #D8DCF1 306.66590452194214deg, #EFEFFF 336.8507981300354deg, #E2DEF1 360deg);
+}

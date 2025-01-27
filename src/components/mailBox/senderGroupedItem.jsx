@@ -1,10 +1,10 @@
-import "@components/mailBox/css/mailSenderGroup.css";
+import "@components/mailBox/css/senderGroupedItem.css";
 import MailItem from "./mailItem";
 
-const MailSenderGroup = ({ sender, mailItems }) => {
+const SenderGroupedItem = ({ sender, mailItems }) => {
   return (
-    <div className="mailSenderGroup-wrapper">
-      <div className="mailSenderGroup-senderContainer">
+    <div className="senderGroupedItem-wrapper">
+      <div className="senderGroupedItem-senderContainer">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="6"
@@ -14,9 +14,9 @@ const MailSenderGroup = ({ sender, mailItems }) => {
         >
           <circle cx="3" cy="3" r="3" fill="#A87CF6" />
         </svg>
-        <span className="mailSenderGroup-sender">{sender}</span>
+        <span className="senderGroupedItem-sender">{sender}</span>
       </div>
-      <div className="mailSenderGroup-Container">
+      <div className="senderGroupedItem-Container">
         {mailItems.map((mail) => (
           <MailItem
             key={mail.id}
@@ -33,4 +33,4 @@ const MailSenderGroup = ({ sender, mailItems }) => {
   );
 };
 
-export default MailSenderGroup;
+export default SenderGroupedItem;

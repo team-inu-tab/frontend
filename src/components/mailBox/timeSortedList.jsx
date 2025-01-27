@@ -1,5 +1,5 @@
 import "@components/mailBox/css/timeSortedList.css";
-import MailItem from "./mailItem";
+import MailListItem from "./mailListItem";
 
 const TimeSortedList = ({ Mails }) => {
   return (
@@ -18,7 +18,7 @@ const TimeSortedList = ({ Mails }) => {
       </div>
       <div className="timeSortedList-container">
         {Mails.map((group, index) => (
-          <MailItem
+          <MailListItem
             key={index}
             isFileExist={group.isFileExist}
             sender={group.sender}

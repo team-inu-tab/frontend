@@ -18,8 +18,13 @@
 
 .mailDetail-header {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
   margin-bottom: 0.5rem;
+}
+
+.mailDetail-header-container {
+  display: flex;
+  align-items: center;
   gap: 0.5rem;
 }
 
@@ -32,7 +37,7 @@
   line-height: normal;;
 }
 
-.mailDetail-info {
+.mailDetail-sender {
   color: rgba(62, 61, 61, 0.26);
   font-family: "Pretendard Variable";
   font-size: 0.625rem;
@@ -41,8 +46,9 @@
   line-height: normal;
 }
 
-.mailDetail-sender {
-  margin-right: 10px;
+.mailDetail-arrow {
+  width: 1.4375rem;
+  height: 1.46775rem;
 }
 
 .mailDetail-files {

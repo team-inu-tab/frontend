@@ -1,4 +1,4 @@
-.mailSenderGroup-wrapper {
+.senderGroupedItem-wrapper {
   display: flex;
   width: 24.125rem;
   padding: 0.75rem 1rem;
@@ -8,7 +8,7 @@
   box-shadow: 2px 2px 6.8px 0px rgba(0, 0, 0, 0.25);
 }
 
-.mailSenderGroup-senderContainer {
+.senderGroupedItem-senderContainer {
   display: flex;
   padding: 0rem 0.75rem;
   align-items: center;
@@ -18,7 +18,7 @@
   border-bottom: 1px solid #e0e0e0;
 }
 
-.mailSenderGroup-sender {
+.senderGroupedItem-sender {
   color: #2F3438;
   font-family: "Pretendard Variable";
   font-size: 0.8125rem;
@@ -33,7 +33,7 @@
   text-underline-position: from-font;
 }
 
-.mailSenderGroup-container {
+.senderGroupedItem-container {
   display: flex;
   flex-direction: column;
   overflow: hidden;

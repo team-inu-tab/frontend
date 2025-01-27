@@ -19,10 +19,15 @@ const MailDetail = () => {
       <div className="mailDetail-container">
         {/* 메일 제목 */}
         <div className="mailDetail-header">
-          <h1 className="mailDetail-title">{mailData.title}</h1>
-          <div className="mailDetail-info">
+          <div className="mailDetail-header-container">
+            <span className="mailDetail-title">{mailData.title}</span>
             <span className="mailDetail-sender">작성자: {mailData.sender}</span>
           </div>
+          <img
+            className="mailDetail-arrow"
+            src="/src/assets/icons/expandArrow.svg"
+            alt="Expand Arrow"
+          />
         </div>
 
         {/* 첨부 파일 */}
