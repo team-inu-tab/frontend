@@ -1,7 +1,15 @@
 import "@components/mailBox/css/timeSortedList.css";
 import MailListItem from "./mailListItem";
+import useFetchMails from "@hooks/useFetchMails";
+import { useContext } from "react";
+import { MailContext } from "@contexts/MailContext";
 
-const TimeSortedList = ({ Mails }) => {
+const TimeSortedList = () => {
+  // API 호출
+  useFetchMails();
+
+  const { mails } = useContext(MailContext);
+
   return (
     <div className="timeSortedList-wrapper">
       <div className="timeSortedList-header">
@@ -17,15 +25,8 @@ const TimeSortedList = ({ Mails }) => {
         <span className="timeSortedList-title">시간순 보기</span>
       </div>
       <div className="timeSortedList-container">
-        {Mails.map((group, index) => (
-          <MailListItem
-            key={index}
-            isFileExist={group.isFileExist}
-            sender={group.sender}
-            title={group.title}
-            receiveAt={group.receiveAt}
-            isChecked={false}
-          />
+        {mails.map((mail) => (
+          <MailListItem key={mail.id} mail={mail} />
         ))}
       </div>
     </div>

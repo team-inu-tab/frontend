@@ -1,5 +1,5 @@
 import "@components/mailBox/css/senderGroupedItem.css";
-import MailItem from "./mailItem";
+import MailListItem from "./mailListItem";
 
 const SenderGroupedItem = ({ sender, mailItems }) => {
   return (
@@ -18,14 +18,14 @@ const SenderGroupedItem = ({ sender, mailItems }) => {
       </div>
       <div className="senderGroupedItem-Container">
         {mailItems.map((mail) => (
-          <MailItem
+          <MailListItem
             key={mail.id}
+            mailId={mail.id}
             isFileExist={mail.isFileExist}
             sender={mail.sender}
             title={mail.title}
             receiveAt={mail.receiveAt}
             isChecked={mail.isChecked}
-            onCheck={mail.onCheck}
           />
         ))}
       </div>

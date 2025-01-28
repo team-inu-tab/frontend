@@ -1,27 +1,25 @@
 import "@components/mailBox/css/mailDetail.css";
 import FileItem from "./fileItem";
-
-// test
-const mailData = {
-  title: "캡스톤디자인1 사전 신청안내",
-  content: `Apple의 system-ui가 익숙한 나로서는 San Francisco와 Apple SD 산돌고딕 Neo가 없는 다른 환경에서 이를 대체할 수 있는 글꼴을 꾸준히 감행해야 했다.`,
-  sender: "나",
-  receiver: "팀원들",
-  sendAt: "2024.11.24 21:21",
-  receiveAt: "2024.11.24 21:22",
-  isImportant: true,
-  file: ["20220101.pdf", "20220102.pdf", "20220103.pdf"],
-};
+import { useContext } from "react";
+import { MailContext } from "@contexts/MailContext";
 
 const MailDetail = () => {
+  const { selectedMail } = useContext(MailContext);
+
+  if (!selectedMail) {
+    return null;
+  }
+
   return (
     <div className="mailDetail-wrapper">
       <div className="mailDetail-container">
         {/* 메일 제목 */}
         <div className="mailDetail-header">
           <div className="mailDetail-header-container">
-            <span className="mailDetail-title">{mailData.title}</span>
-            <span className="mailDetail-sender">작성자: {mailData.sender}</span>
+            <span className="mailDetail-title">{selectedMail.title}</span>
+            <span className="mailDetail-sender">
+              작성자: {selectedMail.sender}
+            </span>
           </div>
           <img
             className="mailDetail-arrow"
@@ -31,24 +29,26 @@ const MailDetail = () => {
         </div>
 
         {/* 첨부 파일 */}
-        {mailData.file && mailData.file.length > 0 && (
+        {selectedMail.isFileExist && selectedMail.file.length > 0 && (
           <div className="mailDetail-files">
             <span className="mailDetail-files-title">
-              첨부파일 {mailData.file.length}개
+              첨부파일 {selectedMail.file.length}개
             </span>
             <div className="mailDetail-files-list">
-              {mailData.file.map((fileName, index) => (
+              {selectedMail.file.map((fileName, index) => (
                 <FileItem key={index} file={fileName} />
               ))}
             </div>
           </div>
         )}
         {/* 메일 내용 */}
-        <div className="mailDetail-content">{mailData.content}</div>
+        <div className="mailDetail-content">{selectedMail.content}</div>
       </div>
       {/* 메일 시간 정보 */}
       <div className="mailDetail-footer">
-        <span className="mailDetail-receiveAt">{mailData.receiveAt} 수신</span>
+        <span className="mailDetail-receiveAt">
+          {selectedMail.receiveAt} 수신
+        </span>
       </div>
     </div>
   );
