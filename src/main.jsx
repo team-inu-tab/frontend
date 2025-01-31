@@ -6,6 +6,6 @@ import MailContainer from "@components/common/mailWriteContainer.jsx";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <MailContainer />
+    <Login />
   </StrictMode>,
 )
