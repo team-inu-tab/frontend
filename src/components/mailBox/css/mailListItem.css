@@ -1,15 +1,15 @@
-.mailItem-wrapper {
+.mailListItem-wrapper {
   display: flex;
   padding: 0.5rem 1.75rem;
   align-items: center;
   border-bottom: 1px solid #e0e0e0;
   cursor: pointer;
 }
-.mailItem-wrapper:hover {
+.mailListItem-wrapper:hover {
   background-color: rgba(229, 231, 233, 0.4);
 }
 
-.mailItem-checkBox {
+.maimailListItemlItem-checkBox {
   display: flex;
   align-items: center;
   width: 0.8125rem;
@@ -19,12 +19,12 @@
   margin-right: 0.75rem;
 }
 
-.mailItem-mailInfo {
+.mailListItem-mailInfo {
   display: flex;
   align-items: center;
 }
 
-.mailItem-sender {
+.mailListItem-sender {
   color: #2F3438;
   font-family: "Pretendard Variable";
   font-size: 0.75rem;
@@ -38,15 +38,15 @@
   margin-right: 0.5rem;
 }
 
-.mailItem-title-container {
+.mailListItem-title-container {
   width: 8.625rem;
   margin-right: 0.38rem;
 }
-.mailItem-attachment {
+.mailListItem-attachment {
   margin-right: 0.25rem;
 }
 
-.mailItem-title {
+.mailListItem-title {
   color: #2F3438;
   font-family: "Pretendard Variable";
   font-size: 0.6875rem;
@@ -58,7 +58,7 @@
   text-overflow: ellipsis;
 }
 
-.mailItem-receiveAt {
+.mailListItem-receiveAt {
   color: rgba(114, 114, 114, 0.60);
   font-family: "Pretendard Variable";
   font-size: 0.5rem;

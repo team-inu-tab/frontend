@@ -1,11 +1,11 @@
 import "@components/mailBox/css/senderGroupedList.css";
-import MailSenderGroup from "./mailSenderGroup";
+import SenderGroupedItem from "./senderGroupedItem";
 
 const SenderGroupedList = ({ Mails }) => {
   return (
     <div className="senderGroupedList-wrapper">
       {Mails.map((group, index) => (
-        <MailSenderGroup
+        <SenderGroupedItem
           key={index}
           sender={group.sender}
           mailItems={group.mailItems}
