@@ -1,4 +1,3 @@
-// src/components/common/MailWriteContainer.jsx
 import React from 'react';
 import '@components/common/css/mailContainer.css';
 

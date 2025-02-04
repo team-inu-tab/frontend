@@ -1,0 +1,46 @@
+
+.mailTitle{
+    width: 289px;
+    height: 29px;
+    position: absolute;
+    top: 8%;
+    left: 5%;
+    border:none;
+    outline: none;
+    font-size: 180%;
+    font-weight: bold;
+}
+.recieverTitleContainer{
+    display: flex;
+    position: absolute;
+    top: 20%;
+    left: 5%;
+    align-items: center;
+    padding-left: 2%;
+    width: 880px;
+    height: 40px;
+    background-color: #CDD9F5;
+    opacity: 50%;
+    font-weight: bold;
+    text-align: left;
+    border-radius: 50px;
+    z-index: 1;
+}
+
+.recieverTitle{
+    position: relative;
+    margin-left: 2%;
+    width: 600px;
+    height: 29px;
+    border:none;
+    outline: none;
+    background-color: #CDD9F5;
+    font-weight: bold;
+}
+
+.isToMe {
+    position: relative;
+    left: 9%;
+    border:none;
+    outline: none;
+}
