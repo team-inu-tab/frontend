@@ -43,7 +43,7 @@ const SubMenu = ({ isMenubarOpen }) => {
         >
           <img
             className={`subMenu-icon ${isMenubarOpen ? "" : "subMenu-close"}`}
-            src="/src/assets/icons/mailbox.svg"
+            src="@assets/icons/mailbox.svg"
           />
           <span
             className={`subMenu-text ${isMenubarOpen ? "" : "subMenu-close"}`}
@@ -57,7 +57,7 @@ const SubMenu = ({ isMenubarOpen }) => {
           className={`subMenu-arrow ${isMenubarOpen ? "" : "subMenu-close"} ${
             isSubMenuOpen ? "subMenu-subMenuOpen" : ""
           }`}
-          src="/src/assets/icons/arrow.svg"
+          src="@assets/icons/arrow.svg"
           alt="화살표 아이콘"
         />
       </div>

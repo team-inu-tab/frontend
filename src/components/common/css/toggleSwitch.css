@@ -1,0 +1,61 @@
+/* ToggleSwitch.css */
+
+/* ToggleSwitch (label) */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 47.7px;
+    height: 23.33px;
+  }
+  
+  /* ToggleSlider (span) */
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #b6b6be;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 34px;
+  }
+  
+  /* ToggleSlider의 ::before 가상 요소 */
+  .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  
+  /* CheckBox (input) 기본 스타일 */
+  .toggle-checkbox {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* CheckBox가 체크된 경우, 슬라이더의 배경색 변경 */
+  .toggle-checkbox:checked + .toggle-slider {
+    background-color: #34C759;
+  }
+  
+  /* CheckBox에 포커스가 있을 때, 슬라이더에 그림자 효과 */
+  .toggle-checkbox:focus + .toggle-slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  /* CheckBox가 체크된 경우, 슬라이더 ::before의 위치 이동 */
+  .toggle-checkbox:checked + .toggle-slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
