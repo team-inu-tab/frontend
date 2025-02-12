@@ -128,16 +128,41 @@
     opacity: 0.3;
 }
 
-.aiText {
+.switchContainer {
+    position: absolute;
+    width: 88%;
+    height: 6%;
+    top: 52%;
+}
+
+.aiOnLogo {
     position: absolute;
     display: flex;
-    top: 52%;
-    left: 8%;
+    top: 40%;
+    left: 0.5%;
+}
+
+.aiText {
+    position: relative;
+    display: flex;
+    top: 40%;
+    left: 2.5%;
+    font-weight: bold;
+    background: linear-gradient(90deg, #D692F8 0%, #6C57F3 6.81%, #5F6FFC 17.15%);
+    backgroud-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent
 }
 
 .aiToggleSwitch {
+    position: relative;
+    display: flex;
+    bottom: 0.4em;
+    left: 6em;
+}
+
+.writeContainer {
     position: absolute;
     display: flex;
-    top: 52%;
-    left: 8%;
+    top: 5%;
 }

@@ -3,10 +3,10 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 1000px;
-    height: 600px;
+    width: 1100px;
+    height: 680px;
     max-width: 90vw;
-    max-height: 80vh;
+    max-height: 70vh;
     min-width: 200px;
     min-height: 200px;
     margin: 0;
@@ -19,10 +19,10 @@
     position: absolute; 
     width: 97.6%;
     height: 96%;
-    border-radius: 2%;
-    border: 13px solid #7FACEE;
-    background: linear-gradient(#9590d5 100%, #7facee 0%);
+    border: 13px solid transparent;
+    border-image: linear-gradient(120deg, #7FACEE 0%, #9590D5 100%);
     filter: blur(9.5px);
+    border-image-slice: 1;
     z-index: 1;
 }
 
@@ -33,7 +33,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    border-radius: 2%;
+    border-radius: 19px;
     background: #FFFFFF;
     box-shadow: 0px 1px 5.2px 0px rgba(0, 0, 0, 0.25);
     z-index: 2;
