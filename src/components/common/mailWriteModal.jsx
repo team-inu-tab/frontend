@@ -34,9 +34,14 @@ function MailWriteModal() {
           <ToggleSwitch className='aiToggleSwitch'/>
         </div>
 
-        <WriteContainer className='writeContainer'>
-        </WriteContainer>
+        <WriteContainer className='writeContainer'/>
+
+        <div className='buttonContainer'>
+          <button className='reservationButton'>예약하기</button>
+          <button className='sendButton'>전송하기</button>
+        </div>
       </MailContainer>
+      
     )
   }
   
