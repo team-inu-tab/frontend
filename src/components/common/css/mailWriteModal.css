@@ -152,11 +152,29 @@
     top: 40%;
     left: 2.5%;
     font-weight: bold;
-    background: linear-gradient(90deg, #D692F8 0%, #6C57F3 6.81%, #5F6FFC 17.15%);
+}
+
+.aiText.on {
+    position: relative;
+    display: flex;
+    top: 40%;
+    left: 2.5%;
+    font-weight: bold;
+    background: linear-gradient(90deg, #D692F8 0%, #6C57F3 33%, #5F6FFC 84%);
     backgroud-clip: text;
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: gradientShift 10s infinite linear; 
 }
+
+@keyframes gradientShift {
+    from {
+      background-position: 0 0, 0 0;
+    }
+    to {
+      background-position: 100% 0, 0 0;
+    }
+    }
 
 .aiToggleSwitch {
     position: relative;
@@ -169,6 +187,14 @@
     position: absolute;
     display: flex;
     bottom: 1.5%;
+    flex-shrink: 0;
+}
+
+.writeContainer.on {
+    position: absolute;
+    display: flex;
+    bottom: 1.5%;
+    flex-shrink: 0;
 }
 
 .buttonContainer {

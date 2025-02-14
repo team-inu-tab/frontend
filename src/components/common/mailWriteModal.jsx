@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '@components/common/css/mailWriteModal.css';
 import MailContainer from '@components/common/MailWriteContainer.jsx';
 import ToggleSwitch from '@components/common/toggleSwitch.jsx';
@@ -7,6 +7,7 @@ import aiOnLogo from '@assets/icons/ai.svg'
 import WriteContainer from '@components/common/mailWritingContainer.jsx';
 
 function MailWriteModal() {
+    const [isAiOn, setIsAiOn] = useState(false);
     return (
       <MailContainer>
         <input className='mailTitle' placeholder='제목을 입력하세요.'/>
@@ -29,12 +30,15 @@ function MailWriteModal() {
         </div>
 
         <div className='switchContainer'>
-          <img src={ aiOnLogo } className='aiOnLogo'></img>
-          <text className='aiText'>AI 도우미</text>
-          <ToggleSwitch className='aiToggleSwitch'/>
+          {isAiOn && <img src={ aiOnLogo } className='aiOnLogo'></img>}
+          <text className={`aiText ${isAiOn ? 'on' : ''}`}>AI 도우미</text>
+          <ToggleSwitch 
+            className='aiToggleSwitch'
+            checked = {isAiOn}
+            onChange={() => setIsAiOn(!isAiOn)}/>
         </div>
 
-        <WriteContainer className='writeContainer'/>
+        <WriteContainer className={isAiOn ? 'writeContainer on' : 'writeContainer'} />
 
         <div className='buttonContainer'>
           <button className='reservationButton'>예약하기</button>
