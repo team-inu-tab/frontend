@@ -3,9 +3,14 @@ import FileItem from "./fileItem";
 import { useContext } from "react";
 import { MailContext } from "@contexts/MailContext";
 
+/**
+ * MailDetail - 선택된 메일의 상세 내용을 표시하는 컴포넌트
+ * @returns {JSX.Element | null} 메일 상세 정보 UI (선택된 메일이 없으면 null 반환)
+ */
 const MailDetail = () => {
-  const { selectedMail } = useContext(MailContext);
+  const { selectedMail } = useContext(MailContext); // 현재 선택된 메일 정보 가져오기
 
+  // 선택된 메일이 없으면 화면에 표시하지 않음
   if (!selectedMail) {
     return null;
   }
@@ -13,7 +18,7 @@ const MailDetail = () => {
   return (
     <div className="mailDetail-wrapper">
       <div className="mailDetail-container">
-        {/* 메일 제목 */}
+        {/* 메일 제목 및 발신자 정보 */}
         <div className="mailDetail-header">
           <div className="mailDetail-header-container">
             <span className="mailDetail-title">{selectedMail.title}</span>
@@ -21,6 +26,7 @@ const MailDetail = () => {
               작성자: {selectedMail.sender}
             </span>
           </div>
+          {/* 확장 버튼 */}
           <img
             className="mailDetail-arrow"
             src="/src/assets/icons/expandArrow.svg"
@@ -28,7 +34,7 @@ const MailDetail = () => {
           />
         </div>
 
-        {/* 첨부 파일 */}
+        {/* 첨부 파일 (첨부된 파일이 있는 경우) */}
         {selectedMail.isFileExist && selectedMail.file.length > 0 && (
           <div className="mailDetail-files">
             <span className="mailDetail-files-title">
@@ -41,10 +47,12 @@ const MailDetail = () => {
             </div>
           </div>
         )}
-        {/* 메일 내용 */}
+
+        {/* 메일 본문 내용 */}
         <div className="mailDetail-content">{selectedMail.content}</div>
       </div>
-      {/* 메일 시간 정보 */}
+
+      {/* 메일 수신 시간 정보 */}
       <div className="mailDetail-footer">
         <span className="mailDetail-receiveAt">
           {selectedMail.receiveAt} 수신

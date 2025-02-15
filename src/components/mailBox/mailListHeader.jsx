@@ -1,15 +1,22 @@
 import "@components/mailBox/css/mailListHeader.css";
 import useMailCheck from "@hooks/useMailCheck";
 
+/**
+ * MailListHeader - 메일함 목록 상단의 헤더 컴포넌트
+ * @returns {JSX.Element} 메일함 헤더
+ */
 const MailListHeader = () => {
-  const { selectedCount, selectAll } = useMailCheck();
+  const { selectedCount, selectAll } = useMailCheck(); // 메일 선택 관련 기능 가져오기
 
   return (
     <div className="mailListHeader-wrapper">
-      {/* 체크박스, 읽음, 삭제 */}
+      {/* 메일 선택 및 액션 버튼 */}
       <div className="mailActions">
+        {/* 전체 선택 체크박스 */}
         <input type="checkbox" onChange={(e) => selectAll(e.target.checked)} />
         <p>전체 선택</p>
+
+        {/* 선택된 메일이 있을 경우 "읽음", "삭제" 버튼 표시 */}
         {selectedCount > 0 && (
           <div>
             <p>읽음</p>
@@ -17,6 +24,7 @@ const MailListHeader = () => {
           </div>
         )}
       </div>
+
       {/* 정렬 옵션 */}
       <div className="sortOptions">
         <div className="sortOptions-items">
@@ -24,8 +32,10 @@ const MailListHeader = () => {
           <p>받은사람 묶어보기</p>
         </div>
       </div>
-      {/* 답장, 전달 등 메일함별 기능 */}
+
+      {/* 메일 기능 도구 (예: 답장, 전달 등) */}
       <div className="mailTools"></div>
+
       {/* 검색창 */}
       <div className="searchBar">검색</div>
     </div>
