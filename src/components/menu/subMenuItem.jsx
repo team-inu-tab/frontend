@@ -1,15 +1,19 @@
 import "../menu/css/subMenuItem.css";
 
 /**
- * @param {"receiveMail" | "sentMail"| "selfSentMail"| "importantMail"| "scheduledMail"|
- * "draftMail"| "spamMail"| "deletedMail"} props.title - 서브 메뉴
+ * SubMenuItem - 서브 메뉴의 개별 항목을 렌더링하는 컴포넌트
+ * @param {"receiveMail" | "sentMail"| "selfSentMail"| "importantMail"| "scheduledMail" | "draftMail"| "spamMail"| "deletedMail"} props.title - 서브 메뉴의 타입
  * @param {boolean} props.isMenubarOpen - 메뉴바가 열려 있는지 여부
  * @returns {JSX.Element} 서브 메뉴 항목
  */
 const SubMenuItem = ({ title, isMenubarOpen }) => {
   let titleName = "";
 
-  // title 값에 따라 한글 텍스트를 설정, 아이콘 색상 반환
+  /**
+   * title 값에 따라 한글 텍스트와 아이콘 색상을 반환하는 함수
+   * @param {string} title - 메일함 유형
+   * @returns {string} 아이콘 색상 코드 (HEX)
+   */
   const getFillColor = (title) => {
     switch (title) {
       case "receiveMail":
@@ -57,6 +61,7 @@ const SubMenuItem = ({ title, isMenubarOpen }) => {
       >
         <circle cx="3" cy="3" r="3" fill={getFillColor(title)} />
       </svg>
+      {/* 서브 메뉴 텍스트 */}
       <span
         className={`subMenuItem-text ${
           isMenubarOpen ? "" : "subMenuItem-close"
