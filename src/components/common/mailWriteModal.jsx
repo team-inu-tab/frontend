@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import '@components/common/css/mailWriteModal.css';
-import MailContainer from '@components/common/MailWriteContainer.jsx';
+import MailContainer from '@components/common/mailWriteContainer.jsx';
 import ToggleSwitch from '@components/common/toggleSwitch.jsx';
 import Link from '@assets/icons/link.svg'
 import aiOnLogo from '@assets/icons/ai.svg'
