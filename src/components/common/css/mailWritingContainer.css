@@ -100,12 +100,18 @@
 }
 
 @keyframes gradientShift {
-from {
-  background-position: 0 0, 0 0;
-}
-to {
-  background-position: 100% 0, 0 0;
-}
+  0% {
+    background-position: 0% 20%;
+  }
+  20% {
+    background-position: 20% 44%;
+  }
+  44% {
+    background-position: 44% 72%;
+  }
+  72% {
+    background-position: 72% 99%;
+  }
 }
 
 .writeField {

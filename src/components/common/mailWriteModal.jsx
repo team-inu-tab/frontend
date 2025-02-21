@@ -5,9 +5,13 @@ import ToggleSwitch from '@components/common/toggleSwitch.jsx';
 import Link from '@assets/icons/link.svg'
 import aiOnLogo from '@assets/icons/ai.svg'
 import WriteContainer from '@components/common/mailWritingContainer.jsx';
+import CompImg from '@assets/images/SendComplete.svg';
+import checkCompImg from '@assets/images/sendCompCheck.svg';
 
 function MailWriteModal() {
     const [isAiOn, setIsAiOn] = useState(false);
+    const [isSendClick, setIsSendClick] = useState(false)
+
     return (
       <MailContainer>
         <input className='mailTitle' placeholder='제목을 입력하세요.'/>
@@ -42,8 +46,12 @@ function MailWriteModal() {
 
         <div className='buttonContainer'>
           <button className='reservationButton'>예약하기</button>
-          <button className='sendButton'>전송하기</button>
+          <button className="sendButton" onClick={() => setIsSendClick(true)}>전송하기</button>
         </div>
+
+        {isSendClick && <img src={CompImg} className="compImg" />}
+        {/* {isSendClick && <img src={checkCompImg} className="sendCheck"></img>}
+        {isSendClick && <text className='sendCompText'>전송완료</text>} */}
       </MailContainer>
       
     )
