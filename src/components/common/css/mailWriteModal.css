@@ -1,5 +1,5 @@
 .mailTitle{
-    width: 289px;
+    width: 90%;
     height: 29px;
     position: absolute;
     top: 10%;
@@ -144,43 +144,50 @@
     display: flex;
     top: 40%;
     left: 0.5%;
+    width: 1.5%;
 }
 
 .aiText {
     position: relative;
-    display: flex;
+    display: inline-block;
     top: 40%;
     left: 2.5%;
     font-weight: bold;
+    color: #000000;
 }
 
 .aiText.on {
     position: relative;
-    display: flex;
-    top: 40%;
-    left: 2.5%;
+    display: inline-block;
     font-weight: bold;
-    background: linear-gradient(90deg, #D692F8 0%, #6C57F3 33%, #5F6FFC 84%);
-    backgroud-clip: text;
+    background: linear-gradient(
+      90deg, 
+      #D692F8 0%, 
+      #6C57F3 33%, 
+      #5F6FFC 84%, 
+      #D692F8 100%
+    );
+    background-size: 200% auto;
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-animation: gradientShift 10s infinite linear; 
-}
-
-@keyframes gradientShift {
-    from {
-      background-position: 0 0, 0 0;
+    animation: gradientShift 10s linear infinite;
+  }
+  
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% -100%;
     }
-    to {
-      background-position: 100% 0, 0 0;
+    100% {
+      background-position: -50% 0%;
     }
-    }
+  }
 
 .aiToggleSwitch {
     position: relative;
     display: flex;
-    bottom: 0.4em;
-    left: 6em;
+    top: 0.8em;
+    left: 2em;
 }
 
 .writeContainer {
