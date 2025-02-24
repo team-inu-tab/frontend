@@ -59,6 +59,7 @@
 .menuItem-icon {
   fill: #2f3438;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
 }
 .menuItem-icon.menuItem-close {
   width: 2rem;
@@ -71,6 +72,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  white-space: nowrap;
 }
 .menuItem-text.menuItem-close {
   display: none;

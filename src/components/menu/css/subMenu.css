@@ -1,5 +1,4 @@
-.subMenu-wrapper {
-}
+
 .subMenu-wrapper.subMenu-close {
   justify-content: center;
   gap: 0;
@@ -63,6 +62,7 @@
 .subMenu-icon {
   fill: #2f3438;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
 }
 .subMenu-icon.subMenu-close {
   width: 2rem;
@@ -75,6 +75,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  white-space: nowrap;
 }
 .subMenu-text.subMenu-close {
   display: none;
@@ -83,6 +84,7 @@
 .subMenu-arrow {
   stroke-width: 1px;
   stroke: #2f3438;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 .subMenu-arrow.subMenu-close {
   display: none;

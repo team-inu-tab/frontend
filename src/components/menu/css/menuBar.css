@@ -8,12 +8,14 @@
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.42);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
 }
 .menuBar-wrapper.menuBar-close {
   display: block;
   width: 4.375rem;
   align-items: center;
   padding: 2rem 0;
+  transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
 }
 
 .menuBar-header {
@@ -21,6 +23,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0;
+  transition: padding 0.3s ease-in-out, gap 0.3s ease-in-out;
 }
 .menuBar-header.menuBar-close {
   gap: 0.75rem;
@@ -36,6 +39,7 @@
   transform: rotate(-90deg);
   stroke-width: 1px;
   stroke: #2f3438;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 .menuBar-arrow.menuBar-close {
   transform: rotate(90deg);
@@ -50,6 +54,8 @@
   line-height: normal;
   padding: 0;
   margin: 0.75rem 0 0;
+  white-space: nowrap;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 .menuBar-text.menuBar-close {
   display: none;
