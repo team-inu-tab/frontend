@@ -50,10 +50,8 @@ function MailWriteModal() {
         </div>
 
         {isSendClick && <img src={CompImg} className="compImg" />}
-        <div className='sendCompContainer'>
-          {isSendClick && <img src={checkCompImg} className="sendCheck"></img>}
-          {isSendClick && <text className='sendCompText'>전송완료</text>}
-        </div>
+        {/* {isSendClick && <img src={checkCompImg} className="sendCheck"></img>}
+        {isSendClick && <text className='sendCompText'>전송완료</text>} */}
       </MailContainer>
       
     )

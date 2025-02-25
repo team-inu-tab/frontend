@@ -1,20 +1,88 @@
 .mailListHeader-wrapper { 
   display: flex;
+  padding: 0 1rem;
+  height: 2.5rem;
   border-radius: 1.1875rem 1.1875rem 0 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.39);
   background: #FFF;
-  box-shadow: 0px 1px 5.2px 0px rgba(0, 0, 0, 0.25);
+}
+.mailListHeader-wrapper p {
+  white-space: nowrap;
+  color: #3E3D3D;
+  font-family: Inter;
+  font-size: 0.8125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
-.mailActions-wrapper {
+.mailListHeader-mailActions {
   display: flex;
+  height: 2.5rem;
+  gap: 0.5rem;
+  padding-right: 2rem;
+  border-right: 1px solid rgba(0, 0, 0, 0.39);
+}
+.mailListHeader-mailActions label {
+  display: flex;
+  gap: 0.5rem;
+}
+.mailListHeader-mailActions-items {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mailListHeader-sortOptions-items {
+  display: flex;
+  height: 2.5rem;
+  justify-content: center;
   align-items: center;
+  gap: 0.5rem;
+  padding: 0 2rem;
+  border-right: 1px solid rgba(0, 0, 0, 0.39);
+}
+.mailListHeader-sortOptions-arrow {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transform: rotate(180deg);
+}
+.mailListHeader-sortOptions-arrow.open {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transform: rotate(0deg);
+}
+.mailListHeader-sortOptions-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 7.8125rem;
+  height: 3.1rem;
+  border-radius: 0.875rem;
+  background: #FFF;
+  box-shadow: 0px 2px 7.3px 0px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+.mailListHeader-sortOptions-container span {
+  padding: 0.4rem 0.6rem;
+  color: #2F3438;
+  font-family: Inter;
+  font-size: 0.625rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  &:hover {
+    background-color: rgba(229, 231, 233, 0.4);
+  }
 }
 
-.mailActions-container {
+.mailListHeader-searchBar {
   display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 0.5rem;
+  justify-content:flex-end;
+  align-items:center;
 }
-
-.searchBar {
-  display: flex;
-  align-items: center;
+.mailListHeader-searchBar img {
+  width: 1.125rem;
+  height: 1.125rem;;
 }

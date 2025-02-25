@@ -18,9 +18,6 @@
   border-radius: 0px;
 }
 
-.subMenuItem-ellipse{ 
-}
-
 .subMenuItem-text {
   color: #2f3438;
   font-family: Pretendard;
@@ -28,6 +25,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  white-space: nowrap;
 }
 .subMenuItem-text.subMenuItem-close {
   font-size: 0.625rem;

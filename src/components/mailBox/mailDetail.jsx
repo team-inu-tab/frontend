@@ -1,14 +1,13 @@
 import "@components/mailBox/css/mailDetail.css";
 import FileItem from "./fileItem";
-import { useContext } from "react";
-import { MailContext } from "@contexts/MailContext";
+import { useMailStore } from "../../store";
 
 /**
  * MailDetail - 선택된 메일의 상세 내용을 표시하는 컴포넌트
  * @returns {JSX.Element | null} 메일 상세 정보 UI (선택된 메일이 없으면 null 반환)
  */
 const MailDetail = () => {
-  const { selectedMail } = useContext(MailContext); // 현재 선택된 메일 정보 가져오기
+  const selectedMail = useMailStore((state) => state.selectedMail); // 현재 선택된 메일 정보 가져오기
 
   // 선택된 메일이 없으면 화면에 표시하지 않음
   if (!selectedMail) {

@@ -1,17 +1,68 @@
 import "@components/mailBox/css/timeSortedList.css";
 import MailListItem from "./mailListItem";
-import useFetchMails from "@hooks/useFetchMails";
-import { useContext } from "react";
-import { MailContext } from "@contexts/MailContext";
+import { useCheckboxStore } from "../../store";
+import { useEffect } from "react";
+
+// test데이터 - 시간순
+const timeSortedMails = [
+  {
+    id: 1,
+    title: "Meeting Reminder",
+    content: "내용1",
+    sender: "John Doe시간순",
+    receiveAt: "2025-01-22 10:00",
+    isImportant: false,
+    isFileExist: true,
+  },
+  {
+    id: 2,
+    title: "Project Update",
+    content: "내용2",
+    sender: "John Doe시간순",
+    receiveAt: "2025-01-22 11:00",
+    isImportant: false,
+    isFileExist: false,
+  },
+  {
+    id: 3,
+    title: "Budget Report",
+    content: "내용3",
+    sender: "Jane Smith시간순",
+    receiveAt: "2025-01-21 09:00",
+    isImportant: false,
+    isFileExist: true,
+  },
+  {
+    id: 4,
+    title: "Weekly Newsletter",
+    content: "내용4",
+    sender: "Alice Brown시간순",
+    receiveAt: "2025-01-20 14:30",
+    isImportant: false,
+    isFileExist: false,
+  },
+  {
+    id: 5,
+    title: "New Opportunities",
+    content: "내용5",
+    sender: "Alice Brown시간순",
+    receiveAt: "2025-01-20 16:00",
+    isImportant: false,
+    isFileExist: true,
+  },
+];
 
 /**
  * TimeSortedList - 시간순 정렬된 메일 목록을 표시하는 컴포넌트
  * @returns {JSX.Element} 시간순으로 정렬된 메일 리스트 UI
  */
 const TimeSortedList = () => {
-  useFetchMails(); // API를 호출하여 메일 목록 가져오기
+  const mails = useCheckboxStore((state) => state.mails);
+  const setMails = useCheckboxStore((state) => state.setMails);
 
-  const { mails } = useContext(MailContext); // 전역 상태에서 메일 목록 가져오기
+  useEffect(() => {
+    setMails(timeSortedMails);
+  }, []);
 
   return (
     <div className="timeSortedList-wrapper">
@@ -31,9 +82,11 @@ const TimeSortedList = () => {
 
       {/* 메일 목록 컨테이너 */}
       <div className="timeSortedList-container">
-        {mails.map((mail) => (
-          <MailListItem key={mail.id} mail={mail} />
-        ))}
+        {mails?.length > 0 ? (
+          mails.map((mail) => <MailListItem key={mail.id} mail={mail} />)
+        ) : (
+          <p>📩 메일이 없습니다.</p>
+        )}
       </div>
     </div>
   );

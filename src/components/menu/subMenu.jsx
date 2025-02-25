@@ -4,10 +4,10 @@ import "../menu/css/subMenu.css";
 
 /**
  * SubMenu - 메일 관련 서브 메뉴 컴포넌트
- * @param {boolean} props.isMenubarOpen - 메뉴바가 열려 있는지 여부
+ * @param {boolean} props.isMenuBarOpen - 메뉴바가 열려 있는지 여부
  * @returns {JSX.Element} 서브 메뉴 컴포넌트
  */
-const SubMenu = ({ isMenubarOpen }) => {
+const SubMenu = ({ isMenuBarOpen }) => {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false); // 서브 메뉴 열림/닫힘 상태 관리
 
   /**
@@ -30,29 +30,29 @@ const SubMenu = ({ isMenubarOpen }) => {
   const toggleSubMenu = () => setIsSubMenuOpen((prev) => !prev);
 
   return (
-    <div className={`subMenu-wrapper ${isMenubarOpen ? "" : "subMenu-close"}`}>
+    <div className={`subMenu-wrapper ${isMenuBarOpen ? "" : "subMenu-close"}`}>
       {/* 마우스 hover 시 나타나는 왼쪽 바 (선택 강조 효과) */}
       <div
-        className={`subMenu-leftBar ${isMenubarOpen ? "" : "subMenu-close"}`}
+        className={`subMenu-leftBar ${isMenuBarOpen ? "" : "subMenu-close"}`}
       />
 
       {/* 서브 메뉴 제목 및 클릭 시 확장/축소 기능 */}
       <div
-        className={`subMenu-container ${isMenubarOpen ? "" : "subMenu-close"}`}
+        className={`subMenu-container ${isMenuBarOpen ? "" : "subMenu-close"}`}
         onClick={toggleSubMenu}
       >
         {/* 서브 메뉴 아이콘 및 제목 */}
         <div
           className={`subMenu-textContainer ${
-            isMenubarOpen ? "" : "subMenu-close"
+            isMenuBarOpen ? "" : "subMenu-close"
           }`}
         >
           <img
-            className={`subMenu-icon ${isMenubarOpen ? "" : "subMenu-close"}`}
-            src="@assets/icons/mailbox.svg"
+            className={`subMenu-icon ${isMenuBarOpen ? "" : "subMenu-close"}`}
+            src="/src/assets/icons/mailbox.svg"
           />
           <span
-            className={`subMenu-text ${isMenubarOpen ? "" : "subMenu-close"}`}
+            className={`subMenu-text ${isMenuBarOpen ? "" : "subMenu-close"}`}
           >
             메일함
           </span>
@@ -60,10 +60,10 @@ const SubMenu = ({ isMenubarOpen }) => {
 
         {/* 서브 메뉴 열림/닫힘 화살표 아이콘 */}
         <img
-          className={`subMenu-arrow ${isMenubarOpen ? "" : "subMenu-close"} ${
+          className={`subMenu-arrow ${isMenuBarOpen ? "" : "subMenu-close"} ${
             isSubMenuOpen ? "subMenu-subMenuOpen" : ""
           }`}
-          src="@assets/icons/arrow.svg"
+          src="/src/assets/icons/arrow.svg"
           alt="화살표 아이콘"
         />
       </div>
@@ -71,14 +71,14 @@ const SubMenu = ({ isMenubarOpen }) => {
       {/* 서브 메뉴 항목 (메일함 리스트) */}
       <div
         className={`subMenu-subMenuItemsContainer ${
-          isMenubarOpen ? "" : "subMenu-close"
+          isMenuBarOpen ? "" : "subMenu-close"
         } ${isSubMenuOpen ? "subMenu-subMenuOpen" : ""}`}
       >
         {mailBox.map((title) => (
           <SubMenuItem
             key={title}
             title={title}
-            isMenubarOpen={isMenubarOpen}
+            isMenuBarOpen={isMenuBarOpen}
           />
         ))}
       </div>

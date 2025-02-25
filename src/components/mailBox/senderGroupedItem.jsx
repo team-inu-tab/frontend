@@ -1,5 +1,6 @@
 import "@components/mailBox/css/senderGroupedItem.css";
 import MailListItem from "./mailListItem";
+import { useMailStore } from "../../store";
 
 /**
  * SenderGroupedItem - 발신자별로 그룹화된 메일 목록을 표시하는 컴포넌트
@@ -12,9 +13,18 @@ import MailListItem from "./mailListItem";
  * @param {boolean} props.mailItems[].isFileExist - 첨부 파일 존재 여부
  * @returns {JSX.Element} 발신자별 메일 리스트 UI
  */
-const SenderGroupedItem = ({ sender, mailItems }) => {
+const SenderGroupedItem = ({ sender, mailItems = [] }) => {
+  const setSelectedGroup = useMailStore((state) => state.setSelectedGroup); // 현재 선택된 메일 정보 가져오기
+
+  const handleSelectGroup = (mail) => {
+    setSelectedGroup(mail);
+  };
+
   return (
-    <div className="senderGroupedItem-wrapper">
+    <div
+      className="senderGroupedItem-wrapper"
+      onClick={() => handleSelectGroup(mailItems)}
+    >
       {/* 발신자 정보 */}
       <div className="senderGroupedItem-senderContainer">
         <svg
