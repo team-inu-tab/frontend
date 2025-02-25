@@ -3,10 +3,10 @@ import "../menu/css/subMenuItem.css";
 /**
  * SubMenuItem - 서브 메뉴의 개별 항목을 렌더링하는 컴포넌트
  * @param {"receiveMail" | "sentMail"| "selfSentMail"| "importantMail"| "scheduledMail" | "draftMail"| "spamMail"| "deletedMail"} props.title - 서브 메뉴의 타입
- * @param {boolean} props.isMenubarOpen - 메뉴바가 열려 있는지 여부
+ * @param {boolean} props.isMenuBarOpen - 메뉴바가 열려 있는지 여부
  * @returns {JSX.Element} 서브 메뉴 항목
  */
-const SubMenuItem = ({ title, isMenubarOpen }) => {
+const SubMenuItem = ({ title, isMenuBarOpen }) => {
   let titleName = "";
 
   /**
@@ -48,7 +48,7 @@ const SubMenuItem = ({ title, isMenubarOpen }) => {
   return (
     <div
       className={`subMenuItem-wrapper ${
-        isMenubarOpen ? "" : "subMenuItem-close"
+        isMenuBarOpen ? "" : "subMenuItem-close"
       }`}
     >
       {/* 서브 메뉴 아이콘 */}
@@ -64,7 +64,7 @@ const SubMenuItem = ({ title, isMenubarOpen }) => {
       {/* 서브 메뉴 텍스트 */}
       <span
         className={`subMenuItem-text ${
-          isMenubarOpen ? "" : "subMenuItem-close"
+          isMenuBarOpen ? "" : "subMenuItem-close"
         }`}
       >
         {titleName}

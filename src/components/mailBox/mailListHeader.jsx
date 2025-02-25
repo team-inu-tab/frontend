@@ -1,15 +1,16 @@
 import "@components/mailBox/css/mailListHeader.css";
-import useMailCheck from "@hooks/useMailCheck";
-import { useContext, useState } from "react";
-import { SortContext } from "../../contexts/SortContext";
+import { useState } from "react";
+import { useCheckboxStore, useSortStore, SORT_OPTIONS } from "../../store";
 
 /**
  * MailListHeader - 메일함 목록 상단의 헤더 컴포넌트
  * @returns {JSX.Element} 메일함 헤더
  */
 const MailListHeader = () => {
-  const { selectedCount, selectAll } = useMailCheck(); // 메일 선택 관련 기능 가져오기
-  const { ChangeSortOption } = useContext(SortContext);
+  const selectedCount = useCheckboxStore((state) => state.selectedCount);
+  const selectAll = useCheckboxStore((state) => state.selectAll);
+  const changeSortOption = useSortStore((state) => state.changeSortOption);
+
   const [isSortOptionOpen, setIsSortOptionOpen] = useState(false);
 
   /**
@@ -17,8 +18,8 @@ const MailListHeader = () => {
    */
   const toggleOption = () => setIsSortOptionOpen((prev) => !prev);
 
-  const HandleSortOptionClick = (option) => {
-    ChangeSortOption(option);
+  const handleSortOptionClick = (option) => {
+    changeSortOption(option);
     toggleOption();
   };
 
@@ -27,8 +28,13 @@ const MailListHeader = () => {
       {/* 메일 선택 및 액션 버튼 */}
       <div className="mailListHeader-mailActions">
         {/* 전체 선택 체크박스 */}
-        <input type="checkbox" onChange={(e) => selectAll(e.target.checked)} />
-        <p>전체선택</p>
+        <label>
+          <input
+            type="checkbox"
+            onChange={(e) => selectAll(e.target.checked)}
+          />
+          <p>전체선택</p>
+        </label>
 
         {/* 선택된 메일이 있을 경우 "읽음", "삭제" 버튼 표시 */}
         {selectedCount > 0 && (
@@ -57,10 +63,10 @@ const MailListHeader = () => {
 
         {isSortOptionOpen && (
           <div className="mailListHeader-sortOptions-container">
-            <span onClick={() => HandleSortOptionClick("time")}>
+            <span onClick={() => handleSortOptionClick(SORT_OPTIONS.TIME)}>
               시간순 보기
             </span>
-            <span onClick={() => HandleSortOptionClick("sender")}>
+            <span onClick={() => handleSortOptionClick(SORT_OPTIONS.SENDER)}>
               받은사람 묶어보기
             </span>
           </div>

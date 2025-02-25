@@ -1,7 +1,5 @@
 import "@components/mailBox/css/mailListItem.css";
-import useMailCheck from "@hooks/useMailCheck";
-import { useContext } from "react";
-import { MailContext } from "@contexts/MailContext";
+import { useCheckboxStore, useMailStore } from "../../store";
 
 /**
  * MailListItem - 개별 메일 항목을 렌더링하는 컴포넌트
@@ -15,8 +13,8 @@ import { MailContext } from "@contexts/MailContext";
  * @returns {JSX.Element} 메일 리스트 항목 컴포넌트
  */
 const MailListItem = ({ mail }) => {
-  const { toggleCheckbox } = useMailCheck(); // 메일 선택 관련 함수 가져오기
-  const { setSelectedMail } = useContext(MailContext); // 현재 선택된 메일을 설정하는 컨텍스트 함수
+  const toggleCheckbox = useCheckboxStore((state) => state.toggleCheckbox); // 메일 선택 관련 함수 가져오기
+  const setSelectedMail = useMailStore((state) => state.setSelectedMail); // 현재 선택된 메일을 설정하는 함수
 
   /**
    * 특정 메일을 선택하여 상세 보기 화면으로 전환하는 함수
