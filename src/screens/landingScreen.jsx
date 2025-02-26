@@ -5,7 +5,6 @@ import '@screens/css/landingScreen.css';
 import GoogleLogin from '@components/common/googleLoginButton.jsx'
 
 function Landing() {
-    const [isStartClick, setIsStartClick] = useState(false)
     return (
         <>
             <img src={symbolLogo} className='symbolLogo'></img>
