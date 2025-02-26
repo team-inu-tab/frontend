@@ -1,23 +1,20 @@
 .mailBoxLayout-container {
   display: flex;
-  width: calc(100% - 6rem);
-  height: 44rem;
-  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+  height: 90vh;
   margin-left: 6rem; 
   flex-direction: column;
   border-radius: 1.1875rem;
-  gap: 1rem;
   align-self: stretch;
+  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
   background: conic-gradient(from 133deg at 53.57% 50%, #D7E1F5 147.15027809143066deg, #CAD9F0 231.97685480117798deg, #D8DCF1 306.66590452194214deg, #EFEFFF 336.8507981300354deg, #E2DEF1 360deg);
   box-shadow: 0px 1px 5.2px 0px rgba(0, 0, 0, 0.25);
 }
 
 .mailBoxLayout-container.menuBar-open {
-  width: calc(100% - 16rem);
   margin-left: 16rem;
 }
 
-.mailBoxLayout-detail {
-  display: flex;
-  padding: 0 1rem;
+.mailBoxLayout-common {
+  padding: 1rem;
+  max-height: 100%;
 }

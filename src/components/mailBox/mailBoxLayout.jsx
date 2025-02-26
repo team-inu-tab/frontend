@@ -9,14 +9,16 @@ const MailBoxLayout = () => {
 
   return (
     <div className="mailBoxLayout-wrapper">
+      {/* 메뉴바 */}
       <MenuBar />
       <div
         className={`mailBoxLayout-container ${
           isMenuBarOpen ? "menuBar-open" : ""
         }`}
       >
+        {/* 메일함 헤더 */}
         <MailListHeader />
-        <div className="mailBoxLayout-detail">
+        <div className="mailBoxLayout-common">
           <Outlet />
         </div>
       </div>

@@ -5,7 +5,7 @@ export const SORT_OPTIONS = {
   TIME: "time",
 };
 
-export const useSortStore = create((set, get) => ({
+export const useSortStore = create((set) => ({
   sortOption: SORT_OPTIONS.TIME, // 정렬 옵션
 
   // 정렬 옵션 변경 (유효한 값만 허용)
@@ -16,7 +16,4 @@ export const useSortStore = create((set, get) => ({
       console.warn(`Invalid sort option: ${option}`);
     }
   },
-
-  // 현재 정렬 옵션 가져오기
-  getSortOption: () => get().sortOption,
 }));

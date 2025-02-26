@@ -5,19 +5,29 @@ import "@components/mailBox/css/mailPreviewItem.css";
  * @param {boolean} props.isSentByMe - 사용자가 보낸 메일인지 여부
  * @returns {JSX.Element} 메일 미리보기 UI
  */
-const MailPreviewItem = ({ isSentByMe = true, mail }) => {
+const MailPreviewItem = ({ mail }) => {
+  const isSentByMe = mail.isSentByMe;
+
   return (
-    <div className={`mailPreviewItem-wrapper ${isSentByMe ? "" : "received"}`}>
+    <div
+      className={`mailPreviewItem-wrapper ${
+        isSentByMe === true ? "" : "received"
+      }`}
+    >
       <div
-        className={`mailPreviewItem-container ${isSentByMe ? "" : "received"}`}
+        className={`mailPreviewItem-container ${
+          isSentByMe === true ? "" : "received"
+        }`}
       >
         {/* 메일 제목 및 작성자 정보 */}
         <div
-          className={`mailPreviewItem-header ${isSentByMe ? "" : "received"}`}
+          className={`mailPreviewItem-header ${
+            isSentByMe === true ? "" : "received"
+          }`}
         >
           <div
             className={`mailPreviewItem-header-container ${
-              isSentByMe ? "" : "received"
+              isSentByMe === true ? "" : "received"
             }`}
           >
             <span className="mailPreviewItem-title">{mail.title}</span>
@@ -28,7 +38,9 @@ const MailPreviewItem = ({ isSentByMe = true, mail }) => {
 
           {/* 확장 버튼 */}
           <img
-            className={`mailPreviewItem-arrow ${isSentByMe ? "" : "received"}`}
+            className={`mailPreviewItem-arrow ${
+              isSentByMe === true ? "" : "received"
+            }`}
             src="/src/assets/icons/expandArrow.svg"
             alt="Expand Arrow"
           />
@@ -36,17 +48,17 @@ const MailPreviewItem = ({ isSentByMe = true, mail }) => {
 
         {/* 메일 내용 (미리보기) */}
         <div className="mailPreviewItem-content">{mail.content}</div>
-      </div>
 
-      {/* 메일 수신 시간 */}
-      <div className="mailPreviewItem-footer">
-        <span
-          className={`mailPreviewItem-receiveAt ${
-            isSentByMe ? "" : "received"
-          }`}
-        >
-          {mail.receiveAt} 수신
-        </span>
+        {/* 메일 수신 시간 */}
+        <div className="mailPreviewItem-footer">
+          <span
+            className={`mailPreviewItem-receiveAt ${
+              isSentByMe === true ? "" : "received"
+            }`}
+          >
+            {mail.receiveAt} 수신
+          </span>
+        </div>
       </div>
     </div>
   );
