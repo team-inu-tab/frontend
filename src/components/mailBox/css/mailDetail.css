@@ -1,5 +1,5 @@
 .mailDetail-wrapper {
-  display: inline-flex;
+  display: flex;
   width: 100%;
   flex-direction: column;
   align-items: flex-end;
@@ -8,7 +8,7 @@
 
 .mailDetail-container {
   display: flex;
-  width: 85%;
+  width: 90%;
   height: 34.75rem;
   padding: 1.5rem;
   flex-direction: column;
@@ -82,6 +82,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: 1.0625rem;
+  overflow: scroll;
 }
 
 .mailDetail-footer {

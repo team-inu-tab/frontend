@@ -2,6 +2,7 @@
   display: flex;
   border-radius: 8px;
   cursor: pointer;
+  text-decoration: none;
 
   &:hover {
     background-color: rgba(229, 231, 233, 0.4);

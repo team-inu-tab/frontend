@@ -11,10 +11,9 @@ const MailPreviewContainer = () => {
 
   return (
     <div className="mailPreviewContainer-wrapper">
-      {selectedGroup > 0 &&
-        selectedGroup.map((mail) => (
-          <MailPreviewItem key={mail.id} mail={mail} />
-        ))}
+      {selectedGroup.map((mail) => (
+        <MailPreviewItem key={mail.id} mail={mail} />
+      ))}
     </div>
   );
 };

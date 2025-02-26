@@ -1,5 +1,4 @@
 import "@components/mailBox/css/mailDetail.css";
-import FileItem from "./fileItem";
 import { useMailStore } from "../../store";
 
 /**
@@ -33,8 +32,8 @@ const MailDetail = () => {
           />
         </div>
 
-        {/* 첨부 파일 (첨부된 파일이 있는 경우) */}
-        {selectedMail.isFileExist && selectedMail.file.length > 0 && (
+        {/* 첨부 파일 (첨부된 파일이 있는 경우)
+        {selectedMail.isFileExist && (
           <div className="mailDetail-files">
             <span className="mailDetail-files-title">
               첨부파일 {selectedMail.file.length}개
@@ -45,7 +44,7 @@ const MailDetail = () => {
               ))}
             </div>
           </div>
-        )}
+        )} */}
 
         {/* 메일 본문 내용 */}
         <div className="mailDetail-content">{selectedMail.content}</div>

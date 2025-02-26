@@ -1,6 +1,7 @@
 import "@components/mailBox/css/senderGroupedItem.css";
 import MailListItem from "./mailListItem";
 import { useMailStore } from "../../store";
+import { useEffect } from "react";
 
 /**
  * SenderGroupedItem - 발신자별로 그룹화된 메일 목록을 표시하는 컴포넌트
@@ -14,11 +15,16 @@ import { useMailStore } from "../../store";
  * @returns {JSX.Element} 발신자별 메일 리스트 UI
  */
 const SenderGroupedItem = ({ sender, mailItems = [] }) => {
-  const setSelectedGroup = useMailStore((state) => state.setSelectedGroup); // 현재 선택된 메일 정보 가져오기
+  const setSelectedGroup = useMailStore((state) => state.setSelectedGroup);
+  const selectedGroup = useMailStore((state) => state.selectedGroup);
 
   const handleSelectGroup = (mail) => {
     setSelectedGroup(mail);
   };
+
+  useEffect(() => {
+    console.log("selectedGroup:", selectedGroup);
+  }, [selectedGroup]); // 상태가 변경될 때마다 로그 출력
 
   return (
     <div
