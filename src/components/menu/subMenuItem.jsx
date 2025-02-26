@@ -1,4 +1,6 @@
+import { Link, useLocation } from "react-router-dom";
 import "../menu/css/subMenuItem.css";
+import { useMemo } from "react";
 
 /**
  * SubMenuItem - 서브 메뉴의 개별 항목을 렌더링하는 컴포넌트
@@ -7,49 +9,78 @@ import "../menu/css/subMenuItem.css";
  * @returns {JSX.Element} 서브 메뉴 항목
  */
 const SubMenuItem = ({ title, isMenuBarOpen }) => {
-  let titleName = "";
+  const location = useLocation();
 
   /**
-   * title 값에 따라 한글 텍스트와 아이콘 색상을 반환하는 함수
-   * @param {string} title - 메일함 유형
-   * @returns {string} 아이콘 색상 코드 (HEX)
+   * title 값에 따라 아이콘 색상 및 한글 메뉴명을 설정
    */
-  const getFillColor = (title) => {
+  const { titleName, link, fillColor } = useMemo(() => {
     switch (title) {
       case "receiveMail":
-        titleName = "받은 메일함";
-        return "#A87CF6";
+        return {
+          titleName: "받은 메일함",
+          link: "/mail/receive",
+          fillColor: "#A87CF6",
+        };
       case "sentMail":
-        titleName = "보낸 메일함";
-        return "#7469F7";
+        return {
+          titleName: "보낸 메일함",
+          link: "/mail/sent",
+          fillColor: "#7469F7",
+        };
       case "selfSentMail":
-        titleName = "내게쓴 메일함";
-        return "#FF57F1";
+        return {
+          titleName: "내게쓴 메일함",
+          link: "/mail/selfsent",
+          fillColor: "#FF57F1",
+        };
       case "importantMail":
-        titleName = "중요 메일함";
-        return "#38FDE6";
+        return {
+          titleName: "중요 메일함",
+          link: "/mail/important",
+          fillColor: "#38FDE6",
+        };
       case "scheduledMail":
-        titleName = "예약 메일함";
-        return "#A87CF6";
+        return {
+          titleName: "예약 메일함",
+          link: "/mail/scheduled",
+          fillColor: "#A87CF6",
+        };
       case "draftMail":
-        titleName = "임시 보관함";
-        return "#7469F7";
+        return {
+          titleName: "임시 보관함",
+          link: "/mail/draft",
+          fillColor: "#7469F7",
+        };
       case "spamMail":
-        titleName = "스팸 메일함";
-        return "#FF57F1";
+        return {
+          titleName: "스팸 메일함",
+          link: "/mail/spam",
+          fillColor: "#FF57F1",
+        };
       case "deletedMail":
-        titleName = "휴지통";
-        return "#38FDE6";
+        return {
+          titleName: "휴지통",
+          link: "/mail/deleted",
+          fillColor: "#38FDE6",
+        };
       default:
-        return "#CCCCCC";
+        return {
+          titleName: "기본 메일함",
+          link: "/mail",
+          fillColor: "#CCCCCC",
+        };
     }
-  };
+  }, [title]);
+
+  const isActive = location.pathname === `${link}`;
 
   return (
-    <div
+    <Link
+      to={link}
       className={`subMenuItem-wrapper ${
         isMenuBarOpen ? "" : "subMenuItem-close"
-      }`}
+      } ${isActive ? "active" : ""}`}
     >
       {/* 서브 메뉴 아이콘 */}
       <svg
@@ -59,7 +90,7 @@ const SubMenuItem = ({ title, isMenuBarOpen }) => {
         width="6"
         height="6"
       >
-        <circle cx="3" cy="3" r="3" fill={getFillColor(title)} />
+        <circle cx="3" cy="3" r="3" fill={fillColor} />
       </svg>
       {/* 서브 메뉴 텍스트 */}
       <span
@@ -69,7 +100,7 @@ const SubMenuItem = ({ title, isMenuBarOpen }) => {
       >
         {titleName}
       </span>
-    </div>
+    </Link>
   );
 };
 

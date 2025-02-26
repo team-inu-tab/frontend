@@ -1,12 +1,10 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import MailWriteModal from './components/common/mailWriteModal.jsx';
-import WriteContainer from '@components/common/mailWritingContainer.jsx';
-import Signin from '@screens/signin.jsx';
-import Landing from '@screens/landingScreen.jsx';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes/router.jsx";
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Landing />
-  </StrictMode>,
-)
+    <RouterProvider router={router} />
+  </StrictMode>
+);

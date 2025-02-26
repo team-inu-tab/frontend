@@ -1,8 +1,12 @@
 import "@screens/mailBox/css/receiveMailScreen.css";
-import MailBoxContainer from "../../components/mailBox/mailBoxContainer";
+import TimeSortedList from "../../components/mailBox/timeSortedList";
 
 const ReceiveMailScreen = () => {
-  return <MailBoxContainer />;
+  return (
+    <div>
+      <TimeSortedList />
+    </div>
+  );
 };
 
 export default ReceiveMailScreen;

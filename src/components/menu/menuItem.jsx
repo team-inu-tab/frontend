@@ -1,4 +1,6 @@
+import { Link, useLocation } from "react-router-dom";
 import "../menu/css/menuItem.css";
+import { useMemo } from "react";
 
 /**
  * MenuItem - 개별 메뉴 아이템 컴포넌트
@@ -7,36 +9,54 @@ import "../menu/css/menuItem.css";
  * @returns {JSX.Element} 개별 메뉴 컴포넌트
  */
 const MenuItem = ({ title, isMenuBarOpen }) => {
-  let icon = "";
-  let titleName = "";
+  const location = useLocation();
 
   /**
    * title 값에 따라 아이콘 이미지 경로 및 한글 메뉴명을 설정
    */
-  switch (title) {
-    case "home":
-      icon = "/src/assets/icons/home.svg";
-      titleName = "홈";
-      break;
-    case "notification":
-      icon = "/src/assets/icons/notification.svg";
-      titleName = "알림";
-      break;
-    case "profile":
-      icon = "/src/assets/icons/profile.svg";
-      titleName = "프로필";
-      break;
-    case "settings":
-      icon = "/src/assets/icons/settings.svg";
-      titleName = "설정";
-      break;
-    default:
-      break;
-  }
+  const { icon, titleName, link } = useMemo(() => {
+    switch (title) {
+      case "home":
+        return {
+          icon: "/src/assets/icons/home.svg",
+          titleName: "홈",
+          link: "receive",
+        };
+      case "notification":
+        return {
+          icon: "/src/assets/icons/notification.svg",
+          titleName: "알림",
+          link: null,
+        };
+      case "profile":
+        return {
+          icon: "/src/assets/icons/profile.svg",
+          titleName: "프로필",
+          link: null,
+        };
+      case "settings":
+        return {
+          icon: "/src/assets/icons/settings.svg",
+          titleName: "설정",
+          link: null,
+        };
+      default:
+        return {
+          icon: "",
+          titleName: "기본",
+          link: null,
+        };
+    }
+  }, [title]);
+
+  const isActive = location.pathname === `${link}`;
 
   return (
-    <div
-      className={`menuItem-wrapper ${isMenuBarOpen ? "" : "menuItem-close"}`}
+    <Link
+      to={link}
+      className={`menuItem-wrapper ${isMenuBarOpen ? "" : "menuItem-close"} ${
+        isActive ? "active" : ""
+      }`}
     >
       {/* 마우스 hover 시 나타나는 왼쪽 바 (선택된 메뉴 강조 효과) */}
       <div
@@ -68,7 +88,7 @@ const MenuItem = ({ title, isMenuBarOpen }) => {
       >
         <span className="menuItem-text">{titleName}</span>
       </div>
-    </div>
+    </Link>
   );
 };
 

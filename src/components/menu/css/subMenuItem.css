@@ -5,10 +5,17 @@
   gap: 0.5rem;
   border-radius: 8px;
   cursor: pointer;
+  text-decoration: none;
 
   &:hover {
     background-color: rgba(229, 231, 233, 0.4);
   }
+}
+.subMenuItem-wrapper.active {
+  background-color: rgba(206, 208, 210, 0.4);
+}
+.subMenuItem-wrapper.subMenuItem-close.active {
+  background-color: rgba(206, 208, 210, 0.4); 
 }
 .subMenuItem-wrapper.subMenuItem-close {
   width: 100%;
