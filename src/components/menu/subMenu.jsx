@@ -1,6 +1,6 @@
-import SubMenuItem from "./SubMenuItem";
+import SubMenuItem from "@components/menu/subMenuItem.jsx";
 import { useState } from "react";
-import "../menu/css/subMenu.css";
+import "@components/menu/css/subMenu.css";
 
 /**
  * SubMenu - 메일 관련 서브 메뉴 컴포넌트
