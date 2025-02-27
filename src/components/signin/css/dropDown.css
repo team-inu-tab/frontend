@@ -1,0 +1,22 @@
+/* 버튼 및 컨테이너 스타일 */
+.dropdown-container {
+    display: inline-block;
+  }
+  
+  .dropdown-button {
+    width: 240px;
+    text-align: left;
+    font-size: 12px;
+    /* MUI 버튼 기본 테마를 덮어쓰려면 !important를 사용해야 할 수도 있음 */
+    border: 2px solid rgb(94, 94, 94);
+  }
+  
+  /* 메뉴의 Paper 컴포넌트 스타일 */
+  .dropdown-menu-paper {
+    min-width: 240px;
+  }
+  
+  /* 메뉴 아이템 스타일 */
+  .dropdown-menu-item {
+    font-size: 12px;
+  }

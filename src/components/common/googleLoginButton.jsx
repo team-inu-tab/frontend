@@ -7,7 +7,7 @@ const GoogleLogIn = () => {
   const handleSuccess = (credentialResponse) => {
     const token = credentialResponse.credential;
 
-    axios.post("https://likelionfesival.shop/oauth2/authorization/google", { token })
+    axios.get("https://likelionfesival.shop/oauth2/authorization/google", { token })
       .then((response) => {
         console.log("로그인 성공:", response.data);
         window.location.href = "https://festivalteama.shop";
