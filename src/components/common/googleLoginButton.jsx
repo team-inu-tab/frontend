@@ -7,7 +7,8 @@ const GoogleLogIn = () => {
   const handleSuccess = (credentialResponse) => {
     const token = credentialResponse.credential;
 
-    axios.get("https://likelionfesival.shop/oauth2/authorization/google", { token })
+    // POST 요청 사용
+    axios.get("https://likelionfesival.shop/oauth2/authorization/google", {withCredentials: true})
       .then((response) => {
         console.log("로그인 성공:", response.data);
         window.location.href = "https://festivalteama.shop";
@@ -18,7 +19,7 @@ const GoogleLogIn = () => {
   };
 
   return (
-    <GoogleOAuthProvider clientId="클라이언트 ID">
+    <GoogleOAuthProvider clientId="776239999845-1l9ai960n66udm13vhcgeredtlr0e76q.apps.googleusercontent.com">
       <GoogleLogin
         onSuccess={handleSuccess}
         onError={() => {
