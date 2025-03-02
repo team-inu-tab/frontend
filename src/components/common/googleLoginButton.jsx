@@ -1,21 +1,18 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useRef } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const GoogleLogIn = () => {
+  const linkRef = useRef(null);
+
   const handleSuccess = (credentialResponse) => {
     const token = credentialResponse.credential;
-
-    // POST 요청 사용
-    axios.get("https://likelionfesival.shop/oauth2/authorization/google", {withCredentials: true})
-      .then((response) => {
-        console.log("로그인 성공:", response.data);
-        window.location.href = "https://festivalteama.shop";
-      })
-      .catch((error) => {
-        console.error("로그인 처리 중 오류 발생: ", error);
-      });
+    const redirectUrl = `https://likelionfesival.shop/oauth2/authorization/google?token=${encodeURIComponent(token)}`;
+    
+    if (linkRef.current) {
+      linkRef.current.href = redirectUrl;
+      linkRef.current.click();
+    }
   };
 
   return (
@@ -26,6 +23,7 @@ const GoogleLogIn = () => {
           console.log("로그인 실패");
         }}
       />
+      <a ref={linkRef} style={{ display: 'none' }}></a>
     </GoogleOAuthProvider>
   );
 };
