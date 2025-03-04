@@ -1,16 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
-import MailBoxLayout from "../components/mailBox/mailBoxLayout";
-import Landing from "../screens/landingScreen";
-import Signin from "../screens/signin";
-import Login from "../screens/login";
-import ReceiveMailScreen from "../screens/mailBox/receiveMailScreen";
-import DeletedMailScreen from "../screens/mailBox/deletedMailScreen";
-import DraftMailScreen from "../screens/mailBox/draftMailScreen";
-import ImportantMailScreen from "../screens/mailBox/importantMailScreen";
-import ScheduledMailScreen from "../screens/mailBox/scheduledMailScreen";
-import SelfSentMailScreen from "../screens/mailBox/selfSentMailScreen";
-import SentMailScreen from "../screens/mailBox/sentMailScreen";
-import SpamMailScreen from "../screens/mailBox/spamMailScreen";
+import MailBoxLayout from "@components/mailBox/mailBoxLayout.jsx";
+import Landing from "@screens/landingScreen.jsx";
+import Signin from "@screens/signin.jsx";
+import ReceiveMailScreen from "@screens/mailBox/receiveMailScreen.jsx";
+import DeletedMailScreen from "@screens/mailBox/deletedMailScreen.jsx";
+import DraftMailScreen from "@screens/mailBox/draftMailScreen.jsx";
+import ImportantMailScreen from "@screens/mailBox/importantMailScreen.jsx";
+import ScheduledMailScreen from "@screens/mailBox/scheduledMailScreen.jsx";
+import SelfSentMailScreen from "@screens/mailBox/selfSentMailScreen.jsx";
+import SentMailScreen from "@screens/mailBox/sentMailScreen.jsx";
+import SpamMailScreen from "@screens/mailBox/spamMailScreen.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,10 +34,6 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signin />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
   },
 ]);
 export default router;

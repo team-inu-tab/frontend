@@ -1,73 +1,32 @@
 .symbolLogo{
     position: absolute;
-    width: 10%;
-    height: 10%;
-    left: 21%;
+    width: 12%;
+    height: 12%;
+    left: 16%;
     top: 15%;
 }
 
-.nameInput{
+.jobPlaceHolder {
     position: absolute;
-    left: 21%;
-    top: 28%;
+    top: 34.5%;
+    left: 16%;
+    font-size: 0.9rem;
 }
 
-.mailInput{
+.inputLine {
     position: absolute;
-    left: 21%;
-    top: 36%;
-}
-
-.pwInput{
-    position: absolute;
-    left: 21%;
-    top: 46%;
-}
-
-.pwCheckInput{
-    position: absolute;
-    left: 21%;
-    top: 54%;
-}
-
-.hpInput{
-    position: absolute;
-    left: 21%;
-    top: 64%;
-}
-
-.hpCheckInput{
-    position: absolute;
-    left: 21%;
-    top: 72%;
-}
-
-.inputDot1{
-    position: absolute;
-    width: 1.5%;
-    height: 1.5%;
-    top: 35.4%;
-    right: 17%;
-    background-color: #000000;
-    border-radius: 50%;
-}
-
-.inputDot2{
-    position: absolute;
-    width: 1.5%;
-    height: 1.5%;
     top: 40%;
-    right: 17%;
-    background-color: #000000;
-    border-radius: 50%;
+    width: 68%;
+    z-index: 1;
 }
 
-.inputDot3{
+.addInfoCompleteButton {
     position: absolute;
-    width: 1.5%;
-    height: 1.5%;
-    top: 71.4%;
-    right: 17%;
-    background-color: #000000;
-    border-radius: 50%;
+    justify-content: center;
+    top: 75%;
+    background-color: #B5C9F1;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
 }

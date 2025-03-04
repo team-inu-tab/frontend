@@ -1,46 +1,53 @@
-import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import React, { useState, useEffect, useRef } from "react";
+import "@components/signin/css/dropDown.css";
 
-const DropdownMenu = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedOption, setSelectedOption] = useState('직업');
+export const DropDown = (props) => {
+  const list = props.props.data;
+  const selectRef = useRef(null);
+  const [currentValue, setCurrentValue] = useState(list[0]);
+  const [showOptions, setShowOptions] = useState(false);
 
-  const handleButtonClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleOnChangeSelectValue = (e) => {
+    setCurrentValue(e.target.getAttribute("value"));
   };
 
-  const handleMenuClose = (option) => {
-    if (option) {
-      setSelectedOption(option);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (selectRef.current && !selectRef.current.contains(event.target)) {
+        setShowOptions(false);
+      }
     }
-    setAnchorEl(null);
-  };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [selectRef]);
 
   return (
-    <div>
-      <Button
-        variant="outlined"
-        onClick={handleButtonClick}
-        style={{ width: 240, textAlign: 'left', fontSize: 12 }}
-      >
-        {selectedOption}
-      </Button>
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={() => handleMenuClose(null)}
-      >
-        <MenuItem onClick={() => handleMenuClose('학생')}>
-          학생
-        </MenuItem>
-        <MenuItem onClick={() => handleMenuClose('직장인')}>
-          직장인
-        </MenuItem>
-      </Menu>
+    <div
+      className="select-box"
+      onClick={() => setShowOptions((prev) => !prev)}
+      ref={selectRef}
+    >
+      <label className="select-label">{currentValue}</label>
+      <ul className={`select-options ${showOptions ? "show" : ""}`}>
+        {list.map((data, index) => (
+          <ul
+            key={index}
+            className="option"
+            value={data}
+            onClick={handleOnChangeSelectValue}
+          >
+            {data}
+          </ul>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default DropdownMenu;
+DropDown.defaultProps = {
+  name: "초기값",
+};
+
+export default DropDown;

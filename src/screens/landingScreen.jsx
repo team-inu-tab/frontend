@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import '@css/login.css';
 import symbolLogo from '@assets/images/symbolLogo.svg';
 import '@screens/css/landingScreen.css';
 import GoogleLogin from '@components/common/googleLoginButton.jsx'

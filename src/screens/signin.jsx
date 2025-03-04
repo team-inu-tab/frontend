@@ -3,29 +3,23 @@ import '@css/signin.css';
 import symbolLogo from '@assets/images/symbolLogo.svg';
 import Circle from '@components/signin/circle.jsx';
 import Container from '@components/signin/parentContainer.jsx';
-import InputTop from '@components/signin/textInputTop.jsx';
-import InputBottom from '@components/signin/textInputBottom.jsx';
-import Dropdown from '@components/signin/dropDown.jsx';
+import CompleteButton from '@components/signin/completeButton.jsx';
+import DropDown from '@components/signin/dropDown.jsx';
+import InputLine from '@assets/images/inputLine.svg';
 
 function Signin() {
-  const [dropdownVisibility, setDropdownVisibility] = useState(false);
+  const [isStudent, setIsStudent] = useState(false);
+  const [isFill, setIsFill] = useState(false);
+  const jobData = { data: ["학생", "직장인"] };
 
   return (
     <Container>
         <Circle>
           <img src={symbolLogo} className='symbolLogo'/>
-          <Dropdown>
-          </Dropdown>
-          {/* <InputTop className='nameInput' placeholder='이름'/>
-          <InputBottom className='mailInput' placeholder='이메일'/>
-          <InputTop className='pwInput' placeholder='비밀번호'/>
-          <InputBottom className='pwCheckInput' placeholder='비밀번호 확인'/>
-          <InputTop className='hpInput' placeholder='전화번호'/>
-          <InputBottom className='hpCheckInput' placeholder='인증번호'/>
-
-          <div className='inputDot1'></div>
-          <div className='inputDot2'></div>
-          <div className='inputDot3'></div> */}
+          <text className='jobPlaceHolder'>직업</text>
+          <img src={InputLine} className='inputLine'></img>
+          <DropDown props={jobData}></DropDown>
+          <CompleteButton className='addInfoCompleteButton' text="입력완료"></CompleteButton>
         </Circle>
     </Container>
   )
