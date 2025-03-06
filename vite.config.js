@@ -5,7 +5,11 @@ import path from "path";
 export default defineConfig({
   plugins: [react()],
   server: {
-    allowedHosts: 'https://festivalteama.shop/"',
+    cors: {
+      origin: 'https://festivalteama.shop',
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      credentials: true,
+    },
     host: true,
     port: 5173,
   },
