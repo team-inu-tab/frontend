@@ -2,8 +2,8 @@
 
 /* Circle 클래스 정의 */
 .circle {
-    width: 30vw; /* 뷰포트 너비의 30% */
-    height: 30vw; /* 뷰포트 너비의 30% */
+    width: 32rem;
+    height: 32rem;
     max-width: 600px;
     max-height: 600px;
     min-width: 200px;
@@ -29,10 +29,10 @@
     opacity: 0.6;
     background: linear-gradient(120deg, #9590d5, #7facee);
     z-index: -1;
-    max-width: 630px;
-    max-height: 630px;
-    min-width: 170px;
-    min-height: 170px;
+    max-width: 680px;
+    max-height: 680px;
+    min-width: 200px;
+    min-height: 200px;
   }
   
   /* 반응형 스타일링: 화면 너비가 768px 이하일 때 */

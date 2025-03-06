@@ -2,12 +2,14 @@
   position: absolute;
   top: 34%;
   left: 36%;
-  width: 55%;
-  height: 10%;
+  width: 54%;
+  height: 5%;
   background-color: #ffffff;
   align-self: center;
   border: none;
   cursor: pointer;
+  opacity: 90%;
+  z-index: 1;
 }
 
 .select-box::before {
@@ -18,6 +20,7 @@
   color: #000000;
   font-size: 0.9rem;
   font-weight: bold;
+  z-index: 1;
 }
 
 .select-label {
@@ -27,7 +30,7 @@
 
 .select-options {
   position: absolute;
-  top: 40%;
+  top: 38%;
   right: 12.5%;
   width: 80%;
   height: 12vh;
@@ -69,4 +72,8 @@
   border-radius: 5px;
   background: linear-gradient(120deg, #7FACEE 0%, #9590D5 40%);
   opacity: 70%;
+}
+
+.select-options {
+  list-style: none;
 }

@@ -4,11 +4,18 @@ import "@components/signin/css/dropDown.css";
 export const DropDown = (props) => {
   const list = props.props.data;
   const selectRef = useRef(null);
-  const [currentValue, setCurrentValue] = useState(list[0]);
+  // 초기 상태를 "직업을 선택 해주세요"로 설정합니다.
+  const [currentValue, setCurrentValue] = useState("직업을 선택 해주세요");
   const [showOptions, setShowOptions] = useState(false);
 
   const handleOnChangeSelectValue = (e) => {
-    setCurrentValue(e.target.getAttribute("value"));
+    e.stopPropagation(); // 이벤트 버블링 방지
+    const value = e.target.getAttribute("value");
+    setCurrentValue(value);
+    if (props.onSelect) {
+      props.onSelect(value);
+    }
+    setShowOptions(false);
   };
 
   useEffect(() => {
@@ -32,14 +39,14 @@ export const DropDown = (props) => {
       <label className="select-label">{currentValue}</label>
       <ul className={`select-options ${showOptions ? "show" : ""}`}>
         {list.map((data, index) => (
-          <ul
+          <li
             key={index}
             className="option"
             value={data}
             onClick={handleOnChangeSelectValue}
           >
             {data}
-          </ul>
+          </li>
         ))}
       </ul>
     </div>
@@ -47,7 +54,7 @@ export const DropDown = (props) => {
 };
 
 DropDown.defaultProps = {
-  name: "초기값",
+  props: { data: ["초기값"] },
 };
 
 export default DropDown;
