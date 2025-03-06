@@ -6,8 +6,7 @@ import Signin from "@screens/signin.jsx";
 import MailWriteModal from "@components/common/mailWriteModal.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    {/* <RouterProvider router={router} /> */}
+    <RouterProvider router={router} />
     <Signin></Signin>
-    {/* <MailWriteModal></MailWriteModal> */}
   </StrictMode>
 );
