@@ -1,0 +1,24 @@
+.symbolLogo {
+    position: absolute;
+    display: flex;
+    width: 20%;
+    height: 20%;
+    top: 30%;
+    left: 40%;
+}
+
+.startButton {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 8%;
+    height: 4%;
+    top: 60%;
+    left: 46%;
+    background-image: linear-gradient(90deg, #90BDE5 0%, #BFBCDD 100%);
+    border-radius: 8px;
+    border-style: none;
+    font-size: 0.8rem;
+    color: #FFFFFF;
+}

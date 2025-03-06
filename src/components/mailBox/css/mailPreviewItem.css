@@ -1,0 +1,92 @@
+.mailPreviewItem-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.25rem;
+}
+.mailPreviewItem-wrapper.received {
+  justify-content: flex-start;
+}
+
+.mailPreviewItem-container {
+  display: flex;
+  padding: 1.75rem;
+  width: 60%;
+  flex-direction: column;
+  align-self: stretch;
+  position: relative;
+  gap: 0.5rem;
+  border-radius: 0.625rem 0.625rem 3.5625rem 0.625rem;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0px 0px 10.3px 0px rgba(0, 0, 0, 0.25) inset;
+}
+.mailPreviewItem-container.received {
+  border-radius: 0.625rem 0.625rem 0.625rem 3.5625rem;
+  align-items: flex-end;
+}
+
+.mailPreviewItem-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.mailPreviewItem-header.received {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.mailPreviewItem-header-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.mailPreviewItem-header-container.received {
+  order: 1;
+  align-items: flex-end;
+}
+
+.mailPreviewItem-title {
+  color: rgba(62, 61, 61, 0.90);
+  font-family: "Pretendard Variable";
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.mailPreviewItem-sender {
+  color: rgba(62, 61, 61, 0.26);
+  font-family: "Pretendard Variable";
+  font-size: 0.625rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.mailPreviewItem-arrow {
+  width: 1.4375rem;
+  height: 1.4375rem;
+}
+.mailPreviewItem-arrow.received {
+  order: 0;
+}
+
+.mailPreviewItem-content {
+  color: rgba(62, 61, 61, 0.71);
+  font-family: "Pretendard Variable";
+  font-size: 0.625rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.0625rem;
+}
+
+.mailPreviewItem-footer {
+  position: absolute;
+  bottom: -1rem;
+  color: rgba(114, 114, 114, 0.60);
+  font-family: "Pretendard Variable";
+  font-size: 0.5rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

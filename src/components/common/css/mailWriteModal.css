@@ -1,0 +1,276 @@
+.mailTitle{
+    width: 90%;
+    height: 29px;
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    border:none;
+    outline: none;
+    font-size: 180%;
+    font-weight: bold;
+}
+.mailTitle::placeholder{
+    color: #3E3D3D;
+}
+
+.recieverTitleContainer{
+    display: flex;
+    position: absolute;
+    top: 19%;
+    left: 5%;
+    align-items: center;
+    padding-left: 2%;
+    width: 88%;
+    height:6.5%;
+    background-color: rgba(205, 217, 245, 0.5);
+    font-weight: bold;
+    text-align: left;
+    border-radius: 50px;
+    z-index: 1;
+}
+
+.recieverLabel{
+    font-weight: lighter;
+    color: #3E3D3D;
+}
+
+.recieverTitle{
+    position: relative;
+    margin-left: 2%;
+    width: 76%;
+    height: 80%;
+    font-weight: bold;
+    color: #3E3D3D;
+    border:none;
+    outline: none;
+    background-color: rgba(205, 217, 245, 0.1);
+}
+
+.toMeText {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: 2.5%;
+    color: #748EEE;
+}
+
+.isToMe {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: 10.2%;
+    border-color: #748EEE;
+    outline: none;
+    
+}
+
+.refTitleContainer {
+    display: flex;
+    position: absolute;
+    top: 26.5%;
+    left: 5%;
+    align-items: center;
+    padding-left: 2%;
+    width: 88%;
+    height:6.5%;
+    background-color: rgba(205, 217, 245, 0.5);
+    font-weight: bold;
+    text-align: left;
+    border-radius: 50px;
+    z-index: 1;
+}
+
+.refLabel {
+    font-weight: lighter;
+    color: #3E3D3D;
+}
+
+.refTitle {
+    position: relative;
+    margin-left: 2%;
+    width: 76%;
+    height: 80%;
+    font-weight: bold;
+    color: #3E3D3D;
+    border:none;
+    outline: none;
+    background-color: rgba(205, 217, 245, 0.1);
+}
+
+.attachedContainer{
+    display: flex;
+    position: absolute;
+    top: 34%;
+    left: 5%;
+    align-items: center;
+    padding-left: 2%;
+    width: 88%;
+    height: 15%;
+    background-color: rgba(205, 217, 245, 0.5);
+    font-weight: bold;
+    text-align: left;
+    border-radius: 15px;
+    z-index: 1;
+}
+
+.attatchedIcon{
+    position: absolute;
+    display: flex;
+    top: 10%;
+    left: 2%;
+    width: 2.5%;
+}
+
+.attachedLabel{
+    position: absolute;
+    display: flex;
+    top: 10%;
+    left: 5.5%;
+    color: #3E3D3D;
+    font-size: 1.2rem;
+    font-weight: lighter;
+    opacity: 0.3;
+}
+
+.switchContainer {
+    position: absolute;
+    width: 88%;
+    height: 6%;
+    top: 52%;
+}
+
+.aiOnLogo {
+    position: absolute;
+    display: flex;
+    top: 40%;
+    left: 0.5%;
+    width: 1.5%;
+}
+
+.aiText {
+    position: relative;
+    display: inline-block;
+    top: 40%;
+    left: 2.5%;
+    font-weight: bold;
+    color: #000000;
+}
+
+.aiText.on {
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+    background: linear-gradient(
+      90deg, 
+      #D692F8 0%, 
+      #6C57F3 33%, 
+      #5F6FFC 84%, 
+      #D692F8 100%
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 10s linear infinite;
+  }
+  
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% -100%;
+    }
+    100% {
+      background-position: -50% 0%;
+    }
+  }
+
+.aiToggleSwitch {
+    position: relative;
+    display: flex;
+    top: 0.8em;
+    left: 2em;
+}
+
+.writeContainer {
+    position: absolute;
+    display: flex;
+    bottom: 1.5%;
+    flex-shrink: 0;
+}
+
+.writeContainer.on {
+    position: absolute;
+    display: flex;
+    bottom: 1.5%;
+    flex-shrink: 0;
+}
+
+.buttonContainer {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    width: 25vw;
+    bottom: -54%;
+}
+
+.reservationButton {
+    position: absolute;
+    justify-content: center;
+    align-items:center;
+    display: flex;
+    border-radius: 18.5px;
+    width: 124px;
+    height: 37px;
+    right: 53%;
+    cursor: pointer;
+    border: none;
+    background-color: #FFFFFF;
+    font-weight: bold;
+    font-size: 0.9rem;
+    box-shadow: 0px 2px 6.6px 0px rgba(0, 0, 0, 0.25);
+}
+
+.sendButton {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    border-radius: 18.5px;
+    width: 124px;
+    height: 37px;
+    left: 53%;
+    cursor: pointer;
+    border: none;
+    background-color: #748EEE;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 0.9rem;
+    box-shadow: 0px 2px 6.6px 0px rgba(0, 0, 0, 0.25);
+}
+
+.compImg {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    z-index: 2;
+}
+
+.sendCompContainer {
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.sendCheck{
+    position: absolute;
+    display: flex;
+    top: 40%;
+    left: 48%;
+}
+
+.sendCompText {
+    position: absolute;
+    display: flex;
+    font-weight: bold;
+    top: 50%;
+    left: 48%;
+}

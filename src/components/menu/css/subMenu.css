@@ -1,0 +1,116 @@
+
+.subMenu-wrapper.subMenu-close {
+  justify-content: center;
+  gap: 0;
+  border-radius: 0px;
+
+  &:hover {
+    background-color: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateX(3px);
+  }
+}
+.subMenu-wrapper:hover .subMenu-leftBar {
+  opacity: 1;
+}
+.subMenu-wrapper:hover .subMenu-subMenuItemsContainer.subMenu-close {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  position: absolute;
+  top: 0;        
+  left: 100%; 
+  overflow: hidden;
+}
+
+.subMenu-leftBar.subMenu-close {
+  position: absolute;
+  left: 0;
+  width: 4px;
+  height: calc(100%);
+  background: #a87cf6;
+  transition: transform 0.3s ease;
+  opacity: 0;
+}
+
+.subMenu-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(229, 231, 233, 0.4);
+  }
+}
+.subMenu-container.subMenu-close {
+  position: relative;
+  justify-content: center;
+  gap: 0;
+  border-radius: 0px;
+  pointer-events: none; 
+}
+
+.subMenu-textContainer {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.subMenu-icon {
+  fill: #2f3438;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+.subMenu-icon.subMenu-close {
+  width: 2rem;
+}
+
+.subMenu-text {
+  color: #2f3438;
+  font-family: Pretendard;
+  font-size: 0.8125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  white-space: nowrap;
+}
+.subMenu-text.subMenu-close {
+  display: none;
+}
+
+.subMenu-arrow {
+  stroke-width: 1px;
+  stroke: #2f3438;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.subMenu-arrow.subMenu-close {
+  display: none;
+}
+.subMenu-arrow.subMenu-subMenuOpen {
+  transform: rotate(180deg);
+}
+
+.subMenu-subMenuItemsContainer {
+  flex-direction: column;
+  top: 100%;
+  width: 100%;
+  margin: 0.5rem 0 0;
+  display: none;
+}
+.subMenu-subMenuItemsContainer.subMenu-close {
+  width: 6rem;
+  padding: 0.5rem;
+  margin: 0;
+  border-radius: 0rem 1.8125rem 1.8125rem 0rem;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.subMenu-subMenuItemsContainer.subMenu-close.subMenu-subMenuOpen {
+  display: none;
+}
+.subMenu-subMenuItemsContainer.subMenu-subMenuOpen {
+  display: flex;
+}

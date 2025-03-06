@@ -1,0 +1,44 @@
+.fileItem-wrapper {
+  display: flex;
+  width: 4.75rem;
+  height: 4.9375rem;
+  padding: 0.125rem;
+  justify-content: center;
+  border-radius: 0.375rem;
+  background: rgba(217, 217, 217, 0.35);
+  box-shadow: 0px 1px 1.7px 0px rgba(0, 0, 0, 0.25);
+}
+
+.fileItem-header {
+  display: flex;
+  align-items: center;
+  width: 4.375rem;
+  height: 1.1875rem;
+  padding: 0.1rem;
+  border-radius: 0.4375rem;
+  background: #D9D9D9;
+  box-shadow: 0px 1px 1.7px 0px rgba(0, 0, 0, 0.25);
+}
+
+.fileItem-icon {
+  width: 12px; 
+  height: 12px;
+}
+
+.fileItem-name {
+  color: #000;
+  font-family: "Pretendard Variable";
+  font-size: 0.5rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fileItem-preview {
+  height: 3.25rem;
+  align-self: stretch;
+  border-radius: 0.375rem;
+  background: #B2B2B2;
+}
