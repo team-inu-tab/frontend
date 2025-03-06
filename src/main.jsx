@@ -4,8 +4,11 @@ import { RouterProvider } from "react-router-dom";
 import router from "@routes/router.jsx";
 import Signin from "@screens/signin.jsx";
 import MailWriteModal from "@components/common/mailWriteModal.jsx";
+import ReceiveMailScreen from "@screens/mailBox/receiveMailScreen.jsx";
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <RouterProvider router={router} />
+    {/* <MailWriteModal></MailWriteModal> */}
   </StrictMode>
 );

@@ -8,7 +8,7 @@ const GoogleLogIn = () => {
   const handleSuccess = (credentialResponse) => {
     const token = credentialResponse.credential;
     const redirectUrl = `https://likelionfesival.shop/oauth2/authorization/google?token=${encodeURIComponent(token)}`;
-    
+
     if (linkRef.current) {
       linkRef.current.href = redirectUrl;
       linkRef.current.click();
