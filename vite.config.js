@@ -12,6 +12,7 @@ export default defineConfig({
     },
     host: true,
     port: 5173,
+    allowedHosts: ['festivalteama.shop'], // 이 줄을 추가하여 허용할 호스트를 명시합니다.
   },
   resolve: {
     alias: {
