@@ -1,46 +1,60 @@
-import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import React, { useState, useEffect, useRef } from "react";
+import "@components/signin/css/dropDown.css";
 
-const DropdownMenu = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedOption, setSelectedOption] = useState('직업');
+export const DropDown = (props) => {
+  const list = props.props.data;
+  const selectRef = useRef(null);
+  // 초기 상태를 "직업을 선택 해주세요"로 설정합니다.
+  const [currentValue, setCurrentValue] = useState("직업을 선택 해주세요");
+  const [showOptions, setShowOptions] = useState(false);
 
-  const handleButtonClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = (option) => {
-    if (option) {
-      setSelectedOption(option);
+  const handleOnChangeSelectValue = (e) => {
+    e.stopPropagation(); // 이벤트 버블링 방지
+    const value = e.target.getAttribute("value");
+    setCurrentValue(value);
+    if (props.onSelect) {
+      props.onSelect(value);
     }
-    setAnchorEl(null);
+    setShowOptions(false);
   };
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (selectRef.current && !selectRef.current.contains(event.target)) {
+        setShowOptions(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [selectRef]);
 
   return (
-    <div>
-      <Button
-        variant="outlined"
-        onClick={handleButtonClick}
-        style={{ width: 240, textAlign: 'left', fontSize: 12 }}
-      >
-        {selectedOption}
-      </Button>
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={() => handleMenuClose(null)}
-      >
-        <MenuItem onClick={() => handleMenuClose('학생')}>
-          학생
-        </MenuItem>
-        <MenuItem onClick={() => handleMenuClose('직장인')}>
-          직장인
-        </MenuItem>
-      </Menu>
+    <div
+      className="select-box"
+      onClick={() => setShowOptions((prev) => !prev)}
+      ref={selectRef}
+    >
+      <label className="select-label">{currentValue}</label>
+      <ul className={`select-options ${showOptions ? "show" : ""}`}>
+        {list.map((data, index) => (
+          <li
+            key={index}
+            className="option"
+            value={data}
+            onClick={handleOnChangeSelectValue}
+          >
+            {data}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default DropdownMenu;
+DropDown.defaultProps = {
+  props: { data: ["초기값"] },
+};
+
+export default DropDown;

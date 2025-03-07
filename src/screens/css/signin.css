@@ -1,73 +1,91 @@
 .symbolLogo{
     position: absolute;
-    width: 10%;
-    height: 10%;
-    left: 21%;
+    width: 12%;
+    height: 12%;
+    left: 16%;
     top: 15%;
 }
 
-.nameInput{
+.jobPlaceHolder {
     position: absolute;
-    left: 21%;
-    top: 28%;
+    top: 34.5%;
+    left: 16%;
+    font-size: 0.9rem;
 }
 
-.mailInput{
+.inputLine1 {
     position: absolute;
-    left: 21%;
-    top: 36%;
+    top: 39%;
+    width: 69%;
+    z-index: 1;
+}
+.jobText{
+    position: absolute;
+    top: 42%;
+    left: 16%;
+    font-size: 0.9rem;
+    z-index: 1;
 }
 
-.pwInput{
+.affiliationInput {
     position: absolute;
-    left: 21%;
-    top: 46%;
+    top: 42%;
+    left: 36%;
+    border: none;
+    outline: none;
+
 }
 
-.pwCheckInput{
+.affiliationInput::placeholder{
+    color: #000000;
+    font-size: 0.9rem;
+    
+}
+
+.departmentPlaceHolder {
     position: absolute;
-    left: 21%;
     top: 54%;
+    left: 16%;
+    font-size: 0.9rem;
 }
 
-.hpInput{
+.inputLine2 {
     position: absolute;
-    left: 21%;
-    top: 64%;
+    top: 58.5%;
+    width: 69%;
+    z-index: 1;
 }
 
-.hpCheckInput{
+.departmentInput {
     position: absolute;
-    left: 21%;
-    top: 72%;
+    top: 53.5%;
+    border: none;
+    outline: none;
+    font-size: 0.9rem;
+
 }
 
-.inputDot1{
+.positionPlaceHolder {
     position: absolute;
-    width: 1.5%;
-    height: 1.5%;
-    top: 35.4%;
-    right: 17%;
-    background-color: #000000;
-    border-radius: 50%;
+    top: 61.5%;
+    left: 16%;
+    font-size: 0.9rem;
 }
 
-.inputDot2{
+.positionInput {
     position: absolute;
-    width: 1.5%;
-    height: 1.5%;
-    top: 40%;
-    right: 17%;
-    background-color: #000000;
-    border-radius: 50%;
+    top: 61.4%;
+    border: none;
+    outline: none;
+    font-size: 0.9rem;
 }
-
-.inputDot3{
+.addInfoCompleteButton {
     position: absolute;
-    width: 1.5%;
-    height: 1.5%;
-    top: 71.4%;
-    right: 17%;
-    background-color: #000000;
-    border-radius: 50%;
+    justify-content: center;
+    top: 75%;
+    background-color: #B5C9F1;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
 }

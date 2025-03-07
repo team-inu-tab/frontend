@@ -5,8 +5,14 @@ import path from "path";
 export default defineConfig({
   plugins: [react()],
   server: {
+    cors: {
+      origin: 'https://festivalteama.shop',
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      credentials: true,
+    },
     host: true,
     port: 5173,
+    allowedHosts: ['festivalteama.shop'], // 이 줄을 추가하여 허용할 호스트를 명시합니다.
   },
   resolve: {
     alias: {
@@ -18,6 +24,7 @@ export default defineConfig({
       "@utils": path.resolve(__dirname, "./src/utils"),
       "@hooks": path.resolve(__dirname, "./src/hooks"),
       "@contexts": path.resolve(__dirname, "./src/contexts"),
+      "@routes": path.resolve(__dirname, "./src/routes"),
     },
   },
 });
