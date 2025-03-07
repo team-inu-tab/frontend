@@ -37,8 +37,6 @@
 
 .menuBar-arrow {
   transform: rotate(-90deg);
-  stroke-width: 1px;
-  stroke: #2f3438;
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 .menuBar-arrow.menuBar-close {

@@ -12,10 +12,10 @@
   }
 }
 .subMenuItem-wrapper.active {
-  background-color: rgba(206, 208, 210, 0.4);
+  background-color: #EFEFFF;
 }
 .subMenuItem-wrapper.subMenuItem-close.active {
-  background-color: rgba(206, 208, 210, 0.4); 
+  background-color: #EFEFFF; 
 }
 .subMenuItem-wrapper.subMenuItem-close {
   width: 100%;

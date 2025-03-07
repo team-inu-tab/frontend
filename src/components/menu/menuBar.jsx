@@ -1,7 +1,7 @@
 import "@components/menu/css/menuBar.css";
-import SubMenu from "./subMenu";
-import MenuItem from "./menuItem";
-import { useMenuStore } from "../../store";
+import SubMenu from "@components/menu/subMenu";
+import MenuItem from "@components/menu/menuItem";
+import { useMenuStore } from "@store";
 
 /**
  * MenuBar - 네비게이션 메뉴바 컴포넌트
@@ -41,7 +41,7 @@ const MenuBar = () => {
           isMenuBarOpen ? "" : "menuBar-close"
         }`}
       >
-        <MenuItem title="home" isMenuBarOpen={isMenuBarOpen} />
+        <MenuItem title="write" isMenuBarOpen={isMenuBarOpen} />
         <SubMenu isMenuBarOpen={isMenuBarOpen} />
         <MenuItem title="notification" isMenuBarOpen={isMenuBarOpen} />
         <MenuItem title="profile" isMenuBarOpen={isMenuBarOpen} />
