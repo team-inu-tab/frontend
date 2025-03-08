@@ -1,12 +1,8 @@
-import "@components/mailBox/css/mailDetail.css";
+import "@components/mailBox/css/mailDetailMax.css";
 import { useMailStore } from "../../store";
 import ExpandArrow from "@assets/icons/expandArrow.svg?react";
 
-/**
- * MailDetail - 선택된 메일의 상세 내용을 표시하는 컴포넌트
- * @returns {JSX.Element | null} 메일 상세 정보 UI (선택된 메일이 없으면 null 반환)
- */
-const MailDetail = () => {
+const MailDetailMax = () => {
   const selectedMail = useMailStore((state) => state.selectedMail); // 현재 선택된 메일 정보 가져오기
   const toggleExpanded = useMailStore((state) => state.toggleExpanded);
 
@@ -16,13 +12,13 @@ const MailDetail = () => {
   }
 
   return (
-    <div className="mailDetail-wrapper">
-      <div className="mailDetail-container">
+    <div className="mailDetailMax-wrapper">
+      <div className="mailDetailMax-container">
         {/* 메일 제목 및 발신자 정보 */}
-        <div className="mailDetail-header">
-          <div className="mailDetail-header-container">
-            <span className="mailDetail-title">{selectedMail.title}</span>
-            <span className="mailDetail-sender">
+        <div className="mailDetailMax-header">
+          <div className="mailDetailMax-header-container">
+            <span className="mailDetailMax-title">{selectedMail.title}</span>
+            <span className="mailDetailMax-sender">
               작성자: {selectedMail.sender}
             </span>
           </div>
@@ -32,11 +28,11 @@ const MailDetail = () => {
 
         {/* 첨부 파일 (첨부된 파일이 있는 경우)
         {selectedMail.isFileExist && (
-          <div className="mailDetail-files">
-            <span className="mailDetail-files-title">
+          <div className="mailDetailMax-files">
+            <span className="mailDetailMax-files-title">
               첨부파일 {selectedMail.file.length}개
             </span>
-            <div className="mailDetail-files-list">
+            <div className="mailDetailMax-files-list">
               {selectedMail.file.map((fileName, index) => (
                 <FileItem key={index} file={fileName} />
               ))}
@@ -45,16 +41,16 @@ const MailDetail = () => {
         )} */}
 
         {/* 메일 본문 내용 */}
-        <div className="mailDetail-content">{selectedMail.content}</div>
+        <div className="mailDetailMax-content">{selectedMail.content}</div>
       </div>
 
       {/* 메일 수신 시간 정보 */}
-      <div className="mailDetail-footer">
-        <span className="mailDetail-receiveAt">
+      <div className="mailDetailMax-footer">
+        <span className="mailDetailMax-receiveAt">
           {selectedMail.receiveAt} 수신
         </span>
       </div>
     </div>
   );
 };
-export default MailDetail;
+export default MailDetailMax;

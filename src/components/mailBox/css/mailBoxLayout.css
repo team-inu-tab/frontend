@@ -15,7 +15,7 @@
   align-self: stretch;
   transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
   background: 
-  linear-gradient(270deg, rgba(255, 255, 255, 0) 40%, #FFF 70%),
+  linear-gradient(270deg, rgba(255, 255, 255, 0) 40%, #FFF 90%),
   conic-gradient(from 133deg at 53.57% 50%,
     #E0DFF2 0deg,
     #D7E1F5 147.15deg, 
@@ -29,5 +29,7 @@
 
 .mailBoxLayout-common {
   padding: 1rem 1rem 0;
+  width: 100%;
+  box-sizing: border-box;
   height: 80vh;
 }
