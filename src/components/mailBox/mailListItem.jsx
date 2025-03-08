@@ -25,7 +25,10 @@ const MailListItem = ({ mail }) => {
   };
 
   return (
-    <div className="mailListItem-wrapper">
+    <div
+      className="mailListItem-wrapper"
+      onClick={() => handleSelectMail(mail)}
+    >
       {/* 메일 선택 체크박스 */}
       <label className="mailListItem-custom-checkBox">
         <input
@@ -37,10 +40,7 @@ const MailListItem = ({ mail }) => {
       </label>
 
       {/* 메일 정보 (클릭 시 상세 보기) */}
-      <div
-        className="mailListItem-mailInfo"
-        onClick={() => handleSelectMail(mail)}
-      >
+      <div className="mailListItem-mailInfo">
         {/* 발신자 이름 */}
         <span className="mailListItem-sender">{mail.sender}</span>
         <div className="mailListItem-title-container">
