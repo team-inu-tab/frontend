@@ -1,9 +1,8 @@
 .menuBar-wrapper {
-  position: fixed;
+  position: sticky;
   display: flex;
   flex-direction: column;
   width: 12rem;
-  height: 40rem;
   padding: 2rem 0.75rem;
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.42);

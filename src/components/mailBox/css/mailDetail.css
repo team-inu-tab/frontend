@@ -1,6 +1,7 @@
 .mailDetail-wrapper {
   display: flex;
   width: 100%;
+  height: 100%;
   flex-direction: column;
   align-items: flex-end;
   gap: 0.5rem;
@@ -8,8 +9,7 @@
 
 .mailDetail-container {
   display: flex;
-  width: 90%;
-  height: 34.75rem;
+  height: 100%;
   padding: 1.5rem;
   flex-direction: column;
   border-radius: 0.625rem 0.625rem 3.5625rem 0.625rem;

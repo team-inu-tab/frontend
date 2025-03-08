@@ -1,6 +1,6 @@
 .mailListItem-wrapper {
   display: flex;
-  padding: 0.5rem 1.75rem;
+  padding: 0.5rem 0.88rem;
   align-items: center;
   border-bottom: 1px solid #e0e0e0;
   cursor: pointer;
@@ -73,16 +73,16 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 4.5rem;
+  width: 5rem;
   margin-right: 0.5rem;
 }
 
 .mailListItem-title-container {
-  width: 8.625rem;
+  display: flex;
+  align-items: center;
+  width: 10rem;
   margin-right: 0.38rem;
-}
-.mailListItem-attachment {
-  margin-right: 0.25rem;
+  gap: 0.25rem;
 }
 
 .mailListItem-title {

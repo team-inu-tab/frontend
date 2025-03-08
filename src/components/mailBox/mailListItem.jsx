@@ -47,7 +47,6 @@ const MailListItem = ({ mail }) => {
           {/* 첨부 파일 존재 시 아이콘 표시 */}
           {mail.isFileExist && (
             <img
-              className="mailListItem-attachment"
               src="/src/assets/icons/attachment.svg"
               alt="Attachment icon for email"
             />
