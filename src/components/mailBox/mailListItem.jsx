@@ -25,27 +25,28 @@ const MailListItem = ({ mail }) => {
   };
 
   return (
-    <div className="mailListItem-wrapper">
+    <div
+      className="mailListItem-wrapper"
+      onClick={() => handleSelectMail(mail)}
+    >
       {/* 메일 선택 체크박스 */}
-      <input
-        className="mailListItem-checkBox"
-        type="checkbox"
-        checked={mail.isChecked}
-        onChange={(e) => toggleCheckbox(mail.id, e.target.checked)}
-      />
+      <label className="mailListItem-custom-checkBox">
+        <input
+          type="checkbox"
+          checked={mail.isChecked}
+          onChange={(e) => toggleCheckbox(mail.id, e.target.checked)}
+        />
+        <span className="checkmark"></span>
+      </label>
 
       {/* 메일 정보 (클릭 시 상세 보기) */}
-      <div
-        className="mailListItem-mailInfo"
-        onClick={() => handleSelectMail(mail)}
-      >
+      <div className="mailListItem-mailInfo">
         {/* 발신자 이름 */}
         <span className="mailListItem-sender">{mail.sender}</span>
         <div className="mailListItem-title-container">
           {/* 첨부 파일 존재 시 아이콘 표시 */}
           {mail.isFileExist && (
             <img
-              className="mailListItem-attachment"
               src="/src/assets/icons/attachment.svg"
               alt="Attachment icon for email"
             />

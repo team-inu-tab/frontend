@@ -1,5 +1,5 @@
+import "@components/menu/css/subMenuItem.css";
 import { Link, useLocation } from "react-router-dom";
-import "../menu/css/subMenuItem.css";
 import { useMemo } from "react";
 
 /**

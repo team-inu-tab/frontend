@@ -1,6 +1,8 @@
+import "@components/menu/css/subMenu.css";
 import SubMenuItem from "@components/menu/subMenuItem.jsx";
 import { useState } from "react";
-import "@components/menu/css/subMenu.css";
+import Mailbox from "@assets/icons/mailbox.svg?react";
+import { useLocation } from "react-router-dom";
 
 /**
  * SubMenu - 메일 관련 서브 메뉴 컴포넌트
@@ -8,6 +10,9 @@ import "@components/menu/css/subMenu.css";
  * @returns {JSX.Element} 서브 메뉴 컴포넌트
  */
 const SubMenu = ({ isMenuBarOpen }) => {
+  const location = useLocation();
+  const isActive = location.pathname.startsWith("/mail/");
+
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false); // 서브 메뉴 열림/닫힘 상태 관리
 
   /**
@@ -38,7 +43,9 @@ const SubMenu = ({ isMenuBarOpen }) => {
 
       {/* 서브 메뉴 제목 및 클릭 시 확장/축소 기능 */}
       <div
-        className={`subMenu-container ${isMenuBarOpen ? "" : "subMenu-close"}`}
+        className={`subMenu-container ${isMenuBarOpen ? "" : "subMenu-close"} ${
+          isSubMenuOpen ? "subMenu-subMenuOpen" : ""
+        } ${isActive ? "active" : ""}`}
         onClick={toggleSubMenu}
       >
         {/* 서브 메뉴 아이콘 및 제목 */}
@@ -47,9 +54,8 @@ const SubMenu = ({ isMenuBarOpen }) => {
             isMenuBarOpen ? "" : "subMenu-close"
           }`}
         >
-          <img
+          <Mailbox
             className={`subMenu-icon ${isMenuBarOpen ? "" : "subMenu-close"}`}
-            src="/src/assets/icons/mailbox.svg"
           />
           <span
             className={`subMenu-text ${isMenuBarOpen ? "" : "subMenu-close"}`}

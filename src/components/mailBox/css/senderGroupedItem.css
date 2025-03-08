@@ -9,11 +9,10 @@
 
 .senderGroupedItem-senderContainer {
   display: flex;
-  padding: 0rem 0.75rem;
   align-items: center;
   gap: 0.5rem;
   align-self: stretch;
-  padding: 0.5rem;
+  padding: 0 0.5rem 0.5rem;
   border-bottom: 1px solid #e0e0e0;
 }
 

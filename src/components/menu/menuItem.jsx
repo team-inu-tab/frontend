@@ -1,10 +1,14 @@
+import "@components/menu/css/menuItem.css";
 import { Link, useLocation } from "react-router-dom";
-import "../menu/css/menuItem.css";
 import { useMemo } from "react";
+import Write from "@assets/icons/write.svg?react";
+import Notification from "@assets/icons/notification.svg?react";
+import Profile from "@assets/icons/profile.svg?react";
+import Settings from "@assets/icons/settings.svg?react";
 
 /**
  * MenuItem - 개별 메뉴 아이템 컴포넌트
- * @param {"home" | "notification" | "profile" | "settings"} props.title - 메뉴 제목
+ * @param {"write" | "notification" | "profile" | "settings"} props.title - 메뉴 제목
  * @param {boolean} props.isMenuBarOpen - 메뉴바가 열려 있는지 여부
  * @returns {JSX.Element} 개별 메뉴 컴포넌트
  */
@@ -14,35 +18,35 @@ const MenuItem = ({ title, isMenuBarOpen }) => {
   /**
    * title 값에 따라 아이콘 이미지 경로 및 한글 메뉴명을 설정
    */
-  const { icon, titleName, link } = useMemo(() => {
+  const { Icon, titleName, link } = useMemo(() => {
     switch (title) {
-      case "home":
+      case "write":
         return {
-          icon: "/src/assets/icons/home.svg",
-          titleName: "홈",
-          link: "receive",
+          Icon: Write,
+          titleName: "메일 쓰기",
+          link: null,
         };
       case "notification":
         return {
-          icon: "/src/assets/icons/notification.svg",
+          Icon: Notification,
           titleName: "알림",
           link: null,
         };
       case "profile":
         return {
-          icon: "/src/assets/icons/profile.svg",
+          Icon: Profile,
           titleName: "프로필",
           link: null,
         };
       case "settings":
         return {
-          icon: "/src/assets/icons/settings.svg",
+          Icon: Settings,
           titleName: "설정",
           link: null,
         };
       default:
         return {
-          icon: "",
+          Icon: null,
           titleName: "기본",
           link: null,
         };
@@ -54,9 +58,7 @@ const MenuItem = ({ title, isMenuBarOpen }) => {
   return (
     <Link
       to={link}
-      className={`menuItem-wrapper ${isMenuBarOpen ? "" : "menuItem-close"} ${
-        isActive ? "active" : ""
-      }`}
+      className={`menuItem-wrapper ${isMenuBarOpen ? "" : "menuItem-close"}`}
     >
       {/* 마우스 hover 시 나타나는 왼쪽 바 (선택된 메뉴 강조 효과) */}
       <div
@@ -67,12 +69,13 @@ const MenuItem = ({ title, isMenuBarOpen }) => {
       <div
         className={`menuItem-container ${
           isMenuBarOpen ? "" : "menuItem-close"
-        }`}
+        } ${isActive ? "active" : ""}`}
       >
-        <img
-          className={`menuItem-icon ${isMenuBarOpen ? "" : "menuItem-close"}`}
-          src={icon}
-        />
+        {Icon && (
+          <Icon
+            className={`menuItem-icon ${isMenuBarOpen ? "" : "menuItem-close"}`}
+          />
+        )}
         <span
           className={`menuItem-text ${isMenuBarOpen ? "" : "menuItem-close"}`}
         >

@@ -1,18 +1,19 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), svgr()],
   server: {
     cors: {
-      origin: 'https://festivalteama.shop',
-      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      origin: "https://festivalteama.shop",
+      methods: ["GET", "POST", "PUT", "DELETE"],
       credentials: true,
     },
     host: true,
     port: 5173,
-    allowedHosts: ['festivalteama.shop'], // 이 줄을 추가하여 허용할 호스트를 명시합니다.
+    allowedHosts: ["festivalteama.shop"], // 이 줄을 추가하여 허용할 호스트를 명시합니다.
   },
   resolve: {
     alias: {
@@ -25,6 +26,7 @@ export default defineConfig({
       "@hooks": path.resolve(__dirname, "./src/hooks"),
       "@contexts": path.resolve(__dirname, "./src/contexts"),
       "@routes": path.resolve(__dirname, "./src/routes"),
+      "@store": path.resolve(__dirname, "./src/store"),
     },
   },
 });
