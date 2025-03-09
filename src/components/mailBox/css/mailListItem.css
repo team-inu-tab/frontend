@@ -1,6 +1,8 @@
 .mailListItem-wrapper {
   display: flex;
-  padding: 0.5rem 0.88rem;
+  width: 100%;
+  padding: 0.5rem;
+  gap: 0.5rem;
   align-items: center;
   border-bottom: 1px solid #e0e0e0;
   cursor: pointer;
@@ -14,7 +16,6 @@
 .mailListItem-custom-checkBox {
   display: flex;
   align-items: center;
-  margin-right: 0.75rem;
   cursor: pointer;
   position: relative;
 }
@@ -58,9 +59,23 @@
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
+.mailListItem-star-container {
+  display: flex;
+  align-items: center;
+}
+.mailListItem-star {
+  width: 16px;
+  height: 16px;
+  color: transparent;
+  stroke: #a5a5a5;
+  stroke-width: 1.2px;
+}
+
 .mailListItem-mailInfo {
   display: flex;
   align-items: center;
+  width: 100%;
+  gap: 0.5rem;
 }
 
 .mailListItem-sender {
@@ -74,14 +89,12 @@
   overflow: hidden;
   text-overflow: ellipsis;
   width: 5rem;
-  margin-right: 0.5rem;
 }
 
 .mailListItem-title-container {
   display: flex;
   align-items: center;
   width: 10rem;
-  margin-right: 0.5rem;
   gap: 0.25rem;
 }
 
