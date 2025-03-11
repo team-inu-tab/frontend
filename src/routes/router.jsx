@@ -16,7 +16,6 @@ const router = createBrowserRouter([
     path: "/mail",
     element: <MailBoxLayout />,
     children: [
-      { index: true, element: <ReceiveMailScreen /> },
       { path: "receive", element: <ReceiveMailScreen /> },
       { path: "deleted", element: <DeletedMailScreen /> },
       { path: "draft", element: <DraftMailScreen /> },
@@ -31,10 +30,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <Landing />,
   },
-  
+
   {
     path: "/addInfo",
-    element: <Signin/>,
+    element: <Signin />,
   },
 
   {

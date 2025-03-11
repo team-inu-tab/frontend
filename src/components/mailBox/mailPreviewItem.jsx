@@ -1,4 +1,6 @@
 import "@components/mailBox/css/mailPreviewItem.css";
+import { useMailStore } from "../../store";
+import ExpandArrow from "@assets/icons/expandArrow.svg?react";
 
 /**
  * MailPreviewItem - 메일 미리보기 항목을 표시하는 컴포넌트
@@ -8,11 +10,20 @@ import "@components/mailBox/css/mailPreviewItem.css";
 const MailPreviewItem = ({ mail }) => {
   const isSentByMe = mail.isSentByMe;
 
+  const toggleExpanded = useMailStore((state) => state.toggleExpanded);
+  const setSelectedMail = useMailStore((state) => state.setSelectedMail); // 현재 선택된 메일을 설정하는 함수
+
+  // 선택된 메일 업데이트 함수
+  const handleSelectMail = (mail) => {
+    setSelectedMail(mail);
+  };
+
   return (
     <div
       className={`mailPreviewItem-wrapper ${
         isSentByMe === true ? "" : "received"
       }`}
+      onClick={() => handleSelectMail(mail)}
     >
       <div
         className={`mailPreviewItem-container ${
@@ -37,12 +48,11 @@ const MailPreviewItem = ({ mail }) => {
           </div>
 
           {/* 확장 버튼 */}
-          <img
+          <ExpandArrow
             className={`mailPreviewItem-arrow ${
               isSentByMe === true ? "" : "received"
             }`}
-            src="/src/assets/icons/expandArrow.svg"
-            alt="Expand Arrow"
+            onClick={toggleExpanded}
           />
         </div>
 

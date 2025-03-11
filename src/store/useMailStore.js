@@ -13,4 +13,10 @@ export const useMailStore = create((set) => ({
         selectedGroup: updatedMails,
       };
     }),
+
+  isExpanded: false, // mailDetailMax 확장 여부
+
+  toggleExpanded: () => set((state) => ({ isExpanded: !state.isExpanded })), // 확장 여부 토글
+
+  reset: () => set({ selectedMail: null, isExpanded: false }), // 선택된 메일, 확장 여부 초기화
 }));

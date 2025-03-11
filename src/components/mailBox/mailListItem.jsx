@@ -1,5 +1,6 @@
 import "@components/mailBox/css/mailListItem.css";
 import { useCheckboxStore, useMailStore } from "../../store";
+import Star from "@assets/icons/star.svg?react";
 
 /**
  * MailListItem - 개별 메일 항목을 렌더링하는 컴포넌트
@@ -38,6 +39,11 @@ const MailListItem = ({ mail }) => {
         />
         <span className="checkmark"></span>
       </label>
+
+      {/* 중요 메일 표시 */}
+      <div className="mailListItem-star-container">
+        <Star className="mailListItem-star" />
+      </div>
 
       {/* 메일 정보 (클릭 시 상세 보기) */}
       <div className="mailListItem-mailInfo">

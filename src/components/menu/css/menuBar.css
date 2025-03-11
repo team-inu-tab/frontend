@@ -69,3 +69,13 @@
   margin: 2.5rem 0 0;
   gap: 0.5rem;
 }
+
+/* 모바일 */
+@media (max-width: 425px) {
+  .menuBar-wrapper {
+    display: none;
+  }
+  .menuBar-wrapper.menuBar-close {
+    display: none;
+  }
+}

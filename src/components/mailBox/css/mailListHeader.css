@@ -180,3 +180,10 @@
   height: 20px;
   cursor: pointer;
 }
+
+/* 모바일 */
+@media (max-width: 425px) {
+  .mailListHeader-wrapper {
+    display: none;
+  }
+}
