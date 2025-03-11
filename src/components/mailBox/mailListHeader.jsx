@@ -16,17 +16,7 @@ const MailListHeader = () => {
   const selectAll = useCheckboxStore((state) => state.selectAll);
   const changeSortOption = useSortStore((state) => state.changeSortOption);
 
-  const [isSortOptionOpen, setIsSortOptionOpen] = useState(false);
-
-  // 메일 기능 도구 기본값
-  let mailTools = (
-    <>
-      <button>답장</button>
-      <button>전달</button>
-      <button>중요</button>
-      <button>스팸차단</button>
-    </>
-  );
+  const [isSortOptionOpen, setIsSortOptionOpen] = useState(false); // 정렬 옵션 상태
 
   // 정렬 옵션 열림/닫힘 상태를 토글하는 함수
   const toggleOption = () => setIsSortOptionOpen((prev) => !prev);
@@ -37,50 +27,88 @@ const MailListHeader = () => {
     toggleOption();
   };
 
+  // 메일 기능 도구 기본값
+  let mailTools = <></>;
+
   /**
    * 현재 위치에 따라 헤더 내용 동적으로 변경
    */
-  if (location.pathname.includes("/deleted")) {
-    mailTools = (
-      <>
-        <button>복원</button>
-        <button>영구삭제</button>
-        <button>스팸차단</button>
-      </>
-    );
-  } else if (location.pathname.includes("/draft")) {
-    mailTools = <></>;
-  } else if (location.pathname.includes("/scheduled")) {
-    mailTools = (
-      <>
-        <button>전달</button>
-        <button>보내기취소</button>
-        <button>시간변경</button>
-      </>
-    );
-  } else if (location.pathname.includes("/selfsent")) {
-    mailTools = (
-      <>
-        <button>전달</button>
-        <button>중요</button>
-        <button>수정</button>
-      </>
-    );
-  } else if (location.pathname.includes("/sent")) {
-    mailTools = (
-      <>
-        <button>답장</button>
-        <button>전달</button>
-        <button>중요</button>
-      </>
-    );
-  } else if (location.pathname.includes("/spam")) {
-    mailTools = (
-      <>
-        <button>영구삭제</button>
-        <button>스팸해제</button>
-      </>
-    );
+  switch (true) {
+    case location.pathname.includes("/receive"):
+      mailTools = (
+        <>
+          <button>답장</button>
+          <button>전달</button>
+          <button>중요</button>
+          <button>스팸차단</button>
+        </>
+      );
+      break;
+    case location.pathname.includes("/important"):
+      mailTools = (
+        <>
+          <button>답장</button>
+          <button>전달</button>
+          <button>중요</button>
+          <button>스팸차단</button>
+        </>
+      );
+      break;
+    case location.pathname.includes("/deleted"):
+      mailTools = (
+        <>
+          <button>복원</button>
+          <button>영구삭제</button>
+          <button>스팸차단</button>
+        </>
+      );
+      break;
+
+    case location.pathname.includes("/draft"):
+      mailTools = <></>;
+      break;
+
+    case location.pathname.includes("/scheduled"):
+      mailTools = (
+        <>
+          <button>전달</button>
+          <button>보내기취소</button>
+          <button>시간변경</button>
+        </>
+      );
+      break;
+
+    case location.pathname.includes("/selfsent"):
+      mailTools = (
+        <>
+          <button>전달</button>
+          <button>중요</button>
+          <button>수정</button>
+        </>
+      );
+      break;
+
+    case location.pathname.includes("/sent"):
+      mailTools = (
+        <>
+          <button>답장</button>
+          <button>전달</button>
+          <button>중요</button>
+        </>
+      );
+      break;
+
+    case location.pathname.includes("/spam"):
+      mailTools = (
+        <>
+          <button>영구삭제</button>
+          <button>스팸해제</button>
+        </>
+      );
+      break;
+
+    default:
+      mailTools = null;
   }
 
   return (

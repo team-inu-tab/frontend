@@ -37,3 +37,18 @@
   box-sizing: border-box;
   height: 80vh;
 }
+
+/* 모바일 */
+@media (max-width: 425px) {
+  .mailBoxLayout-wrapper {
+    margin: 0;
+  }
+
+  .mailBoxLayout-container {
+    border-radius: 0;
+  }
+
+  .mailBoxLayout-common {
+
+  }
+}
