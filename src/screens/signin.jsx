@@ -6,6 +6,7 @@ import Container from '@components/signin/parentContainer.jsx';
 import CompleteButton from '@components/signin/completeButton.jsx';
 import DropDown from '@components/signin/dropDown.jsx';
 import InputLine from '@assets/images/inputLine.svg';
+import backGround from "@assets/images/backGround.svg";
 
 function Signin() {
   const [selectedJob, setSelectedJob] = useState("");
@@ -20,7 +21,8 @@ function Signin() {
 
   return (
     <Container>
-        <Circle>
+        <img src={backGround} className='backGround'/>
+        <Circle className='formContainer'>
           <img src={symbolLogo} className='symbolLogo'/>
           <span className='jobPlaceHolder'>직업</span>
           <img src={InputLine} className='inputLine1'></img>
