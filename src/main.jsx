@@ -10,9 +10,9 @@ import Signin from "@screens/signin.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    {/* <RouterProvider router={router} /> */}
+    <RouterProvider router={router} />
     {/* <MailWriteModal></MailWriteModal> */}
     {/* <TextEditor></TextEditor> */}
-    <Signin></Signin>
+    {/* <Signin></Signin> */}
   </StrictMode>
 );
