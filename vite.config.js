@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react(), svgr()],
   server: {
     cors: {
-      origin: "https://festivalteama.shop",
+      origin: "maeilmail.co.kr",
       methods: ["GET", "POST", "PUT", "DELETE"],
       credentials: true,
     },
