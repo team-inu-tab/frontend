@@ -2,9 +2,14 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import svgr from "vite-plugin-svgr";
+import fs from "fs";
 
 export default defineConfig(({ mode }) => {
   const isProduction = mode === "production";
+
+  const hasSSL =
+    isProduction &&
+    fs.existsSync("/etc/letsencrypt/live/maeilmail.co.kr/privkey.pem");
 
   return {
     plugins: [react(), svgr()],
@@ -20,6 +25,17 @@ export default defineConfig(({ mode }) => {
       allowedHosts: isProduction
         ? ["maeilmail.co.kr"]
         : ["localhost", "127.0.0.1"],
+
+      https: hasSSL
+        ? {
+            key: fs.readFileSync(
+              "/etc/letsencrypt/live/maeilmail.co.kr/privkey.pem"
+            ),
+            cert: fs.readFileSync(
+              "/etc/letsencrypt/live/maeilmail.co.kr/fullchain.pem"
+            ),
+          }
+        : false,
     },
     resolve: {
       alias: {
