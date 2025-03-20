@@ -5,12 +5,18 @@ import SenderGroupedList from "../../components/mailBox/senderGroupedList";
 import MailPreviewContainer from "../../components/mailBox/mailPreviewContainer";
 import MailDetail from "../../components/mailBox/mailDetail";
 import MailDetailMax from "../../components/mailBox/mailDetailMax";
+import { useEffect } from "react";
 
 const ReceiveMailScreen = () => {
   const sortOption = useSortStore((state) => state.sortOption);
   const selectedGroup = useMailStore((state) => state.selectedGroup);
   const selectedMail = useMailStore((state) => state.selectedMail);
   const isExpanded = useMailStore((state) => state.isExpanded);
+  const { receivedMails, fetchReceivedMails, status, error } = useMailStore();
+
+  useEffect(() => {
+    fetchReceivedMails();
+  }, [fetchReceivedMails]);
 
   return (
     <div className="receiveMailScreen-container">
@@ -20,8 +26,12 @@ const ReceiveMailScreen = () => {
         <>
           {/* 왼쪽: 메일 목록 */}
           <div className="receiveMailScreen-list">
-            {sortOption === SORT_OPTIONS.TIME ? (
-              <TimeSortedList />
+            {status === "loading" ? (
+              <p>📩 메일을 불러오는 중...</p>
+            ) : error ? (
+              <p>오류: {error}</p>
+            ) : sortOption === SORT_OPTIONS.TIME ? (
+              <TimeSortedList mails={receivedMails} />
             ) : (
               <SenderGroupedList />
             )}
