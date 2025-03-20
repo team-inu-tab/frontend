@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import "@css/signin.css";
 import symbolLogo from "@assets/images/symbolLogo.svg";
@@ -13,8 +13,13 @@ function Signin() {
   const [selectedJob, setSelectedJob] = useState("");
   const jobData = { data: ["학생", "직장인"] };
 
+  const hasFetched = useRef(false); // 첫 실행 여부를 저장
+
   // 리프레시 API 호출 함수
   const refreshAccessToken = async () => {
+    if (hasFetched.current) return;
+    hasFetched.current = true;
+
     try {
       const response = await axios.post(
         "https://likelionfesival.shop/oauth2/reissue",
@@ -22,10 +27,7 @@ function Signin() {
         { withCredentials: true }
       );
 
-      const accessToken = response.headers["authorization"]?.replace(
-        "Bearer ",
-        ""
-      );
+      const accessToken = response.headers["Authorization"];
       if (accessToken) {
         localStorage.setItem("accessToken", accessToken);
         console.log("새로운 액세스 토큰 저장 완료:", accessToken);
