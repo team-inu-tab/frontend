@@ -1,19 +1,26 @@
 import { useRef } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import axios from "axios";
 
 const GoogleLogIn = () => {
   const linkRef = useRef(null);
 
-  const handleSuccess = (credentialResponse) => {
-    const token = credentialResponse.credential;
+  const handleSuccess = async (credentialResponse) => {
+    const token = credentialResponse.credential; // Google ID 토큰
     const redirectUrl = `https://likelionfesival.shop/oauth2/authorization/google?token=${encodeURIComponent(
       token
     )}`;
 
-    if (linkRef.current) {
-      linkRef.current.href = redirectUrl;
-      linkRef.current.click();
+    try {
+      await axios.get(redirectUrl, { withCredentials: true });
+
+      if (linkRef.current) {
+        linkRef.current.href = redirectUrl;
+        linkRef.current.click();
+      }
+    } catch (error) {
+      console.error("로그인 요청 실패:", error);
     }
   };
 
