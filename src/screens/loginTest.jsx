@@ -8,7 +8,7 @@ const LoginTest = () => {
 
   const getDraftEmails = async () => {
     try {
-      const response = await fetch('http://localhost:8080/mails/draft', {
+      const response = await fetch('https://likelionfesival.shop/mails/draft', {
         method: "GET",
         credentials: "include",
         headers: { Authorization: accessToken }
@@ -27,7 +27,7 @@ const LoginTest = () => {
 
   const getScheduledEmails = async () => {
     try {
-      const response = await fetch('http://localhost:8080/mails/schedule', {
+      const response = await fetch('https://likelionfesival.shop/mails/schedule', {
         method: "GET",
         credentials: "include",
         headers: { Authorization: accessToken }
@@ -46,7 +46,7 @@ const LoginTest = () => {
 
   const getImportantEmails = async () => {
     try {
-      const response = await fetch('http://localhost:8080/mails/important', {
+      const response = await fetch('https://likelionfesival.shop/mails/important', {
         method: "GET",
         credentials: "include",
         headers: { Authorization: accessToken }
@@ -65,7 +65,7 @@ const LoginTest = () => {
 
   const getSelfEmails = async () => {
     try {
-      const response = await fetch('http://localhost:8080/mails/self', {
+      const response = await fetch('https://likelionfesival.shop/mails/self', {
         method: "GET",
         credentials: "include",
         headers: { Authorization: accessToken }
@@ -103,7 +103,7 @@ const LoginTest = () => {
 
   const getSentEmails = async () => {
     try {
-      const response = await fetch('http://localhost:8080/mails/send', {
+      const response = await fetch('https://likelionfesival.shop/mails/send', {
         method: "GET",
         credentials: "include",
         headers: { Authorization: accessToken }
@@ -122,7 +122,7 @@ const LoginTest = () => {
 
   const getFile = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/mails/${emailId}/file/${fileName}`, {
+      const response = await fetch(`https://likelionfesival.shop/mails/${emailId}/file/${fileName}`, {
         method: "GET",
         credentials: "include",
         headers: { Authorization: accessToken }
@@ -146,7 +146,7 @@ const LoginTest = () => {
     formData.append('file', fileInputRef.current.files[0]);
 
     try {
-      const response = await fetch('http://localhost:8080/fileUploadSample', {
+      const response = await fetch('https://likelionfesival.shop/fileUploadSample', {
         method: 'POST',
         credentials: "include",
         headers: { Authorization: accessToken },
@@ -164,7 +164,7 @@ const LoginTest = () => {
   };
 
   const getHello = () => {
-    fetch("http://localhost:8080/hello", {
+    fetch("https://likelionfesival.shop/hello", {
       method: "GET",
       credentials: "include",
       headers: { Authorization: accessToken },
@@ -177,7 +177,7 @@ const LoginTest = () => {
   };
 
   const refresh = () => {
-    fetch("http://localhost:8080/oauth2/reissue", {
+    fetch("https://likelionfesival.shop/oauth2/reissue", {
       method: "POST",
       credentials: "include",
     })
@@ -192,7 +192,7 @@ const LoginTest = () => {
   };
 
   const storeUserInfo = () => {
-    fetch("http://localhost:8080/users/info/student", {
+    fetch("https://likelionfesival.shop/users/info/student", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -215,7 +215,7 @@ const LoginTest = () => {
   };
 
   const storeWorkerInfo = () => {
-    fetch("http://localhost:8080/users/info/worker", {
+    fetch("https://likelionfesival.shop/users/info/worker", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -238,7 +238,7 @@ const LoginTest = () => {
   };
 
   const logout = () => {
-    fetch("http://localhost:8080/oauth2/logout", {
+    fetch("https://likelionfesival.shop/oauth2/logout", {
       method: "POST",
       credentials: "include",
       headers: { Authorization: accessToken }
@@ -246,7 +246,7 @@ const LoginTest = () => {
       .then(res => {
         if (res.status === 200) {
           alert("logout success!");
-          window.location.href = "http://localhost:5500/testLoginPage.html";
+          window.location.href = "https://maeilmail.co.kr/testLoginPage.html";
         }
       });
   };
