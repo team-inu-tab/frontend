@@ -1,24 +1,241 @@
-.symbolLogo {
+@font-face {
+    font-family: "SUIT";
+    src: url("https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.woff2")
+      format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  
+.landingBackground{
     position: absolute;
-    display: flex;
-    width: 20%;
-    height: 20%;
-    top: 30%;
-    left: 40%;
+    margin-top: -1%;
+    background-image: url('@assets/images/LandingBackground.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 420vh;
+    min-width: 99.4vw;
+    z-index: -1;
 }
 
-.startButton {
+.landingSymbolLogo {
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 8%;
-    height: 4%;
-    top: 60%;
-    left: 46%;
-    background-image: linear-gradient(90deg, #90BDE5 0%, #BFBCDD 100%);
-    border-radius: 8px;
-    border-style: none;
-    font-size: 0.8rem;
-    color: #FFFFFF;
+    margin-left: 40%;
+    margin-right: 40%;
+    top: 5.2%;
+    left: 6%;
+    width: 6.875rem;
+    height: 5.1875rem;
 }
+
+.serviceText{
+    position: absolute;
+    top: 5.2%;
+    left: 11.5%;
+    margin-top: 6.87%;
+    margin-left: 17%;
+    margin-right: 15%;
+    font-family: "SUIT";
+    font-size: 8rem;
+    font-style: normal;
+    font-weight: 50;
+    line-height: normal;
+    color: #2F3438;
+}
+
+.landingAILogo {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.9375rem;
+    height: 1.9375rem;
+    aspect-ratio: 1/1;
+    top: 12.88%;
+    left: 8.6%;
+    margin-top: 4%;
+    margin-bottom: 4%;
+    margin-left: 40%;
+    margin-right: 40%;
+}
+
+.introText{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 14.68%;
+    left: 8.6%;
+    margin-top: 3%;
+    margin-left: 30%;
+    margin-right: 30%;
+    color: #2F3438;
+    font-family: "SUIT";
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+
+}
+
+.serviceStartButton{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 18.8%;
+    left: 3%;
+    margin-top: 2%;
+    margin-left: 40%;
+    margin-right: 40%;
+    width: 12.5625rem;
+    height: 3.75rem;
+
+    border-radius: 1rem;
+    border: 4px solid #BFBDE6;
+    background: #FFF;
+    outline: none;
+
+    color: #000;
+    cursor: pointer;
+    font-family: "SUIT";
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+}
+
+.buttonImg {
+    width: 1.62rem;
+    height: 1.62rem;
+    flex-shrink: 0;
+    aspect-ratio: 25.92/25.92;
+    margin-left: 2.25%;
+    margin-right: 3.375%;
+}
+
+.catchphraseShadow {
+    position: absolute;
+    display: flex;
+    top: 28.8%;
+    left: 5.4%;
+    margin-left: 25%;
+    margin-right: 25%;
+    
+    font-family: "SUIT";
+    font-size: 3rem;
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+    background: linear-gradient(90deg, #8C4CF6 0%, #5947F5 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: blur(5.449999809265137px);
+}
+
+.catchphrase1 {
+    position: absolute;
+    display: flex;
+    top: 28.8%;
+    left: 5.4%;
+    margin-left: 25%;
+    margin-right: 25%;
+    
+    font-family: "SUIT";
+    font-size: 3rem;
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+    background: linear-gradient(90deg, #8C4CF6 0%, #5947F5 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.catchphrase2 {
+    position: absolute;
+    display: flex;
+    top: 31.8%;
+    left: 15.4%;
+    margin-left: 25%;
+    margin-right: 25%;
+    font-family: "SUIT";
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+}
+
+.functionContainer {
+    position: absolute;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    top: 41.8%;
+    width: 92.5%;
+    height: 16%;
+}
+
+.subState {
+    position: absolute;
+}
+
+.function1Wrapper {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    margin-right: 4%;
+    width: 32%;
+    height: 80%;
+}
+
+.function1 {
+    position: relative;
+    width: 3.75rem;
+    height: 3.75rem;
+    margin-bottom: 12%;
+    aspect-ratio: 1/1;
+}
+
+.functionState1 {
+    position: relative;
+}
+
+.function2Wrapper {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+
+    width: 32%;
+    height: 80%;
+}
+
+.funtion2 {
+    position: relative;
+    display: flex;
+
+    width: 3.875rem;
+    height: 3.875rem;
+    aspect-ratio: 1/1;
+}
+
+.funcState2 {
+    position: relative;
+    margin-top: 12.1%;
+}
+/* .function3 {
+    position: relative;
+    display: flex;
+    
+    margin-right: 14.9%;
+    padding-left: 32.12%;
+    width: 3.5625rem;
+    height: 3.5625rem;
+    aspect-ratio: 1/1;
+} */

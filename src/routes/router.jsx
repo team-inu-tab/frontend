@@ -10,6 +10,7 @@ import ScheduledMailScreen from "@screens/mailBox/scheduledMailScreen.jsx";
 import SelfSentMailScreen from "@screens/mailBox/selfSentMailScreen.jsx";
 import SentMailScreen from "@screens/mailBox/sentMailScreen.jsx";
 import SpamMailScreen from "@screens/mailBox/spamMailScreen.jsx";
+import LoginTest from "@screens/loginTest.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: "selfsent", element: <SelfSentMailScreen /> },
       { path: "sent", element: <SentMailScreen /> },
       { path: "spam", element: <SpamMailScreen /> },
+      { path: "test", element: <LoginTest/>},
     ],
   },
   {
@@ -39,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signin />,
+  },
+  {
+    path: "/test",
+    element: <LoginTest />,
   },
 ]);
 export default router;

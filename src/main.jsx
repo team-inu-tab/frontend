@@ -7,6 +7,7 @@ import mailListItem from "@components/mailBox/mailListItem.jsx";
 import TextEditor from "@components/common/textEditor.jsx";
 import MailWriteModal from "@components/common/mailWriteModal.jsx"
 import Signin from "@screens/signin.jsx";
+import AddInfoComp from "@screens/addInfoComp.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -14,5 +15,7 @@ createRoot(document.getElementById("root")).render(
     {/* <MailWriteModal></MailWriteModal> */}
     {/* <TextEditor></TextEditor> */}
     {/* <Signin></Signin> */}
+    {/* <AddInfoComp></AddInfoComp> */}
+
   </StrictMode>
 );
