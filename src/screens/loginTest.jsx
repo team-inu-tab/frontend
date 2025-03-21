@@ -176,19 +176,28 @@ const LoginTest = () => {
       });
   };
 
-  const refresh = () => {
-    fetch("https://likelionfesival.shop/oauth2/reissue", {
-      method: "POST",
-      credentials: "include",
-    })
-      .then(res => {
-        if (res.status === 200) {
-          alert("refresh done!");
-          setAccessToken(res.headers.get("Authorization"));
-        } else {
-          alert("refresh fail..");
-        }
+  const refresh = async () => {
+    try {
+      const res = await fetch("https://likelionfesival.shop/oauth2/reissue", {
+        method: "POST",
+        credentials: "include",
       });
+  
+      if (res.ok) {
+        const token = res.headers.get("Authorization");
+        if (token && token.startsWith("Bearer ")) {
+          setAccessToken(token.slice(7)); // "Bearer " 제거 후 저장
+          alert("refresh done!");
+        } else {
+          alert("토큰 형식이 잘못됨");
+        }
+      } else {
+        alert("refresh fail..");
+      }
+    } catch (err) {
+      alert("refresh 중 오류 발생");
+      console.error(err);
+    }
   };
 
   const storeUserInfo = () => {
