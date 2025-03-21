@@ -9,7 +9,7 @@ const GoogleLogIn = () => {
 
   const handleSuccess = (credentialResponse) => {
     const token = credentialResponse.credential;
-    const redirectUrl = `https://likelionfesival.shop/oauth2/authorization/google?token=${encodeURIComponent(token)}`;
+    const redirectUrl = `https://maeilmail.co.kr/api/oauth2/authorization/google?token=${encodeURIComponent(token)}`;
   
     // 안전한 리다이렉트 방식 사용
     window.location.href = redirectUrl;

@@ -11,7 +11,7 @@ const LoginTest = () => {
 
   const getDraftEmails = async () => {
     try {
-      const response = await fetch('https://likelionfesival.shop/mails/draft', {
+      const response = await fetch('https://maeilmail.co.kr/api/mails/draft', {
         method: "GET",
         credentials: "include",
         headers: { Authorization: accessToken }
@@ -30,7 +30,7 @@ const LoginTest = () => {
 
   const getScheduledEmails = async () => {
     try {
-      const response = await fetch('https://likelionfesival.shop/mails/schedule', {
+      const response = await fetch('https://maeilmail.co.kr/api/mails/schedule', {
         method: "GET",
         credentials: "include",
         headers: { Authorization: accessToken }
@@ -49,7 +49,7 @@ const LoginTest = () => {
 
   const getImportantEmails = async () => {
     try {
-      const response = await fetch('https://likelionfesival.shop/mails/important', {
+      const response = await fetch('https://maeilmail.co.kr/api/mails/important', {
         method: "GET",
         credentials: "include",
         headers: { Authorization: accessToken }
@@ -68,7 +68,7 @@ const LoginTest = () => {
 
   const getSelfEmails = async () => {
     try {
-      const response = await fetch('https://likelionfesival.shop/mails/self', {
+      const response = await fetch('https://maeilmail.co.kr/api/mails/self', {
         method: "GET",
         credentials: "include",
         headers: { Authorization: accessToken }
@@ -106,7 +106,7 @@ const LoginTest = () => {
 
   const getSentEmails = async () => {
     try {
-      const response = await fetch('https://likelionfesival.shop/mails/send', {
+      const response = await fetch('https://maeilmail.co.kr/api/mails/send', {
         method: "GET",
         credentials: "include",
         headers: { Authorization: accessToken }
@@ -125,7 +125,7 @@ const LoginTest = () => {
 
   const getFile = async () => {
     try {
-      const response = await fetch(`https://likelionfesival.shop/mails/${emailId}/file/${fileName}`, {
+      const response = await fetch(`https://maeilmail.co.kr/api/mails/${emailId}/file/${fileName}`, {
         method: "GET",
         credentials: "include",
         headers: { Authorization: accessToken }
@@ -149,7 +149,7 @@ const LoginTest = () => {
     formData.append('file', fileInputRef.current.files[0]);
 
     try {
-      const response = await fetch('https://likelionfesival.shop/fileUploadSample', {
+      const response = await fetch('https://maeilmail.co.kr/api/fileUploadSample', {
         method: 'POST',
         credentials: "include",
         headers: { Authorization: accessToken },
@@ -167,7 +167,7 @@ const LoginTest = () => {
   };
 
   const getHello = () => {
-    fetch("https://likelionfesival.shop/hello", {
+    fetch("https://maeilmail.co.kr/api/hello", {
       method: "GET",
       credentials: "include",
       headers: { Authorization: accessToken },
@@ -181,7 +181,7 @@ const LoginTest = () => {
 
   const refresh = async () => {
     try {
-      const res = await fetch("https://likelionfesival.shop/oauth2/reissue", {
+      const res = await fetch("https://maeilmail.co.kr/api/oauth2/reissue", {
         method: "POST",
         credentials: "include", // 이건 꼭 유지
       });
@@ -207,7 +207,7 @@ const LoginTest = () => {
   };
 
   const storeUserInfo = () => {
-    fetch("https://likelionfesival.shop/users/info/student", {
+    fetch("https://maeilmail.co.kr/api/users/info/student", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -230,7 +230,7 @@ const LoginTest = () => {
   };
 
   const storeWorkerInfo = () => {
-    fetch("https://likelionfesival.shop/users/info/worker", {
+    fetch("https://maeilmail.co.kr/api/users/info/worker", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -253,7 +253,7 @@ const LoginTest = () => {
   };
 
   const logout = () => {
-    fetch("https://likelionfesival.shop/oauth2/logout", {
+    fetch("https://maeilmail.co.kr/api/oauth2/logout", {
       method: "POST",
       credentials: "include",
       headers: { Authorization: accessToken }
@@ -268,7 +268,7 @@ const LoginTest = () => {
 
   const sendEmail = async () => {
     try {
-      const response = await fetch('https://likelionfesival.shop/mails/send', {
+      const response = await fetch('https://maeilmail.co.kr/api/mails/send', {
         method: "POST",
         credentials: "include",
         headers: {
