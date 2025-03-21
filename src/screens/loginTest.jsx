@@ -14,7 +14,7 @@ const LoginTest = () => {
       const response = await fetch('https://maeilmail.co.kr/api/mails/draft', {
         method: "GET",
         credentials: "include",
-        headers: { Authorization: accessToken }
+        headers: { Authorization: `Bearer ${accessToken}` }
       });
       if (response.ok) {
         alert('임시 메일 수신 성공(콘솔에 데이터 확인)');
@@ -33,7 +33,7 @@ const LoginTest = () => {
       const response = await fetch('https://maeilmail.co.kr/api/mails/schedule', {
         method: "GET",
         credentials: "include",
-        headers: { Authorization: accessToken }
+        headers: { Authorization: `Bearer ${accessToken}` }
       });
       if (response.ok) {
         alert('예약 메일 수신 성공(콘솔에 데이터 확인)');
@@ -52,7 +52,7 @@ const LoginTest = () => {
       const response = await fetch('https://maeilmail.co.kr/api/mails/important', {
         method: "GET",
         credentials: "include",
-        headers: { Authorization: accessToken }
+        headers: { Authorization: `Bearer ${accessToken}` }
       });
       if (response.ok) {
         alert('중요 메일 수신 성공(콘솔에 데이터 확인)');
@@ -71,7 +71,7 @@ const LoginTest = () => {
       const response = await fetch('https://maeilmail.co.kr/api/mails/self', {
         method: "GET",
         credentials: "include",
-        headers: { Authorization: accessToken }
+        headers: { Authorization: `Bearer ${accessToken}` }
       });
       if (response.ok) {
         alert('내게 보낸 메일 수신 성공(콘솔에 데이터 확인)');
@@ -90,7 +90,7 @@ const LoginTest = () => {
       const response = await fetch('http://localhost:8080/mails/receive', {
         method: "GET",
         credentials: "include",
-        headers: { Authorization: accessToken }
+        headers: { Authorization: `Bearer ${accessToken}` }
       });
       if (response.ok) {
         alert('받은 메일 수신 성공(콘솔에 데이터 확인)');
@@ -109,7 +109,7 @@ const LoginTest = () => {
       const response = await fetch('https://maeilmail.co.kr/api/mails/send', {
         method: "GET",
         credentials: "include",
-        headers: { Authorization: accessToken }
+        headers: { Authorization: `Bearer ${accessToken}` }
       });
       if (response.ok) {
         alert('보낸 메일 수신 성공(콘솔에 데이터 확인)');
@@ -128,7 +128,7 @@ const LoginTest = () => {
       const response = await fetch(`https://maeilmail.co.kr/api/mails/${emailId}/file/${fileName}`, {
         method: "GET",
         credentials: "include",
-        headers: { Authorization: accessToken }
+        headers: { Authorization: `Bearer ${accessToken}` }
       });
       if (response.ok) {
         alert('파일 수신 성공');
@@ -152,7 +152,7 @@ const LoginTest = () => {
       const response = await fetch('https://maeilmail.co.kr/api/fileUploadSample', {
         method: 'POST',
         credentials: "include",
-        headers: { Authorization: accessToken },
+        headers: { Authorization: `Bearer ${accessToken}` },
         body: formData,
       });
       if (response.ok) {
@@ -209,7 +209,7 @@ const LoginTest = () => {
       method: "POST",
       credentials: "include",
       headers: {
-        Authorization: accessToken,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -232,7 +232,7 @@ const LoginTest = () => {
       method: "POST",
       credentials: "include",
       headers: {
-        Authorization: accessToken,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -254,7 +254,7 @@ const LoginTest = () => {
     fetch("https://maeilmail.co.kr/api/oauth2/logout", {
       method: "POST",
       credentials: "include",
-      headers: { Authorization: accessToken }
+      headers: { Authorization: `Bearer ${accessToken}` }
     })
       .then(res => {
         if (res.status === 200) {
