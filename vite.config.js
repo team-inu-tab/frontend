@@ -16,11 +16,16 @@ export default defineConfig(({ mode }) => {
       },
       hmr: {
         host: 'maeilmail.co.kr',
-        protocol: 'ws',
+        protocol: 'wss',
+        port: 433
       },
       host: "0.0.0.0",
       port: 5173,
       allowedHosts: ["maeilmail.co.kr"],
+      https: {
+        key: fs.readFileSync('/etc/letsencrypt/live/maeilmail.co.kr/privkey.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/maeilmail.co.kr/fullchain.pem'),
+      },
     },
     resolve: {
       alias: {
