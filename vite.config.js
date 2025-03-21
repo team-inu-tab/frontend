@@ -14,7 +14,10 @@ export default defineConfig(({ mode }) => {
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true,
       },
-      hmr: isProduction ? { host: "maeilmail.co.kr", protocol: "wss" } : true,
+      hmr: {
+        host: 'maeilmail.co.kr',
+        protocol: 'ws',
+      },
       host: "0.0.0.0",
       port: 5173,
       allowedHosts: ["maeilmail.co.kr"],
