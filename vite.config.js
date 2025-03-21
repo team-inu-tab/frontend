@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
       hmr: {
         host: 'maeilmail.co.kr',
         protocol: 'wss',
-        port: 433
+        port: 443
       },
       host: "0.0.0.0",
       port: 5173,
