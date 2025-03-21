@@ -183,13 +183,16 @@ const LoginTest = () => {
     try {
       const res = await fetch("https://likelionfesival.shop/oauth2/reissue", {
         method: "POST",
-        credentials: "include",
+        credentials: "include", // 이건 꼭 유지
       });
+  
+      const cookieHeader = res.headers.get("set-cookie"); // 이건 브라우저에서 안 나올 수도 있음
   
       if (res.ok) {
         const token = res.headers.get("Authorization");
         if (token && token.startsWith("Bearer ")) {
-          setAccessToken(token.slice(7)); // "Bearer " 제거 후 저장
+          setAccessToken(token.slice(7));
+          localStorage.setItem("accessToken", token.slice(7));
           alert("refresh done!");
         } else {
           alert("토큰 형식이 잘못됨");
@@ -198,8 +201,8 @@ const LoginTest = () => {
         alert("refresh fail..");
       }
     } catch (err) {
+      console.error("refresh 중 오류 발생", err);
       alert("refresh 중 오류 발생");
-      console.error(err);
     }
   };
 
