@@ -9,15 +9,10 @@ const GoogleLogIn = () => {
 
   const handleSuccess = (credentialResponse) => {
     const token = credentialResponse.credential;
-    const redirectUrl = `https://likelionfesival.shop/oauth2/authorization/google?token=${encodeURIComponent(
-      token
-    )}`;
-
-    if (linkRef.current) {
-      linkRef.current.href = redirectUrl;
-      linkRef.current.click();
-    }
-    navigate("/test");
+    const redirectUrl = `https://likelionfesival.shop/oauth2/authorization/google?token=${encodeURIComponent(token)}`;
+  
+    // 안전한 리다이렉트 방식 사용
+    window.location.href = redirectUrl;
   };
 
   return (
