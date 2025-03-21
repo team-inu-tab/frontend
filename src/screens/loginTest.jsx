@@ -170,7 +170,7 @@ const LoginTest = () => {
     fetch("https://maeilmail.co.kr/api/hello", {
       method: "GET",
       credentials: "include",
-      headers: { Authorization: accessToken },
+      headers: { Authorization: `Bearer ${accessToken}` },
     })
       .then(res => res.json())
       .then(data => {
@@ -185,9 +185,7 @@ const LoginTest = () => {
         method: "POST",
         credentials: "include", // 이건 꼭 유지
       });
-  
-      const cookieHeader = res.headers.get("set-cookie"); // 이건 브라우저에서 안 나올 수도 있음
-  
+    
       if (res.ok) {
         const token = res.headers.get("Authorization");
         if (token && token.startsWith("Bearer ")) {
@@ -273,7 +271,7 @@ const LoginTest = () => {
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`, // <- Bearer 꼭 붙이기
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
           toEmail,
