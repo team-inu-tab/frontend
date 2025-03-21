@@ -5,6 +5,9 @@ const LoginTest = () => {
   const [emailId, setEmailId] = useState("");
   const [fileName, setFileName] = useState("");
   const fileInputRef = useRef(null);
+  const [toEmail, setToEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [body, setBody] = useState("");
 
   const getDraftEmails = async () => {
     try {
@@ -260,6 +263,36 @@ const LoginTest = () => {
       });
   };
 
+  const sendEmail = async () => {
+    try {
+      const response = await fetch('https://likelionfesival.shop/mails/send', {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`, // <- Bearer 꼭 붙이기
+        },
+        body: JSON.stringify({
+          toEmail,
+          subject,
+          body,
+        }),
+      });
+  
+      if (response.ok) {
+        alert('메일 전송 성공!');
+        setToEmail("");
+        setSubject("");
+        setBody("");
+      } else {
+        alert('메일 전송 실패');
+      }
+    } catch (error) {
+      console.error("메일 전송 중 오류 발생:", error);
+      alert("메일 전송 중 오류 발생");
+    }
+  };
+
   return (
     <div>
       <h1>login Success</h1>
@@ -304,6 +337,28 @@ const LoginTest = () => {
         <button onClick={getFile}>get file</button>
       </div>
       <br />
+      <h3>메일 보내기</h3>
+      <div>
+        <h5>메일 보내기</h5>
+        <input
+          type="email"
+          placeholder="받는 사람 이메일"
+          value={toEmail}
+          onChange={(e) => setToEmail(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="제목"
+          value={subject}
+          onChange={(e) => setSubject(e.target.value)}
+        />
+        <textarea
+          placeholder="이메일 내용"
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+        />
+        <button onClick={sendEmail}>메일 보내기</button>
+      </div>
     </div>
   );
 };
