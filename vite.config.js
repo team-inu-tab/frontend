@@ -22,10 +22,6 @@ export default defineConfig(({ mode }) => {
       host: "0.0.0.0",
       port: 5173,
       allowedHosts: ["maeilmail.co.kr"],
-      https: {
-        key: fs.readFileSync('/etc/letsencrypt/live/maeilmail.co.kr/privkey.pem'),
-        cert: fs.readFileSync('/etc/letsencrypt/live/maeilmail.co.kr/fullchain.pem'),
-      },
     },
     resolve: {
       alias: {
