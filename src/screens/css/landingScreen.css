@@ -178,6 +178,8 @@
     top: 41.8%;
     width: 92.5%;
     height: 16%;
+    padding: auto;
+    margin: auto;
 }
 
 .subState {
@@ -189,9 +191,9 @@
     display: grid;
     justify-items: center;
     align-items: center;
-    margin-right: 4%;
     width: 32%;
     height: 80%;
+    margin-left: 7%;
 }
 
 .function1 {
@@ -229,13 +231,27 @@
     position: relative;
     margin-top: 12.1%;
 }
-/* .function3 {
+
+.function3Wrapper {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+
+    width: 32%;
+    height: 80%;
+}
+
+.function3 {
     position: relative;
     display: flex;
     
-    margin-right: 14.9%;
-    padding-left: 32.12%;
     width: 3.5625rem;
     height: 3.5625rem;
     aspect-ratio: 1/1;
-} */
+}
+
+.funcState3 {
+    position: relative;
+    margin-top: 12.1%;
+}
