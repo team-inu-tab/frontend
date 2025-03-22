@@ -9,6 +9,7 @@ import function2 from '@assets/icons/function2.svg';
 import function3 from '@assets/icons/function3.svg';
 import functionState1 from '@assets/images/functionState1.svg';
 import functionState2 from '@assets/images/functionState2.svg';
+import functionState3 from '@assets/images/functionState3.svg';
 
 function Landing() {
     return (
@@ -36,10 +37,15 @@ function Landing() {
                     <img src = {function2} className='function2'></img>
                     <img src = {functionState2} className='funcState2'></img>
                 </div>
+
+                <div className='function3Wrapper'>
+                    <img src = {function3} className='function3'></img>
+                    <img src = {functionState3} className='funcState3'></img>
+                </div>
+
                 {/* <img src = {function3} className='function3'></img>
                 <div className='function3Modal'></div> */}
             </div>
-            <GoogleLogin/>
         </div>
     )
 }

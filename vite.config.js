@@ -6,7 +6,7 @@ import svgr from "vite-plugin-svgr";
 export default defineConfig(({ mode }) => {
   const isProduction = mode === "production";
 
-  return {
+  const config = {
     plugins: [react(), svgr()],
     server: {
       cors: {
@@ -38,4 +38,11 @@ export default defineConfig(({ mode }) => {
       },
     },
   };
+
+  
+  if (!isProduction) {
+    config.server.hmr = true;
+  }
+
+  return config;
 });
