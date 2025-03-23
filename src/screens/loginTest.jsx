@@ -198,7 +198,11 @@ const LoginTest = () => {
     }).then((res) => {
       if (res.status === 200) {
         alert("refresh done!");
-        setAccessToken(res.headers.get("Authorization"));
+
+        const accessToken = res.headers.get("Authorization");
+        if (accessToken) {
+          sessionStorage.setItem("accessToken", accessToken);
+        }
       } else {
         alert("refresh fail..");
       }
