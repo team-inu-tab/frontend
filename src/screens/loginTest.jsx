@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from "react";
 
 const LoginTest = () => {
   const [accessToken, setAccessToken] = useState("");
@@ -8,17 +8,17 @@ const LoginTest = () => {
 
   const getDraftEmails = async () => {
     try {
-      const response = await fetch('https://likelionfesival.shop/mails/draft', {
+      const response = await fetch("https://maeilmail.co.kr/api/mails/draft", {
         method: "GET",
         credentials: "include",
-        headers: { Authorization: accessToken }
+        headers: { Authorization: accessToken },
       });
       if (response.ok) {
-        alert('임시 메일 수신 성공(콘솔에 데이터 확인)');
+        alert("임시 메일 수신 성공(콘솔에 데이터 확인)");
         const data = await response.json();
         console.log(data);
       } else {
-        alert('임시 메일 수신 실패');
+        alert("임시 메일 수신 실패");
       }
     } catch (error) {
       alert("임시 메일 수신 중 오류 발생");
@@ -27,17 +27,20 @@ const LoginTest = () => {
 
   const getScheduledEmails = async () => {
     try {
-      const response = await fetch('https://likelionfesival.shop/mails/schedule', {
-        method: "GET",
-        credentials: "include",
-        headers: { Authorization: accessToken }
-      });
+      const response = await fetch(
+        "https://maeilmail.co.kr/api/mails/schedule",
+        {
+          method: "GET",
+          credentials: "include",
+          headers: { Authorization: accessToken },
+        }
+      );
       if (response.ok) {
-        alert('예약 메일 수신 성공(콘솔에 데이터 확인)');
+        alert("예약 메일 수신 성공(콘솔에 데이터 확인)");
         const data = await response.json();
         console.log(data);
       } else {
-        alert('예약 메일 수신 실패');
+        alert("예약 메일 수신 실패");
       }
     } catch (error) {
       alert("예약 메일 수신 중 오류 발생");
@@ -46,17 +49,20 @@ const LoginTest = () => {
 
   const getImportantEmails = async () => {
     try {
-      const response = await fetch('https://likelionfesival.shop/mails/important', {
-        method: "GET",
-        credentials: "include",
-        headers: { Authorization: accessToken }
-      });
+      const response = await fetch(
+        "https://maeilmail.co.kr/api/mails/important",
+        {
+          method: "GET",
+          credentials: "include",
+          headers: { Authorization: accessToken },
+        }
+      );
       if (response.ok) {
-        alert('중요 메일 수신 성공(콘솔에 데이터 확인)');
+        alert("중요 메일 수신 성공(콘솔에 데이터 확인)");
         const data = await response.json();
         console.log(data);
       } else {
-        alert('중요 메일 수신 실패');
+        alert("중요 메일 수신 실패");
       }
     } catch (error) {
       alert("중요 메일 수신 중 오류 발생");
@@ -65,17 +71,17 @@ const LoginTest = () => {
 
   const getSelfEmails = async () => {
     try {
-      const response = await fetch('https://likelionfesival.shop/mails/self', {
+      const response = await fetch("https://maeilmail.co.kr/api/mails/self", {
         method: "GET",
         credentials: "include",
-        headers: { Authorization: accessToken }
+        headers: { Authorization: accessToken },
       });
       if (response.ok) {
-        alert('내게 보낸 메일 수신 성공(콘솔에 데이터 확인)');
+        alert("내게 보낸 메일 수신 성공(콘솔에 데이터 확인)");
         const data = await response.json();
         console.log(data);
       } else {
-        alert('내게 보낸 메일 수신 실패');
+        alert("내게 보낸 메일 수신 실패");
       }
     } catch (error) {
       alert("내게 보낸 메일 수신 중 오류 발생");
@@ -84,17 +90,20 @@ const LoginTest = () => {
 
   const getReceivedEmails = async () => {
     try {
-      const response = await fetch('http://localhost:8080/mails/receive', {
-        method: "GET",
-        credentials: "include",
-        headers: { Authorization: accessToken }
-      });
+      const response = await fetch(
+        "https://maeilmail.co.kr/api/mails/receive",
+        {
+          method: "GET",
+          credentials: "include",
+          headers: { Authorization: accessToken },
+        }
+      );
       if (response.ok) {
-        alert('받은 메일 수신 성공(콘솔에 데이터 확인)');
+        alert("받은 메일 수신 성공(콘솔에 데이터 확인)");
         const data = await response.json();
         console.log(data);
       } else {
-        alert('받은 메일 수신 실패');
+        alert("받은 메일 수신 실패");
       }
     } catch (error) {
       alert("받은 메일 수신 중 오류 발생");
@@ -103,17 +112,17 @@ const LoginTest = () => {
 
   const getSentEmails = async () => {
     try {
-      const response = await fetch('https://likelionfesival.shop/mails/send', {
+      const response = await fetch("https://maeilmail.co.kr/api/mails/send", {
         method: "GET",
         credentials: "include",
-        headers: { Authorization: accessToken }
+        headers: { Authorization: accessToken },
       });
       if (response.ok) {
-        alert('보낸 메일 수신 성공(콘솔에 데이터 확인)');
+        alert("보낸 메일 수신 성공(콘솔에 데이터 확인)");
         const data = await response.json();
         console.log(data);
       } else {
-        alert('보낸 메일 수신 실패');
+        alert("보낸 메일 수신 실패");
       }
     } catch (error) {
       alert("보낸 메일 수신 중 오류 발생");
@@ -122,15 +131,18 @@ const LoginTest = () => {
 
   const getFile = async () => {
     try {
-      const response = await fetch(`https://likelionfesival.shop/mails/${emailId}/file/${fileName}`, {
-        method: "GET",
-        credentials: "include",
-        headers: { Authorization: accessToken }
-      });
+      const response = await fetch(
+        `https://maeilmail.co.kr/api/mails/${emailId}/file/${fileName}`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: { Authorization: accessToken },
+        }
+      );
       if (response.ok) {
-        alert('파일 수신 성공');
+        alert("파일 수신 성공");
       } else {
-        alert('파일 수신 실패');
+        alert("파일 수신 실패");
       }
     } catch (error) {
       alert("파일 수신 중 오류 발생");
@@ -139,60 +151,62 @@ const LoginTest = () => {
 
   const storeFile = async () => {
     if (!fileInputRef.current || fileInputRef.current.files.length === 0) {
-      alert('파일을 선택해주세요.');
+      alert("파일을 선택해주세요.");
       return;
     }
     const formData = new FormData();
-    formData.append('file', fileInputRef.current.files[0]);
+    formData.append("file", fileInputRef.current.files[0]);
 
     try {
-      const response = await fetch('https://likelionfesival.shop/fileUploadSample', {
-        method: 'POST',
-        credentials: "include",
-        headers: { Authorization: accessToken },
-        body: formData,
-      });
+      const response = await fetch(
+        "https://maeilmail.co.kr/api/fileUploadSample",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: { Authorization: accessToken },
+          body: formData,
+        }
+      );
       if (response.ok) {
-        alert('파일 업로드 성공');
+        alert("파일 업로드 성공");
       } else {
-        alert('파일 업로드 실패');
+        alert("파일 업로드 실패");
       }
     } catch (error) {
-      console.error('업로드 중 오류 발생:', error);
-      alert('파일 업로드 중 오류 발생');
+      console.error("업로드 중 오류 발생:", error);
+      alert("파일 업로드 중 오류 발생");
     }
   };
 
   const getHello = () => {
-    fetch("https://likelionfesival.shop/hello", {
+    fetch("https://maeilmail.co.kr/api/hello", {
       method: "GET",
       credentials: "include",
       headers: { Authorization: accessToken },
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         console.log(data);
         alert(JSON.stringify(data));
       });
   };
 
   const refresh = () => {
-    fetch("https://likelionfesival.shop/oauth2/reissue", {
+    fetch("https://maeilmail.co.kr/api/oauth2/reissue", {
       method: "POST",
       credentials: "include",
-    })
-      .then(res => {
-        if (res.status === 200) {
-          alert("refresh done!");
-          setAccessToken(res.headers.get("Authorization"));
-        } else {
-          alert("refresh fail..");
-        }
-      });
+    }).then((res) => {
+      if (res.status === 200) {
+        alert("refresh done!");
+        setAccessToken(res.headers.get("Authorization"));
+      } else {
+        alert("refresh fail..");
+      }
+    });
   };
 
   const storeUserInfo = () => {
-    fetch("https://likelionfesival.shop/users/info/student", {
+    fetch("https://maeilmail.co.kr/api/users/info/student", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -201,21 +215,21 @@ const LoginTest = () => {
       },
       body: JSON.stringify({
         studentDepartment: "컴퓨터공학부",
-        studentNum: 201901630
-      })
+        studentNum: 201901630,
+      }),
     })
-      .then(res => {
+      .then((res) => {
         if (res.status === 200) {
-          alert('save success!');
+          alert("save success!");
         } else {
-          alert('save fail...');
+          alert("save fail...");
         }
       })
-      .catch(error => alert(error));
+      .catch((error) => alert(error));
   };
 
   const storeWorkerInfo = () => {
-    fetch("https://likelionfesival.shop/users/info/worker", {
+    fetch("https://maeilmail.co.kr/api/users/info/worker", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -225,30 +239,28 @@ const LoginTest = () => {
       body: JSON.stringify({
         company: "카카오",
         workerDepartment: "개발",
-        position: "대리"
-      })
-    })
-      .then(res => {
-        if (res.status === 200) {
-          alert('save success!');
-        } else {
-          alert('save fail...');
-        }
-      });
+        position: "대리",
+      }),
+    }).then((res) => {
+      if (res.status === 200) {
+        alert("save success!");
+      } else {
+        alert("save fail...");
+      }
+    });
   };
 
   const logout = () => {
-    fetch("https://likelionfesival.shop/oauth2/logout", {
+    fetch("https://maeilmail.co.kr/api/oauth2/logout", {
       method: "POST",
       credentials: "include",
-      headers: { Authorization: accessToken }
-    })
-      .then(res => {
-        if (res.status === 200) {
-          alert("logout success!");
-          window.location.href = "https://maeilmail.co.kr/testLoginPage.html";
-        }
-      });
+      headers: { Authorization: accessToken },
+    }).then((res) => {
+      if (res.status === 200) {
+        alert("logout success!");
+        window.location.href = "https://maeilmail.co.kr/testLoginPage.html";
+      }
+    });
   };
 
   return (
@@ -256,8 +268,12 @@ const LoginTest = () => {
       <h1>login Success</h1>
       <h5>로그인 성공 후 refresh 필수!!</h5>
       <button onClick={getHello}>get hello</button>
-      <button onClick={refresh} style={{ color: 'orange' }}>refresh</button>
-      <button onClick={logout} style={{ color: 'red' }}>logout</button>
+      <button onClick={refresh} style={{ color: "orange" }}>
+        refresh
+      </button>
+      <button onClick={logout} style={{ color: "red" }}>
+        logout
+      </button>
 
       <h3>개인 정보 저장 API</h3>
       <button onClick={storeUserInfo}>store student info</button>
