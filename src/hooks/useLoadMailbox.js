@@ -9,7 +9,7 @@ export const useLoadMailbox = (type) => {
   const setScheduledMails = useMailStore((state) => state.setScheduledMails);
   const setSelfSentMails = useMailStore((state) => state.setSelfSentMails);
   const setImportantMails = useMailStore((state) => state.setImportantMails);
-  const setStatus = useMailStore((state) => state.selectedsetStatusMail);
+  const setStatus = useMailStore((state) => state.setStatus);
   const setError = useMailStore((state) => state.setError);
 
   const {
