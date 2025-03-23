@@ -4,7 +4,7 @@ const BASE_URL = "https://maeilmail.co.kr/api";
 
 export const useMailApi = () => {
   const getToken = () => {
-    const token = localStorage.getItem("accessToken");
+    const token = sessionStorage.getItem("accessToken");
     if (!token) throw new Error("액세스 토큰이 없습니다.");
     return token;
   };
