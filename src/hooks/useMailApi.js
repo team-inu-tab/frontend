@@ -14,7 +14,7 @@ export const useMailApi = () => {
     try {
       const token = getToken();
       const res = await axios.get(`${BASE_URL}/mails/receive`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: token },
         withCredentials: true,
       });
       return res.data;
@@ -33,7 +33,7 @@ export const useMailApi = () => {
     try {
       const token = getToken();
       const res = await axios.get(`${BASE_URL}/mails/send`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: token },
         withCredentials: true,
       });
       return res.data;
@@ -52,7 +52,7 @@ export const useMailApi = () => {
     try {
       const token = getToken();
       const res = await axios.get(`${BASE_URL}/mails/draft`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: token },
         withCredentials: true,
       });
       return res.data;
@@ -71,7 +71,7 @@ export const useMailApi = () => {
     try {
       const token = getToken();
       const res = await axios.get(`${BASE_URL}/mails/schedule`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: token },
         withCredentials: true,
       });
       return res.data;
@@ -90,7 +90,7 @@ export const useMailApi = () => {
     try {
       const token = getToken();
       const res = await axios.get(`${BASE_URL}/mails/important`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: token },
         withCredentials: true,
       });
       return res.data;
@@ -109,7 +109,7 @@ export const useMailApi = () => {
     try {
       const token = getToken();
       const res = await axios.get(`${BASE_URL}/mails/self`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: token },
         withCredentials: true,
       });
       return res.data;
