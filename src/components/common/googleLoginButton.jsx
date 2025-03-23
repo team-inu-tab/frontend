@@ -9,7 +9,7 @@ const GoogleLogIn = () => {
 
   const handleSuccess = (credentialResponse) => {
     const token = credentialResponse.credential;
-    const redirectUrl = `https://likelionfesival.shop/oauth2/authorization/google?token=${encodeURIComponent(
+    const redirectUrl = `https://maeilmail.co.kr/api/oauth2/authorization/google?token=${encodeURIComponent(
       token
     )}`;
 
