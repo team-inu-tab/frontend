@@ -1,6 +1,7 @@
 import "@components/mailBox/css/mailListItem.css";
 import { useCheckboxStore, useMailStore } from "../../store";
 import Star from "@assets/icons/star.svg?react";
+import { useFormattedDate } from "../../hooks/useFormattedDate";
 
 /**
  * MailListItem - 개별 메일 항목을 렌더링하는 컴포넌트
@@ -15,20 +16,15 @@ import Star from "@assets/icons/star.svg?react";
  */
 const MailListItem = ({ mail }) => {
   const toggleCheckbox = useCheckboxStore((state) => state.toggleCheckbox); // 메일 선택 관련 함수 가져오기
-  const setSelectedMail = useMailStore((state) => state.setSelectedMail); // 현재 선택된 메일을 설정하는 함수
+  const setSelectedMailId = useMailStore((state) => state.setSelectedMailId); // 현재 선택된 메일을 설정하는 함수
 
-  /**
-   * 특정 메일을 선택하여 상세 보기 화면으로 전환하는 함수
-   * @param {Object} mail - 선택된 메일 객체
-   */
-  const handleSelectMail = (mail) => {
-    setSelectedMail(mail); // 선택된 메일 업데이트
-  };
+  const formatReceiveDate = useFormattedDate(); // 날짜 포맷 변경
+  const isImportant = mail.isImportant; // 중요 메일 여부
 
   return (
     <div
       className="mailListItem-wrapper"
-      onClick={() => handleSelectMail(mail)}
+      onClick={() => setSelectedMailId(mail.id)}
     >
       {/* 메일 선택 체크박스 */}
       <label className="mailListItem-custom-checkBox">
@@ -42,13 +38,17 @@ const MailListItem = ({ mail }) => {
 
       {/* 중요 메일 표시 */}
       <div className="mailListItem-star-container">
-        <Star className="mailListItem-star" />
+        <Star
+          className={`mailListItem-star ${isImportant ? "important" : ""}`}
+        />
       </div>
 
       {/* 메일 정보 (클릭 시 상세 보기) */}
       <div className="mailListItem-mailInfo">
         {/* 발신자 이름 */}
-        <span className="mailListItem-sender">{mail.sender}</span>
+        <span className="mailListItem-sender">
+          {mail.sender ?? mail.receiver}
+        </span>
         <div className="mailListItem-title-container">
           {/* 첨부 파일 존재 시 아이콘 표시 */}
           {mail.isFileExist && (
@@ -62,7 +62,9 @@ const MailListItem = ({ mail }) => {
         </div>
 
         {/* 메일 수신 시간 */}
-        <span className="mailListItem-receiveAt">{mail.receiveAt}</span>
+        <span className="mailListItem-receiveAt">
+          {formatReceiveDate(mail.receiveAt ?? mail.sendAt ?? mail.createdAt)}
+        </span>
       </div>
     </div>
   );
