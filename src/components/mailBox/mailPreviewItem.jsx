@@ -11,19 +11,14 @@ const MailPreviewItem = ({ mail }) => {
   const isSentByMe = mail.isSentByMe;
 
   const toggleExpanded = useMailStore((state) => state.toggleExpanded);
-  const setSelectedMail = useMailStore((state) => state.setSelectedMail); // 현재 선택된 메일을 설정하는 함수
-
-  // 선택된 메일 업데이트 함수
-  const handleSelectMail = (mail) => {
-    setSelectedMail(mail);
-  };
+  const setSelectedMailId = useMailStore((state) => state.setSelectedMailId); // 현재 선택된 메일을 설정하는 함수
 
   return (
     <div
       className={`mailPreviewItem-wrapper ${
         isSentByMe === true ? "" : "received"
       }`}
-      onClick={() => handleSelectMail(mail)}
+      onClick={() => setSelectedMailId(mail.id)}
     >
       <div
         className={`mailPreviewItem-container ${

@@ -1,4 +1,4 @@
-.receiveMailScreen-container {
+.MailScreen-container {
   display: flex;
   width: 100%;
   box-sizing: border-box;
@@ -6,7 +6,7 @@
   gap: 1rem;
 }
 
-.receiveMailScreen-list {
+.MailScreen-list {
   flex: 1; 
   flex-basis: 30%;
   width: 100%;
@@ -14,7 +14,7 @@
   height: 100%;
 }
 
-.receiveMailScreen-preview {
+.MailScreen-preview {
   flex: 2;
   flex-basis: 70%;
   width: 100%;

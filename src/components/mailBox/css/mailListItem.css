@@ -70,6 +70,9 @@
   stroke: #a5a5a5;
   stroke-width: 1.4px;
 }
+.mailListItem-star.impotant{
+  fill: yellow;
+}
 
 .mailListItem-mailInfo {
   display: flex;
