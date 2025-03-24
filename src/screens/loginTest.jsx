@@ -87,7 +87,7 @@ const LoginTest = () => {
 
   const getReceivedEmails = async () => {
     try {
-      const response = await fetch('http://localhost:8080/mails/receive', {
+      const response = await fetch('https://maeilmail.co.kr/api/mails/receive', {
         method: "GET",
         credentials: "include",
         headers: { Authorization: `Bearer ${accessToken}` }
