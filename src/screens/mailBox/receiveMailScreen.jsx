@@ -1,4 +1,4 @@
-import "@screens/mailBox/css/receiveMailScreen.css";
+import "@screens/mailBox/css/mailScreen.css";
 import TimeSortedList from "../../components/mailBox/timeSortedList";
 import { useSortStore, SORT_OPTIONS, useMailStore } from "../../store";
 import SenderGroupedList from "../../components/mailBox/senderGroupedList";
