@@ -2,21 +2,21 @@ import { create } from "zustand";
 import { useSortStore, SORT_OPTIONS } from "./useSortStore";
 
 export const useCheckboxStore = create((set) => ({
-  mails: [],
+  // mails: [],
   selectedCount: 0,
 
-  // 전체 메일 업데이트
-  setMails: (mails) =>
-    set(() => {
-      const updatedMails = mails.map((mail) => ({
-        ...mail,
-        isChecked: mail.isChecked ?? false,
-      }));
-      return {
-        mails: updatedMails,
-        selectedCount: updatedMails.filter((mail) => mail.isChecked).length,
-      };
-    }),
+  // // 전체 메일 업데이트
+  // setMails: (mails) =>
+  //   set(() => {
+  //     const updatedMails = mails.map((mail) => ({
+  //       ...mail,
+  //       isChecked: mail.isChecked ?? false,
+  //     }));
+  //     return {
+  //       mails: updatedMails,
+  //       selectedCount: updatedMails.filter((mail) => mail.isChecked).length,
+  //     };
+  //   }),
 
   // 메일 전체 선택
   selectAll: (isChecked) =>
