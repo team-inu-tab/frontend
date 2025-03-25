@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const GoogleLogIn = () => {
   const linkRef = useRef(null);
-  const navigate = useNavigate();
 
   const handleSuccess = (credentialResponse) => {
     const token = credentialResponse.credential;
@@ -17,7 +16,6 @@ const GoogleLogIn = () => {
       linkRef.current.href = redirectUrl;
       linkRef.current.click();
     }
-    navigate("/addInfo");
   };
 
   return (
