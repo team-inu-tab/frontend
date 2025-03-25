@@ -30,19 +30,19 @@ const MenuItem = ({ title, isMenuBarOpen }) => {
         return {
           Icon: Notification,
           titleName: "알림",
-          link: null,
+          link: "/notification",
         };
       case "profile":
         return {
           Icon: Profile,
           titleName: "프로필",
-          link: null,
+          link: "/profile",
         };
       case "settings":
         return {
           Icon: Settings,
           titleName: "설정",
-          link: null,
+          link: "/setting",
         };
       default:
         return {
