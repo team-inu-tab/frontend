@@ -19,11 +19,12 @@
     align-items: center;
     justify-content: center;
     height: 2rem;
-    padding: 0 0.5rem; 
+    padding: 0 0.3rem; 
     background: none;
     border: 1px solid transparent;
     cursor: pointer;
     outline: none;
+    font-family: 'SUIT', sans-serif;
   
     &:hover {
       border: 1px solid #e6e6ea;
@@ -76,7 +77,6 @@
 
     white-space: nowrap;
     color: #3E3D3D;
-    font-family: Inter;
     font-size: 0.8rem;
     font-style: normal;
     font-weight: 600;
@@ -90,8 +90,7 @@
   .mailListHeaderM-title {
     white-space: nowrap;
     color: #3e3e3e;
-    font-family: Inter;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
