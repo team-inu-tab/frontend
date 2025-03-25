@@ -9,6 +9,12 @@ export const useLoadMailbox = (type) => {
   const setScheduledMails = useMailStore((state) => state.setScheduledMails);
   const setSelfSentMails = useMailStore((state) => state.setSelfSentMails);
   const setImportantMails = useMailStore((state) => state.setImportantMails);
+  const setGroupedReceiveMails = useMailStore(
+    (state) => state.setGroupedReceiveMails
+  );
+  const setGroupedSentMails = useMailStore(
+    (state) => state.setGroupedSentMails
+  );
   const setStatus = useMailStore((state) => state.setStatus);
   const setError = useMailStore((state) => state.setError);
 
@@ -31,9 +37,11 @@ export const useLoadMailbox = (type) => {
           case "receive":
             data = await fetchReceiveMails();
             setReceivedMails(data);
+            setGroupedReceiveMails(data);
             break;
           case "sent":
             data = await fetchSentMails();
+            setGroupedSentMails(data);
             setSentMails(data);
             break;
           case "draft":

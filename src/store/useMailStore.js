@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export const useMailStore = create((set) => ({
-  // 메일 리스트
+  // 메일 리스트 (시간순)
   receiveMails: [],
   sentMails: [],
   deletedMails: [],
@@ -10,6 +10,10 @@ export const useMailStore = create((set) => ({
   scheduledMails: [],
   selfSentMails: [],
   spamMails: [],
+
+  // 메일 리스트 (그룹)
+  groupedReceiveMails: [],
+  groupedSentMails: [],
 
   // 상태 및 에러
   status: "idle", // "idle" | "loading" | "succeeded" | "failed"
@@ -31,6 +35,43 @@ export const useMailStore = create((set) => ({
   setSelfSentMails: (mails) => set({ selfSentMails: mails }),
   setSpamMails: (mails) => set({ spamMails: mails }),
 
+  // 그룹화 설정 함수
+  setGroupedReceiveMails: (mails) =>
+    set(() => {
+      const groupedMap = mails.reduce((acc, mail) => {
+        const key = mail.sender ?? "unknown";
+        if (!acc[key]) acc[key] = [];
+        acc[key].push(mail);
+        return acc;
+      }, {});
+
+      const groupedArray = Object.entries(groupedMap).map(
+        ([sender, mailItems]) => ({
+          sender,
+          mailItems,
+        })
+      );
+
+      return { groupedReceiveMails: groupedArray };
+    }),
+  setGroupedSentMails: (mails) =>
+    set(() => {
+      const groupedMap = mails.reduce((acc, mail) => {
+        const key = mail.receiver ?? "unknown";
+        if (!acc[key]) acc[key] = [];
+        acc[key].push(mail);
+        return acc;
+      }, {});
+
+      const groupedArray = Object.entries(groupedMap).map(
+        ([receiver, mailItems]) => ({
+          receiver,
+          mailItems,
+        })
+      );
+
+      return { groupedSentMails: groupedArray };
+    }),
   // 상태 처리
   setStatus: (status) => set({ status }),
   setError: (error) => set({ error }),

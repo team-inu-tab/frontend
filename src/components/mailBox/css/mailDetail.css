@@ -29,7 +29,6 @@
 
 .mailDetail-title {
   color: rgba(62, 61, 61, 0.90);
-  font-family: "Pretendard Variable";
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 700;
@@ -38,7 +37,6 @@
 
 .mailDetail-sender {
   color: rgba(62, 61, 61, 0.26);
-  font-family: "Pretendard Variable";
   font-size: 0.625rem;
   font-style: normal;
   font-weight: 700;
@@ -52,7 +50,6 @@
 
 .mailDetail-files-title {
   color: rgba(62, 61, 61, 0.60);
-  font-family: "Pretendard Variable";
   font-size: 0.5rem;
   font-style: normal;
   font-weight: 500;
@@ -70,7 +67,6 @@
   flex-shrink: 0;
   align-self: stretch;
   color: #3E3D3D;
-  font-family: "Pretendard Variable";
   font-size: 0.625rem;
   font-style: normal;
   font-weight: 500;
@@ -87,7 +83,6 @@
 .mailDetail-receiveAt {
   color: rgba(114, 114, 114, 0.60);
   text-align: right;
-  font-family: "Pretendard Variable";
   font-size: 0.6875rem;
   font-style: normal;
   font-weight: 500;

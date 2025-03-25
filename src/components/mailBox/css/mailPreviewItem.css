@@ -47,7 +47,7 @@
 
 .mailPreviewItem-title {
   color: rgba(62, 61, 61, 0.90);
-  font-family: "Pretendard Variable";
+
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 700;
@@ -56,7 +56,7 @@
 
 .mailPreviewItem-sender {
   color: rgba(62, 61, 61, 0.26);
-  font-family: "Pretendard Variable";
+
   font-size: 0.625rem;
   font-style: normal;
   font-weight: 700;
@@ -73,7 +73,7 @@
 
 .mailPreviewItem-content {
   color: rgba(62, 61, 61, 0.71);
-  font-family: "Pretendard Variable";
+
   font-size: 0.625rem;
   font-style: normal;
   font-weight: 500;
@@ -84,7 +84,7 @@
   position: absolute;
   bottom: -1rem;
   color: rgba(114, 114, 114, 0.60);
-  font-family: "Pretendard Variable";
+
   font-size: 0.5rem;
   font-style: normal;
   font-weight: 500;
