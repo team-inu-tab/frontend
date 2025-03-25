@@ -8,12 +8,14 @@ import CompleteButton from "@components/signin/completeButton.jsx";
 import DropDown from "@components/signin/dropDown.jsx";
 import InputLine from "@assets/images/inputLine.svg";
 import backGround from "@assets/images/backGround.svg";
+import { useNavigate } from "react-router-dom";
 
 function Signin() {
   const [selectedJob, setSelectedJob] = useState("");
   const jobData = { data: ["학생", "직장인"] };
 
   const hasFetched = useRef(false);
+  const navigation = useNavigate();
 
   const refreshAccessToken = async () => {
     if (hasFetched.current) return;
@@ -80,6 +82,7 @@ function Signin() {
         <CompleteButton
           className="addInfoCompleteButton"
           text="입력완료"
+          onClick={() => navigation("/mail")}
         ></CompleteButton>
       </Circle>
     </Container>
