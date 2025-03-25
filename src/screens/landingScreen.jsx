@@ -13,7 +13,12 @@ import { useNavigate } from "react-router-dom";
 
 function Landing() {
     const navigate = useNavigate();
-    
+    const GoogleLogIn = () => {
+        const handleLogin = () => {
+          window.location.href =
+            "http://maeilmail.co.kr/api/oauth2/authorization/google";
+        };
+    }
     return (
         <div className='landingBackground'>
             <img src={symbolLogo} className='landingSymbolLogo'/>
@@ -21,7 +26,7 @@ function Landing() {
             <img src={landingAI} className='landingAILogo'></img>
             <p className='introText'>생성형 AI를 이용한 메일 자동 교정 서비스</p>
             <button className='serviceStartButton'
-                    onClick={() => navigate("/login")}>
+                    onClick={handleLogin}>
                 <img src={serviceStartButton} className='buttonImg'></img>
                 Start now
             </button>
