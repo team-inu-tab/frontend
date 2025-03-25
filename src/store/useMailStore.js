@@ -36,7 +36,7 @@ export const useMailStore = create((set) => ({
   setError: (error) => set({ error }),
 
   // 선택된 메일 설정 함수
-  setSelectedMailId: (mail) => set({ selectedMailId: mail.id }),
+  setSelectedMailId: (id) => set({ selectedMailId: id }),
   setSelectedGroup: (mails) =>
     set(() => {
       const updatedMails = mails.map((mail) => ({ ...mail }));
