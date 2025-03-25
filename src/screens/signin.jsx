@@ -39,7 +39,11 @@ function Signin() {
   };
 
   useEffect(() => {
-    refresh();
+    const timer = setTimeout(() => {
+      refresh();
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const renderJobText = (value) => {
