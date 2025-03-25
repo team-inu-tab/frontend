@@ -27,25 +27,26 @@ function Landing() {
             <p className='catchphrase2'>타이핑은 최소로, 완성은 탭으로.</p>
 
             <div className='functionContainer'>
-                {/* <p className='subState'>AI가 당신의 메일을 분석합니다.</p> */}
+                <p className='subState'>Tab AI가 당신의 메일을 분석합니다.</p>
                 <div className='function1Wrapper'>
                     <img src = {function1} className='function1'></img>
+                    <p className='functionIntro1'>Type</p>
                     <img src = {functionState1} className='funcState1'></img>
                 </div>
                 
                 <div className='function2Wrapper'>
                     <img src = {function2} className='function2'></img>
+                    <p className='functionIntro2'>Tab AI</p>
                     <img src = {functionState2} className='funcState2'></img>
                 </div>
 
                 <div className='function3Wrapper'>
                     <img src = {function3} className='function3'></img>
+                    <p className='functionIntro3'>UX/UI</p>
                     <img src = {functionState3} className='funcState3'></img>
                 </div>
-
-                {/* <img src = {function3} className='function3'></img>
-                <div className='function3Modal'></div> */}
             </div>
+
         </div>
     )
 }
