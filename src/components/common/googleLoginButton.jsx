@@ -1,28 +1,16 @@
-import React, { useRef } from "react";
-import { GoogleLogin } from "@react-oauth/google";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import { useNavigate } from "react-router-dom";
-
 const GoogleLogIn = () => {
-  const linkRef = useRef(null);
-
-  const handleSuccess = (credentialResponse) => {
-    const token = credentialResponse.credential;
-    const redirectUrl = `http://maeilmail.co.kr/api/oauth2/authorization/google?token=${encodeURIComponent(
-      token
-    )}`;
-
-    if (linkRef.current) {
-      linkRef.current.href = redirectUrl;
-      linkRef.current.click();
-    }
+  const handleLogin = () => {
+    window.location.href =
+      "http://maeilmail.co.kr/api/oauth2/authorization/google";
   };
 
   return (
-    <GoogleOAuthProvider clientId="776239999845-1l9ai960n66udm13vhcgeredtlr0e76q.apps.googleusercontent.com">
-      <GoogleLogin />
-      <a ref={linkRef} style={{ display: "none" }}></a>
-    </GoogleOAuthProvider>
+    <button
+      onClick={handleLogin}
+      className="px-4 py-2 rounded bg-blue-500 text-white"
+    >
+      구글 로그인
+    </button>
   );
 };
 
