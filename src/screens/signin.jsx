@@ -56,6 +56,8 @@ function Signin() {
   
   const handleSubmit = async () => {
     try {
+      const accessToken = localStorage.getItem("accessToken");
+
       if (selectedJob === "학교") {
         const payload = {
           schoolName: affiliation,
@@ -65,7 +67,11 @@ function Signin() {
         const response = await axios.post(
           "https://maeilmail.co.kr/api/users/info/student",
           payload,
-          { withCredentials: true }
+          { withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            }
+           }
         );
         console.log("학교 정보 저장 완료:", response.data);
       } else if (selectedJob === "회사") {
@@ -77,7 +83,11 @@ function Signin() {
         const response = await axios.post(
           "https://maeilmail.co.kr/api/users/info/worker",
           payload,
-          { withCredentials: true }
+          { withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            }
+           }
         );
         console.log("회사 정보 저장 완료:", response.data);
       }
@@ -86,6 +96,7 @@ function Signin() {
       console.error("정보 전송 실패:", error);
     }
   };
+  
   return (
     <Container>
       <img src={backGround} className="backGround" />
