@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import "@css/signin.css";
 import symbolLogo from "@assets/images/symbolLogo.svg";
@@ -17,21 +17,20 @@ function Signin() {
   const [position, setPosition] = useState("");
   const [selectedJob, setSelectedJob] = useState("");
   const jobData = { data: ["학생", "직장인"] };
+
   const BASE_URL = "https://maeilmail.co.kr/api";
-  const hasFetched = useRef(false);
   const navigation = useNavigate();
   const { getToken } = useMailApi();
-  const refreshAccessToken = async () => {
-    if (hasFetched.current) return;
-    hasFetched.current = true;
 
+  const refreshAccessToken = async () => {
     try {
       const response = await axios.post(
         `${BASE_URL}/oauth2/reissue`,
         {},
-        { withCredentials: true }
+        {
+          withCredentials: true,
+        }
       );
-
       const accessToken = response.headers["Authorization"];
       if (accessToken) {
         sessionStorage.setItem("accessToken", accessToken);

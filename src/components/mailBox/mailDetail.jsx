@@ -45,8 +45,8 @@ const MailDetail = () => {
   }
 
   // 메일 상세 정보가 로딩 중일 경우
-  if (isLoading && !mailDetail) {
-    return <div>Loading...</div>;
+  if (!mailDetail) {
+    return <div>{isLoading ? "Loading..." : ""}</div>;
   }
 
   return (
