@@ -29,11 +29,16 @@ const MailDetail = () => {
     };
 
     load();
-  }, [selectedMailId]);
+  }, [selectedMailId, fetchMailDetail]);
 
   // 선택된 메일이 없으면 화면에 표시하지 않음
   if (!selectedMailId) {
     return null;
+  }
+
+  // 메일 상세 정보가 로딩 중일 경우
+  if (!mailDetail) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -55,7 +60,7 @@ const MailDetail = () => {
         </div>
 
         {/* 첨부 파일 */}
-        {mailDetail.fileName.length && (
+        {mailDetail.fileName.length > 0 && (
           <div className="mailDetail-files">
             <span className="mailDetail-files-title">
               첨부파일 {mailDetail.file.length}개
