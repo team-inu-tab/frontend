@@ -1,7 +1,7 @@
 import "./index.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider } from "react-router-dom";
+import { BrowserRouter, RouterProvider } from "react-router-dom";
 import router from "@routes/router.jsx";
 import mailListItem from "@components/mailBox/mailListItem.jsx";
 import TextEditor from "@components/common/textEditor.jsx";
@@ -17,6 +17,5 @@ createRoot(document.getElementById("root")).render(
     {/* <TextEditor></TextEditor> */}
     {/* <Signin></Signin> */}
     {/* <AddInfoComp></AddInfoComp> */}
-    <Login></Login>
   </StrictMode>
 );
