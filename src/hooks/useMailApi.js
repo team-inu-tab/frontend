@@ -174,6 +174,7 @@ export const useMailApi = () => {
   };
 
   return {
+    getToken,
     fetchReceiveMails,
     fetchSentMails,
     fetchDraftMails,
