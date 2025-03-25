@@ -22,31 +22,24 @@ function Signin() {
   const navigation = useNavigate();
   const { getToken } = useMailApi();
 
-  const refreshAccessToken = async () => {
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/oauth2/reissue`,
-        {},
-        {
-          withCredentials: true,
+  const refresh = () => {
+    fetch(`${BASE_URL}/oauth2/reissue`, {
+      method: "POST",
+      credentials: "include",
+    }).then((res) => {
+      if (res.status === 200) {
+        const accessToken = res.headers.get("Authorization");
+        if (accessToken) {
+          sessionStorage.setItem("accessToken", accessToken);
         }
-      );
-      const accessToken = response.headers["Authorization"];
-      if (accessToken) {
-        sessionStorage.setItem("accessToken", accessToken);
-      }
-    } catch (error) {
-      if (error.response) {
-        alert(`실패: ${error.response.status}`);
       } else {
-        alert("Occur refresh error");
+        alert("토큰 저장 실패");
       }
-      console.error(error);
-    }
+    });
   };
 
   useEffect(() => {
-    refreshAccessToken();
+    refresh();
   }, []);
 
   const renderJobText = (value) => {
