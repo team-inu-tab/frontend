@@ -9,7 +9,7 @@ import DropDown from "@components/signin/dropDown.jsx";
 import InputLine from "@assets/images/inputLine.svg";
 import backGround from "@assets/images/backGround.svg";
 import { useNavigate } from "react-router-dom";
-import '@hooks/useMailApi.js';
+import {useMailApi} from '@hooks/useMailApi.js';
 
 function Signin() {
   const [affiliation, setAffiliation] = useState("");
