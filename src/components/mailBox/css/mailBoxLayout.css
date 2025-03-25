@@ -40,15 +40,25 @@
 
 /* 모바일 */
 @media (max-width: 425px) {
-  .mailBoxLayout-wrapper {
-    margin: 0;
+  .MailScreen-container {
+    flex-direction: column;
   }
 
-  .mailBoxLayout-container {
-    border-radius: 0;
+  .MailScreen-list {
+    flex-basis: 100%;
+    width: 100%;
   }
 
-  .mailBoxLayout-common {
+  .MailScreen-preview {
+    display: none;
+  }
 
+  .MailScreen-container.show-preview .MailScreen-list {
+    display: none;
+  }
+
+  .MailScreen-container.show-preview .MailScreen-preview {
+    display: block;
+    flex-basis: 100%;
   }
 }

@@ -6,9 +6,14 @@ import MailPreviewContainer from "../../components/mailBox/mailPreviewContainer"
 import MailDetail from "../../components/mailBox/mailDetail";
 import MailDetailMax from "../../components/mailBox/mailDetailMax";
 import { useLoadMailbox } from "../../hooks/useLoadMailbox";
+import { useMediaQuery } from "react-responsive";
+import { useEffect, useState } from "react";
 
 const ReceiveMailScreen = () => {
   useLoadMailbox("receive");
+
+  const isMobile = useMediaQuery({ query: "(max-width: 425px)" });
+  const [showPreview, setShowPreview] = useState(false);
 
   const sortOption = useSortStore((state) => state.sortOption);
   const selectedGroup = useMailStore((state) => state.selectedGroup);
@@ -20,8 +25,19 @@ const ReceiveMailScreen = () => {
   );
   const status = useMailStore((state) => state.status);
 
+  // 메일 클릭 후 모바일이면 preview 모드로 전환
+  useEffect(() => {
+    if (isMobile && (selectedMailId || selectedGroup.length > 0)) {
+      setShowPreview(true);
+    }
+  }, [selectedMailId, selectedGroup, isMobile]);
+
   return (
-    <div className="MailScreen-container">
+    <div
+      className={`MailScreen-container ${
+        isMobile && showPreview ? "show-preview" : ""
+      }`}
+    >
       {isExpanded ? (
         <MailDetailMax />
       ) : (

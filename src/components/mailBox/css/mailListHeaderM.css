@@ -10,6 +10,7 @@
     align-items: center;
     padding: 0 0.5rem;
     height: 2.5rem;
+    border-radius: 1.1875rem 1.1875rem 0 0;
     border-bottom: 1.5px solid #efeff0;
     background: #FFF;
   }
@@ -38,6 +39,12 @@
   }
 
   .mailListHeaderM-left {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
+  .mailListHeaderM-right {
     display: flex;
     align-items: center;
     flex: 1;
