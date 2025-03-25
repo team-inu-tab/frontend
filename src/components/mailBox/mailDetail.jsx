@@ -12,6 +12,7 @@ import FileItem from "./fileItem";
  */
 const MailDetail = () => {
   const [mailDetail, setMailDetail] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const selectedMailId = useMailStore((state) => state.selectedMailId); // 현재 선택된 메일 id 가져오기
   const toggleExpanded = useMailStore((state) => state.toggleExpanded);
@@ -21,16 +22,17 @@ const MailDetail = () => {
   const { fetchMailDetail, getFile } = useMailApi();
 
   useEffect(() => {
-    console.log("selectedMailId:", selectedMailId);
     if (!selectedMailId) return;
 
     const load = async () => {
+      setIsLoading(true);
       try {
         const detail = await fetchMailDetail(selectedMailId);
-        console.log("Fetched mail detail:", detail);
         setMailDetail(detail);
       } catch (error) {
         console.error("Error fetching mail detail:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -43,7 +45,7 @@ const MailDetail = () => {
   }
 
   // 메일 상세 정보가 로딩 중일 경우
-  if (!mailDetail) {
+  if (isLoading && !mailDetail) {
     return <div>Loading...</div>;
   }
 
