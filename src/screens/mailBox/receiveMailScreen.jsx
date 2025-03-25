@@ -12,7 +12,7 @@ const ReceiveMailScreen = () => {
 
   const sortOption = useSortStore((state) => state.sortOption);
   const selectedGroup = useMailStore((state) => state.selectedGroup);
-  const selectedMail = useMailStore((state) => state.selectedMail);
+  const selectedMailId = useMailStore((state) => state.selectedMailId);
   const isExpanded = useMailStore((state) => state.isExpanded);
   const receiveMails = useMailStore((state) => state.receiveMails);
   const status = useMailStore((state) => state.status);
@@ -38,7 +38,7 @@ const ReceiveMailScreen = () => {
           <div className="receiveMailScreen-preview">
             {sortOption === SORT_OPTIONS.SENDER && selectedGroup.length > 0 ? (
               <MailPreviewContainer />
-            ) : selectedMail ? (
+            ) : selectedMailId ? (
               <MailDetail />
             ) : null}
           </div>
