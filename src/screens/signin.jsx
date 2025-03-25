@@ -72,7 +72,7 @@ function Signin() {
           payload,
           { withCredentials: true,
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: accessToken,
             }
            }
         );
@@ -88,7 +88,7 @@ function Signin() {
           payload,
           { withCredentials: true,
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: accessToken,
             }
            }
         );
