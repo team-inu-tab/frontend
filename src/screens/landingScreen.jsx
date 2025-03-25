@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import symbolLogo from '@assets/images/symbolLogo.svg';
 import '@screens/css/landingScreen.css';
-import GoogleLogin from '@components/common/googleLoginButton.jsx';
 import landingAI from '@assets/icons/landingAI.svg';
 import serviceStartButton from '@assets/icons/serviceStartButton.svg';
 import function1 from '@assets/icons/function1.svg';
@@ -10,15 +9,19 @@ import function3 from '@assets/icons/function3.svg';
 import functionState1 from '@assets/images/functionState1.svg';
 import functionState2 from '@assets/images/functionState2.svg';
 import functionState3 from '@assets/images/functionState3.svg';
+import { useNavigate } from "react-router-dom";
 
 function Landing() {
+    const navigate = useNavigate();
+    
     return (
         <div className='landingBackground'>
             <img src={symbolLogo} className='landingSymbolLogo'/>
             <p className='serviceText'>Maeil, MAIL.</p>
             <img src={landingAI} className='landingAILogo'></img>
             <p className='introText'>생성형 AI를 이용한 메일 자동 교정 서비스</p>
-            <button className='serviceStartButton'>
+            <button className='serviceStartButton'
+                    onClick={() => navigate("/login")}>
                 <img src={serviceStartButton} className='buttonImg'></img>
                 Start now
             </button>
@@ -46,7 +49,6 @@ function Landing() {
                     <img src = {functionState3} className='funcState3'></img>
                 </div>
             </div>
-
         </div>
     )
 }
