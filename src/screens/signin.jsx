@@ -9,7 +9,7 @@ import DropDown from "@components/signin/dropDown.jsx";
 import InputLine from "@assets/images/inputLine.svg";
 import backGround from "@assets/images/backGround.svg";
 import { useNavigate } from "react-router-dom";
-import {useMailApi} from '@hooks/useMailApi.js';
+import { useMailApi } from "@hooks/useMailApi.js";
 
 function Signin() {
   const [affiliation, setAffiliation] = useState("");
@@ -17,29 +17,33 @@ function Signin() {
   const [position, setPosition] = useState("");
   const [selectedJob, setSelectedJob] = useState("");
   const jobData = { data: ["학생", "직장인"] };
+
   const BASE_URL = "https://maeilmail.co.kr/api";
   const hasFetched = useRef(false);
   const navigation = useNavigate();
   const { getToken } = useMailApi();
+
   const refreshAccessToken = async () => {
     if (hasFetched.current) return;
     hasFetched.current = true;
 
     try {
       const response = await axios.post(
-       `${BASE_URL}/oauth2/reissue`,
-        { withCredentials: true }
+        `${BASE_URL}/oauth2/reissue`,
+        {},
+        {
+          withCredentials: true,
+        }
       );
 
       const accessToken = response.headers["Authorization"];
       if (accessToken) {
         sessionStorage.setItem("accessToken", accessToken);
-      } 
-    } catch (error) {
-      if (error.response){
-        alert(`실패: ${error.response.status}`);
       }
-      else {
+    } catch (error) {
+      if (error.response) {
+        alert(`실패: ${error.response.status}`);
+      } else {
         alert("Occur refresh error");
       }
       console.error(error);
@@ -56,7 +60,7 @@ function Signin() {
     else if (value === "직장인") setSelectedJob("회사");
     else setSelectedJob("");
   };
-  
+
   const handleSubmit = async () => {
     try {
       const accessToken = getToken();
@@ -65,32 +69,34 @@ function Signin() {
         const payload = {
           schoolName: affiliation,
           studentDepartment: department,
-          studentNum: Number(position)
+          studentNum: Number(position),
         };
         const response = await axios.post(
           "https://maeilmail.co.kr/api/users/info/student",
           payload,
-          { withCredentials: true,
+          {
+            withCredentials: true,
             headers: {
               Authorization: accessToken,
-            }
-           }
+            },
+          }
         );
         console.log("학교 정보 저장 완료:", response.data);
       } else if (selectedJob === "회사") {
         const payload = {
           company: affiliation,
           workerDepartment: department,
-          position: position
+          position: position,
         };
         const response = await axios.post(
           "https://maeilmail.co.kr/api/users/info/worker",
           payload,
-          { withCredentials: true,
+          {
+            withCredentials: true,
             headers: {
               Authorization: accessToken,
-            }
-           }
+            },
+          }
         );
         console.log("회사 정보 저장 완료:", response.data);
       }
@@ -110,34 +116,50 @@ function Signin() {
 
         <DropDown props={jobData} onSelect={renderJobText} />
         <span className="jobText">{selectedJob}</span>
-        { selectedJob && <input className="affiliationInput" 
-                              value={affiliation}
-                              onChange={(e) => setAffiliation(e.target.value)}></input> }
+        {selectedJob && (
+          <input
+            className="affiliationInput"
+            value={affiliation}
+            onChange={(e) => setAffiliation(e.target.value)}
+          ></input>
+        )}
 
-        { selectedJob === "학교" && (
-          <span className="departmentPlaceHolder">학과</span>) }
-        { selectedJob === "회사" && (
-          <span className="departmentPlaceHolder">부서</span>) }
+        {selectedJob === "학교" && (
+          <span className="departmentPlaceHolder">학과</span>
+        )}
+        {selectedJob === "회사" && (
+          <span className="departmentPlaceHolder">부서</span>
+        )}
 
-        { selectedJob && <img src={InputLine} className="inputLine2"></img> }
+        {selectedJob && <img src={InputLine} className="inputLine2"></img>}
 
-        { selectedJob && <input className="departmentInput" 
-                                        value={department}
-                                        onChange={(e) => setDepartment(e.target.value)}></input> }
-        
-        { selectedJob === "학교" && (
-          <span className="positionPlaceHolder">학번</span>) }
-        { selectedJob === "회사" && (
-          <span className="positionPlaceHolder">직책</span>) }
+        {selectedJob && (
+          <input
+            className="departmentInput"
+            value={department}
+            onChange={(e) => setDepartment(e.target.value)}
+          ></input>
+        )}
 
-        { selectedJob && <input className="positionInput" 
-                                        value={position}
-                                        onChange={(e) => setPosition(e.target.value)}></input> }
+        {selectedJob === "학교" && (
+          <span className="positionPlaceHolder">학번</span>
+        )}
+        {selectedJob === "회사" && (
+          <span className="positionPlaceHolder">직책</span>
+        )}
+
+        {selectedJob && (
+          <input
+            className="positionInput"
+            value={position}
+            onChange={(e) => setPosition(e.target.value)}
+          ></input>
+        )}
 
         <CompleteButton
           className="addInfoCompleteButton"
           text="입력완료"
-          onClick={ handleSubmit }
+          onClick={handleSubmit}
         ></CompleteButton>
       </Circle>
     </Container>
