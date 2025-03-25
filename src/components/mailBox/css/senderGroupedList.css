@@ -5,3 +5,7 @@
   align-items: flex-start;
   gap: 1.5rem;
 }
+.senderGroupedList-wrapper P {
+  white-space: nowrap;
+  font-size: 0.8rem;
+}
