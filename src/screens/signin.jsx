@@ -9,6 +9,7 @@ import DropDown from "@components/signin/dropDown.jsx";
 import InputLine from "@assets/images/inputLine.svg";
 import backGround from "@assets/images/backGround.svg";
 import { useNavigate } from "react-router-dom";
+import '@hooks/useMailApi.js';
 
 function Signin() {
   const [affiliation, setAffiliation] = useState("");
@@ -16,30 +17,32 @@ function Signin() {
   const [position, setPosition] = useState("");
   const [selectedJob, setSelectedJob] = useState("");
   const jobData = { data: ["학생", "직장인"] };
-
+  const BASE_URL = "https://maeilmail.co.kr/api";
   const hasFetched = useRef(false);
   const navigation = useNavigate();
-
+  const { getToken } = useMailApi();
   const refreshAccessToken = async () => {
     if (hasFetched.current) return;
     hasFetched.current = true;
 
     try {
       const response = await axios.post(
-        "https://maeilmail.co.kr/api/oauth2/reissue",
-        {},
+       `${BASE_URL}/oauth2/reissue`,
         { withCredentials: true }
       );
 
       const accessToken = response.headers["Authorization"];
       if (accessToken) {
-        localStorage.setItem("accessToken", accessToken);
-        console.log("새로운 액세스 토큰 저장 완료:", accessToken);
-      } else {
-        console.error("액세스 토큰을 찾을 수 없음!");
-      }
+        sessionStorage.setItem("accessToken", accessToken);
+      } 
     } catch (error) {
-      console.error("액세스 토큰 갱신 실패:", error);
+      if (error.response){
+        alert(`실패: ${error.response.status}`);
+      }
+      else {
+        alert("Occur refresh error");
+      }
+      console.error(error);
     }
   };
 
@@ -56,7 +59,7 @@ function Signin() {
   
   const handleSubmit = async () => {
     try {
-      const accessToken = localStorage.getItem("accessToken");
+      const accessToken = getToken();
 
       if (selectedJob === "학교") {
         const payload = {
@@ -96,7 +99,7 @@ function Signin() {
       console.error("정보 전송 실패:", error);
     }
   };
-  
+
   return (
     <Container>
       <img src={backGround} className="backGround" />
