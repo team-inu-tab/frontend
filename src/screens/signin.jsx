@@ -13,9 +13,8 @@ function Signin() {
   const [selectedJob, setSelectedJob] = useState("");
   const jobData = { data: ["학생", "직장인"] };
 
-  const hasFetched = useRef(false); // 첫 실행 여부를 저장
+  const hasFetched = useRef(false);
 
-  // 리프레시 API 호출 함수
   const refreshAccessToken = async () => {
     if (hasFetched.current) return;
     hasFetched.current = true;
