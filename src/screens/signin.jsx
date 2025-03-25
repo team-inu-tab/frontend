@@ -11,6 +11,9 @@ import backGround from "@assets/images/backGround.svg";
 import { useNavigate } from "react-router-dom";
 
 function Signin() {
+  const [affiliation, setAffiliation] = useState("");
+  const [department, setDepartment] = useState("");
+  const [position, setPosition] = useState("");
   const [selectedJob, setSelectedJob] = useState("");
   const jobData = { data: ["학생", "직장인"] };
 
@@ -23,7 +26,7 @@ function Signin() {
 
     try {
       const response = await axios.post(
-        "https://likelionfesival.shop/oauth2/reissue",
+        "https://maeilmail.co.kr/api/oauth2/reissue",
         {},
         { withCredentials: true }
       );
@@ -40,7 +43,6 @@ function Signin() {
     }
   };
 
-  // 페이지 로드 시 리프레쉬 API 호출
   useEffect(() => {
     refreshAccessToken();
   }, []);
@@ -51,7 +53,39 @@ function Signin() {
     else if (value === "직장인") setSelectedJob("회사");
     else setSelectedJob("");
   };
-
+  
+  const handleSubmit = async () => {
+    try {
+      if (selectedJob === "학교") {
+        const payload = {
+          schoolName: affiliation,
+          studentDepartment: department,
+          studentNum: Number(position)
+        };
+        const response = await axios.post(
+          "https://maeilmail.co.kr/api/users/info/student",
+          payload,
+          { withCredentials: true }
+        );
+        console.log("학교 정보 저장 완료:", response.data);
+      } else if (selectedJob === "회사") {
+        const payload = {
+          company: affiliation,
+          workerDepartment: department,
+          position: position
+        };
+        const response = await axios.post(
+          "https://maeilmail.co.kr/api/users/info/worker",
+          payload,
+          { withCredentials: true }
+        );
+        console.log("회사 정보 저장 완료:", response.data);
+      }
+      navigation("/mail");
+    } catch (error) {
+      console.error("정보 전송 실패:", error);
+    }
+  };
   return (
     <Container>
       <img src={backGround} className="backGround" />
@@ -59,30 +93,37 @@ function Signin() {
         <img src={symbolLogo} className="symbolLogo" />
         <span className="jobPlaceHolder">직업</span>
         <img src={InputLine} className="inputLine1"></img>
+
         <DropDown props={jobData} onSelect={renderJobText} />
         <span className="jobText">{selectedJob}</span>
-        {selectedJob && <input className="affiliationInput"></input>}
-        {selectedJob === "학교" && (
-          <span className="departmentPlaceHolder">학과</span>
-        )}
-        {selectedJob === "회사" && (
-          <span className="departmentPlaceHolder">부서</span>
-        )}
-        {selectedJob && <img src={InputLine} className="inputLine2"></img>}
-        {selectedJob === "학교" && <input className="departmentInput"></input>}
-        {selectedJob === "회사" && <input className="departmentInput"></input>}
-        {selectedJob === "학교" && (
-          <span className="positionPlaceHolder">학번</span>
-        )}
-        {selectedJob === "회사" && (
-          <span className="positionPlaceHolder">직책</span>
-        )}
-        {selectedJob === "학교" && <input className="positionInput"></input>}
-        {selectedJob === "회사" && <input className="positionInput"></input>}
+        { selectedJob && <input className="affiliationInput" 
+                              value={affiliation}
+                              onChange={(e) => setAffiliation(e.target.value)}></input> }
+
+        { selectedJob === "학교" && (
+          <span className="departmentPlaceHolder">학과</span>) }
+        { selectedJob === "회사" && (
+          <span className="departmentPlaceHolder">부서</span>) }
+
+        { selectedJob && <img src={InputLine} className="inputLine2"></img> }
+
+        { selectedJob && <input className="departmentInput" 
+                                        value={department}
+                                        onChange={(e) => setDepartment(e.target.value)}></input> }
+        
+        { selectedJob === "학교" && (
+          <span className="positionPlaceHolder">학번</span>) }
+        { selectedJob === "회사" && (
+          <span className="positionPlaceHolder">직책</span>) }
+
+        { selectedJob && <input className="positionInput" 
+                                        value={position}
+                                        onChange={(e) => setPosition(e.target.value)}></input> }
+
         <CompleteButton
           className="addInfoCompleteButton"
           text="입력완료"
-          onClick={() => navigation("/mail")}
+          onClick={ handleSubmit }
         ></CompleteButton>
       </Circle>
     </Container>
