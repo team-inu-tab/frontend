@@ -1,9 +1,9 @@
-import "@screens/css/profileScreen.css";
+import "@screens/css/settingScreen.css";
 import "@components/mailBox/css/mailBoxLayout.css";
 import MenuBar from "../components/menu/menuBar";
 import { useMenuStore } from "../store";
 
-const ProfileScreen = () => {
+const SettingScreen = () => {
   const isMenuBarOpen = useMenuStore((state) => state.isMenuBarOpen);
 
   return (
@@ -14,9 +14,9 @@ const ProfileScreen = () => {
           isMenuBarOpen ? "menuBar-open" : ""
         }`}
       >
-        <div className="mailBoxLayout-common">profile</div>
+        <div className="mailBoxLayout-common">setting</div>
       </div>
     </div>
   );
 };
-export default ProfileScreen;
+export default SettingScreen;
