@@ -1,21 +1,21 @@
-import React, { useRef } from "react";
+import { useRef, useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { useNavigate } from "react-router-dom";
 
 const GoogleLogIn = () => {
   const linkRef = useRef(null);
+  const [redirected, setRedirected] = useState(false); // 이미 리디렉션이 발생했는지 체크하는 플래그
 
   const handleSuccess = (credentialResponse) => {
+    if (redirected) return;
+    setRedirected(true);
+
     const token = credentialResponse.credential;
     const redirectUrl = `http://maeilmail.co.kr/api/oauth2/authorization/google?token=${encodeURIComponent(
       token
     )}`;
 
-    if (linkRef.current) {
-      linkRef.current.href = redirectUrl;
-      linkRef.current.click();
-    }
+    window.location.href = redirectUrl;
   };
 
   return (
