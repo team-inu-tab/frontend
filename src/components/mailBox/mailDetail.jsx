@@ -21,11 +21,17 @@ const MailDetail = () => {
   const { fetchMailDetail, getFile } = useMailApi();
 
   useEffect(() => {
+    console.log("selectedMailId:", selectedMailId);
     if (!selectedMailId) return;
 
     const load = async () => {
-      const detail = await fetchMailDetail(selectedMailId);
-      setMailDetail(detail);
+      try {
+        const detail = await fetchMailDetail(selectedMailId);
+        console.log("Fetched mail detail:", detail);
+        setMailDetail(detail);
+      } catch (error) {
+        console.error("Error fetching mail detail:", error);
+      }
     };
 
     load();
@@ -33,7 +39,7 @@ const MailDetail = () => {
 
   // 선택된 메일이 없으면 화면에 표시하지 않음
   if (!selectedMailId) {
-    return null;
+    return <div>No mail selected</div>;
   }
 
   // 메일 상세 정보가 로딩 중일 경우
