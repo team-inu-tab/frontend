@@ -1,14 +1,8 @@
 import "./index.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import router from "@routes/router.jsx";
-import mailListItem from "@components/mailBox/mailListItem.jsx";
-import TextEditor from "@components/common/textEditor.jsx";
-import MailWriteModal from "@components/common/mailWriteModal.jsx";
-import Signin from "@screens/signin.jsx";
-import AddInfoComp from "@screens/addInfoComp.jsx";
-import Login from "@screens/loginScreen.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

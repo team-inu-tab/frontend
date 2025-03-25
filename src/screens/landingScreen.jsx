@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import symbolLogo from "@assets/images/symbolLogo.svg";
 import "@screens/css/landingScreen.css";
 import landingAI from "@assets/icons/landingAI.svg";
