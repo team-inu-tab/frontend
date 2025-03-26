@@ -25,7 +25,6 @@ const ReceiveMailScreen = () => {
   );
   const status = useMailStore((state) => state.status);
 
-  // 메일 클릭 후 모바일이면 preview 모드로 전환
   useEffect(() => {
     if (isMobile && (selectedMailId || selectedGroup.length > 0)) {
       setShowPreview(true);
