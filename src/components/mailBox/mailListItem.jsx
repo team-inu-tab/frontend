@@ -2,6 +2,7 @@ import "@components/mailBox/css/mailListItem.css";
 import { useCheckboxStore, useMailStore } from "../../store";
 import Star from "@assets/icons/star.svg?react";
 import { useFormattedDate } from "../../hooks/useFormattedDate";
+import { useMediaQuery } from "react-responsive";
 
 /**
  * MailListItem - 개별 메일 항목을 렌더링하는 컴포넌트
@@ -20,6 +21,8 @@ const MailListItem = ({ mail }) => {
 
   const formatReceiveDate = useFormattedDate(); // 날짜 포맷 변경
   const isImportant = mail.isImportant; // 중요 메일 여부
+
+  const isMobile = useMediaQuery({ query: "(max-width: 425px)" });
 
   return (
     <div
@@ -44,28 +47,56 @@ const MailListItem = ({ mail }) => {
       </div>
 
       {/* 메일 정보 (클릭 시 상세 보기) */}
-      <div className="mailListItem-mailInfo">
-        {/* 발신자 이름 */}
-        <span className="mailListItem-sender">
-          {mail.sender ?? mail.receiver}
-        </span>
-        <div className="mailListItem-title-container">
-          {/* 첨부 파일 존재 시 아이콘 표시 */}
-          {mail.isFileExist && (
-            <img
-              src="/src/assets/icons/attachment.svg"
-              alt="Attachment icon for email"
-            />
-          )}
-          {/* 메일 제목 */}
-          <span className="mailListItem-title">{mail.title}</span>
+      {isMobile ? (
+        <div className="mailListItem-mailInfo">
+          <div className="mailListItem-mailInfo-m">
+            {/* 발신자 이름 */}
+            <span className="mailListItem-sender">
+              {mail.sender ?? mail.receiver}
+            </span>
+            {/* 메일 수신 시간 */}
+            <span className="mailListItem-receiveAt">
+              {formatReceiveDate(
+                mail.receiveAt ?? mail.sendAt ?? mail.createdAt
+              )}
+            </span>
+          </div>
+          <div className="mailListItem-title-container">
+            {/* 첨부 파일 존재 시 아이콘 표시 */}
+            {mail.isFileExist && (
+              <img
+                src="/src/assets/icons/attachment.svg"
+                alt="Attachment icon for email"
+              />
+            )}
+            {/* 메일 제목 */}
+            <span className="mailListItem-title">{mail.title}</span>
+          </div>
         </div>
+      ) : (
+        <div className="mailListItem-mailInfo">
+          {/* 발신자 이름 */}
+          <span className="mailListItem-sender">
+            {mail.sender ?? mail.receiver}
+          </span>
+          <div className="mailListItem-title-container">
+            {/* 첨부 파일 존재 시 아이콘 표시 */}
+            {mail.isFileExist && (
+              <img
+                src="/src/assets/icons/attachment.svg"
+                alt="Attachment icon for email"
+              />
+            )}
+            {/* 메일 제목 */}
+            <span className="mailListItem-title">{mail.title}</span>
+          </div>
 
-        {/* 메일 수신 시간 */}
-        <span className="mailListItem-receiveAt">
-          {formatReceiveDate(mail.receiveAt ?? mail.sendAt ?? mail.createdAt)}
-        </span>
-      </div>
+          {/* 메일 수신 시간 */}
+          <span className="mailListItem-receiveAt">
+            {formatReceiveDate(mail.receiveAt ?? mail.sendAt ?? mail.createdAt)}
+          </span>
+        </div>
+      )}
     </div>
   );
 };

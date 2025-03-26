@@ -14,6 +14,17 @@
     border-bottom: 1.5px solid #efeff0;
     background: #FFF;
   }
+  .mailListHeaderM-wrapper.detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.5rem;
+    height: 2.5rem;
+    border-radius: 1.1875rem 1.1875rem 0 0;
+    border-bottom: 1.5px solid #efeff0;
+    background: #FFF;
+  }
+
   /* 공통 버튼 */
   .mailListHeaderM-wrapper button {
     display: flex;
@@ -47,7 +58,6 @@
   .mailListHeaderM-right {
     display: flex;
     align-items: center;
-    flex: 1;
   }
 
   /* 정렬 옵션 컨테이너 */

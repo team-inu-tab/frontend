@@ -1,6 +1,11 @@
 import "@components/mailBox/css/mailListHeaderM.css";
 import { useState } from "react";
-import { useSortStore, SORT_OPTIONS, useMailStore } from "../../store";
+import {
+  useSortStore,
+  SORT_OPTIONS,
+  useMailStore,
+  useMenuStore,
+} from "../../store";
 import { useLocation } from "react-router-dom";
 import Search from "@assets/icons/search.svg?react";
 import People from "@assets/icons/people.svg?react";
@@ -21,6 +26,8 @@ const MailListHeaderM = () => {
   const setSelectedGroup = useMailStore((state) => state.setSelectedGroup);
 
   const [isSortOptionOpen, setIsSortOptionOpen] = useState(false); // 정렬 옵션 상태
+
+  const toggleMobileMenu = useMenuStore((state) => state.toggleMobileMenu);
 
   // 정렬 옵션 열림/닫힘 상태를 토글하는 함수
   const toggleOption = () => setIsSortOptionOpen((prev) => !prev);
@@ -82,7 +89,7 @@ const MailListHeaderM = () => {
         <>
           <div className="mailListHeaderM-left">
             {/* 햄버거 메뉴 */}
-            <button>
+            <button onClick={toggleMobileMenu}>
               <Menu className="mailListHeaderM-icon" />
             </button>
             {/* 정렬 옵션 */}
