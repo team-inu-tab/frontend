@@ -138,6 +138,6 @@
   }
 
   .mailListItem-sender {
-    width: fit-content;
+    width: 13rem;
   }
 }

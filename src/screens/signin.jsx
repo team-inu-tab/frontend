@@ -92,7 +92,7 @@ function Signin() {
         );
         console.log("회사 정보 저장 완료:", response.data);
       }
-      navigation("/mail");
+      navigation("/mail/receive");
     } catch (error) {
       console.error("정보 전송 실패:", error);
     }
