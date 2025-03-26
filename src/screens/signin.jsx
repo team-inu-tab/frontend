@@ -106,7 +106,7 @@ function Signin() {
         <span className="jobPlaceHolder">직업</span>
         <img src={InputLine} className="inputLine1"></img>
 
-        <DropDown props={jobData} onSelect={renderJobText} />
+        <DropDown data={jobData.data} onSelect={renderJobText} />
         <span className="jobText">{selectedJob}</span>
         {selectedJob && (
           <input

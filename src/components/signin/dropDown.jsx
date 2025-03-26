@@ -1,20 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import "@components/signin/css/dropDown.css";
 
-
-export const DropDown = ({
-  data = ["초기값"],
-  onSelect,
-}) => {
+export const DropDown = ({ data = ["초기값"], onSelect }) => {
   const selectRef = useRef(null);
   const [currentValue, setCurrentValue] = useState("직업을 선택 해주세요");
   const [showOptions, setShowOptions] = useState(false);
 
-  const handleOnChangeSelectValue = (e) => {
-    e.stopPropagation();
-    const value = e.target.getAttribute("value");
+  const handleOnChangeSelectValue = (value) => {
     setCurrentValue(value);
-
     if (onSelect) {
       onSelect(value);
     }
@@ -31,7 +24,7 @@ export const DropDown = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [selectRef]);
+  }, []);
 
   return (
     <div
@@ -41,14 +34,13 @@ export const DropDown = ({
     >
       <label className="select-label">{currentValue}</label>
       <ul className={`select-options ${showOptions ? "show" : ""}`}>
-        {data.map((item, index) => (
+        {list.map((data, index) => (
           <li
             key={index}
             className="option"
-            value={item}
-            onClick={handleOnChangeSelectValue}
+            onClick={() => handleOnChangeSelectValue(item)}
           >
-            {item}
+            {data}
           </li>
         ))}
       </ul>
