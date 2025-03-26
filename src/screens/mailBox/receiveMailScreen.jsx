@@ -9,86 +9,86 @@ import { useLoadMailbox } from "../../hooks/useLoadMailbox";
 import { useMediaQuery } from "react-responsive";
 import { useEffect, useState } from "react";
 
-export const mockSelectedGroup = [
-  {
-    id: "email-001",
-    title: "팀 회의 일정 조정",
-    content: "다음 주 회의 일정 확인 바랍니다.",
-    sender: "김철수",
-    receiver: "me@example.com",
-    receiveAt: "2025-03-20T10:00:00",
-    isImportant: true,
-    fileNameList: [],
-  },
-  {
-    id: "email-002",
-    title: "RE: 팀 회의 일정 조정",
-    content: "확인했습니다. 회의실 예약하겠습니다.",
-    sender: "me@example.com",
-    receiver: "김철수",
-    receiveAt: "2025-03-20T11:00:00",
-    isImportant: false,
-    fileNameList: [],
-  },
-];
+// export const mockSelectedGroup = [
+//   {
+//     id: "email-001",
+//     title: "팀 회의 일정 조정",
+//     content: "다음 주 회의 일정 확인 바랍니다.",
+//     sender: "김철수",
+//     receiver: "me@example.com",
+//     receiveAt: "2025-03-20T10:00:00",
+//     isImportant: true,
+//     fileNameList: [],
+//   },
+//   {
+//     id: "email-002",
+//     title: "RE: 팀 회의 일정 조정",
+//     content: "확인했습니다. 회의실 예약하겠습니다.",
+//     sender: "me@example.com",
+//     receiver: "김철수",
+//     receiveAt: "2025-03-20T11:00:00",
+//     isImportant: false,
+//     fileNameList: [],
+//   },
+// ];
 
-export const mockGroupedReceiveMails = [
-  {
-    sender: "김철수",
-    mailItems: [
-      {
-        id: "email-101",
-        title: "회의록 공유드립니다",
-        content: "회의록은 첨부파일 확인 부탁드립니다.",
-        sender: "김철수",
-        receiver: "me@example.com",
-        receiveAt: "2025-03-18T09:15:00",
-        isImportant: false,
-        fileNameList: [{ fileName: "회의록.pdf", attachmentId: "att-001" }],
-      },
-    ],
-  },
-  {
-    sender: "이영희",
-    mailItems: [
-      {
-        id: "email-102",
-        title: "점심 약속 확인",
-        content: "내일 12시에 괜찮으신가요?",
-        sender: "이영희",
-        receiver: "me@example.com",
-        receiveAt: "2025-03-19T13:00:00",
-        isImportant: false,
-        fileNameList: [],
-      },
-      {
-        id: "email-103",
-        title: "RE: 점심 약속 확인",
-        content: "네 괜찮습니다. 장소는 어디로 할까요?",
-        sender: "me@example.com",
-        receiver: "이영희",
-        receiveAt: "2025-03-19T13:30:00",
-        isImportant: false,
-        fileNameList: [],
-      },
-    ],
-  },
-  {
-    sender: "네이버 고객센터",
-    mailItems: [
-      {
-        id: "email-104",
-        title: "[중요] 비밀번호 변경 안내",
-        content: "보안 강화를 위해 비밀번호 변경을 권장드립니다.",
-        sender: "네이버 고객센터",
-        receiver: "me@example.com",
-        receiveAt: "2025-03-17T08:00:00",
-        isImportant: true,
-        fileNameList: [],
-      },
-    ],
-  },
-];
+// export const mockGroupedReceiveMails = [
+//   {
+//     sender: "김철수",
+//     mailItems: [
+//       {
+//         id: "email-101",
+//         title: "회의록 공유드립니다",
+//         content: "회의록은 첨부파일 확인 부탁드립니다.",
+//         sender: "김철수",
+//         receiver: "me@example.com",
+//         receiveAt: "2025-03-18T09:15:00",
+//         isImportant: false,
+//         fileNameList: [{ fileName: "회의록.pdf", attachmentId: "att-001" }],
+//       },
+//     ],
+//   },
+//   {
+//     sender: "이영희",
+//     mailItems: [
+//       {
+//         id: "email-102",
+//         title: "점심 약속 확인",
+//         content: "내일 12시에 괜찮으신가요?",
+//         sender: "이영희",
+//         receiver: "me@example.com",
+//         receiveAt: "2025-03-19T13:00:00",
+//         isImportant: false,
+//         fileNameList: [],
+//       },
+//       {
+//         id: "email-103",
+//         title: "RE: 점심 약속 확인",
+//         content: "네 괜찮습니다. 장소는 어디로 할까요?",
+//         sender: "me@example.com",
+//         receiver: "이영희",
+//         receiveAt: "2025-03-19T13:30:00",
+//         isImportant: false,
+//         fileNameList: [],
+//       },
+//     ],
+//   },
+//   {
+//     sender: "네이버 고객센터",
+//     mailItems: [
+//       {
+//         id: "email-104",
+//         title: "[중요] 비밀번호 변경 안내",
+//         content: "보안 강화를 위해 비밀번호 변경을 권장드립니다.",
+//         sender: "네이버 고객센터",
+//         receiver: "me@example.com",
+//         receiveAt: "2025-03-17T08:00:00",
+//         isImportant: true,
+//         fileNameList: [],
+//       },
+//     ],
+//   },
+// ];
 
 const ReceiveMailScreen = () => {
   useLoadMailbox("receive");
@@ -128,9 +128,9 @@ const ReceiveMailScreen = () => {
             {status === "loading" ? (
               <p>📩 메일을 불러오는 중...</p>
             ) : sortOption === SORT_OPTIONS.TIME ? (
-              <TimeSortedList mails={mockSelectedGroup} />
+              <TimeSortedList mails={receiveMails} />
             ) : (
-              <SenderGroupedList mails={mockGroupedReceiveMails} />
+              <SenderGroupedList mails={groupedReceiveMails} />
             )}
           </div>
 

@@ -8,6 +8,7 @@ import FileItem from "./fileItem";
 
 const MailDetailMax = () => {
   const [mailDetail, setMailDetail] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const selectedMailId = useMailStore((state) => state.selectedMailId); // 현재 선택된 메일 id 가져오기
   const toggleExpanded = useMailStore((state) => state.toggleExpanded);
@@ -20,8 +21,15 @@ const MailDetailMax = () => {
     if (!selectedMailId) return;
 
     const load = async () => {
-      const detail = await fetchMailDetail(selectedMailId);
-      setMailDetail(detail);
+      setIsLoading(true);
+      try {
+        const detail = await fetchMailDetail(selectedMailId);
+        setMailDetail(detail);
+      } catch (error) {
+        console.error("Error fetching mail detail:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     load();
@@ -29,7 +37,12 @@ const MailDetailMax = () => {
 
   // 선택된 메일이 없으면 화면에 표시하지 않음
   if (!selectedMailId) {
-    return null;
+    return <div>No mail selected</div>;
+  }
+
+  // 메일 상세 정보가 로딩 중일 경우
+  if (!mailDetail) {
+    return <div>{isLoading ? "Loading..." : ""}</div>;
   }
 
   return (
