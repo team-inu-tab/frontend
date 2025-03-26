@@ -13,7 +13,7 @@ const SubMenu = ({ isMenuBarOpen }) => {
   const location = useLocation();
   const isActive = location.pathname.startsWith("/mail/");
 
-  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false); // 서브 메뉴 열림/닫힘 상태 관리
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(true); // 서브 메뉴 열림/닫힘 상태 관리
 
   /**
    * 메일함 카테고리 목록
