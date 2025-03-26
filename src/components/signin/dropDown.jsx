@@ -34,13 +34,13 @@ export const DropDown = ({ data = ["초기값"], onSelect }) => {
     >
       <label className="select-label">{currentValue}</label>
       <ul className={`select-options ${showOptions ? "show" : ""}`}>
-        {list.map((data, index) => (
+        {data.map((item, index) => (
           <li
             key={index}
             className="option"
             onClick={() => handleOnChangeSelectValue(item)}
           >
-            {data}
+            {item}
           </li>
         ))}
       </ul>
