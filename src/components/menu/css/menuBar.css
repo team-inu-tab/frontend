@@ -79,3 +79,17 @@
     display: none;
   }
 }
+
+/* 모바일 */
+@media (max-width: 425px) {
+  .menuBar-wrapper {
+    position: fixed;
+    display: flex;
+    background-color: white;
+    z-index: 9999;
+  }
+
+  .menuBar-arrow {
+    display: none;
+  }
+}

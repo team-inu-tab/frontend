@@ -1,6 +1,5 @@
 .mailListItem-wrapper {
   display: flex;
-  width: 100%;
   padding: 0.5rem;
   gap: 0.5rem;
   align-items: center;
@@ -77,8 +76,13 @@
 .mailListItem-mailInfo {
   display: flex;
   align-items: center;
-  width: 100%;
   gap: 0.5rem;
+}
+.mailListItem-mailInfo-m {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .mailListItem-sender {
@@ -121,4 +125,19 @@
   font-weight: 500;
   line-height: normal;
   white-space: nowrap;
+}
+
+/* 모바일 */
+@media (max-width: 425px) {
+  .mailListItem-mailInfo {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .mailListItem-sender {
+    width: fit-content;
+  }
 }

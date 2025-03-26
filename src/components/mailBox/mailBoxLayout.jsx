@@ -12,7 +12,7 @@ const MailBoxLayout = () => {
 
   return (
     <div className="mailBoxLayout-wrapper">
-      <MenuBar />
+      {!isMobile && <MenuBar />}
       <div
         className={`mailBoxLayout-container ${
           isMenuBarOpen ? "menuBar-open" : ""
