@@ -36,12 +36,14 @@ export const DropDown = ({ data = ["초기값"], onSelect }) => {
       <ul className={`select-options ${showOptions ? "show" : ""}`}>
         {data.map((item, index) => (
           <li
-            key={index}
-            className="option"
-            onClick={() => handleOnChangeSelectValue(item)}
-          >
-            {item}
-          </li>
+          key={index}
+          className="option"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleOnChangeSelectValue(item)}}
+        >
+          {item}
+        </li>
         ))}
       </ul>
     </div>
