@@ -12,7 +12,7 @@ const SelfSentMailScreen = () => {
 
   const sortOption = useSortStore((state) => state.sortOption);
   const selectedGroup = useMailStore((state) => state.selectedGroup);
-  const selectedMailId = useMailStore((state) => state.selectedMailId);
+  const selectedMail = useMailStore((state) => state.selectedMail);
   const isExpanded = useMailStore((state) => state.isExpanded);
   const selfSentMails = useMailStore((state) => state.selfSentMails);
   const status = useMailStore((state) => state.status);
@@ -38,7 +38,7 @@ const SelfSentMailScreen = () => {
           <div className="MailScreen-preview">
             {sortOption === SORT_OPTIONS.SENDER && selectedGroup.length > 0 ? (
               <MailPreviewContainer />
-            ) : selectedMailId ? (
+            ) : selectedMail ? (
               <MailDetail />
             ) : null}
           </div>

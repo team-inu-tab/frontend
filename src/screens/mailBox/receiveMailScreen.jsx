@@ -98,7 +98,7 @@ const ReceiveMailScreen = () => {
 
   const sortOption = useSortStore((state) => state.sortOption);
   const selectedGroup = useMailStore((state) => state.selectedGroup);
-  const selectedMailId = useMailStore((state) => state.selectedMailId);
+  const selectedMail = useMailStore((state) => state.selectedMail);
   const isExpanded = useMailStore((state) => state.isExpanded);
   const receiveMails = useMailStore((state) => state.receiveMails);
   const groupedReceiveMails = useMailStore(
@@ -107,10 +107,10 @@ const ReceiveMailScreen = () => {
   const status = useMailStore((state) => state.status);
 
   useEffect(() => {
-    if (isMobile && (selectedMailId || selectedGroup.length > 0)) {
+    if (isMobile && (selectedMail || selectedGroup.length > 0)) {
       setShowPreview(true);
     }
-  }, [selectedMailId, selectedGroup, isMobile]);
+  }, [selectedMail, selectedGroup, isMobile]);
 
   return (
     <div
@@ -137,7 +137,7 @@ const ReceiveMailScreen = () => {
           <div className="MailScreen-preview">
             {sortOption === SORT_OPTIONS.SENDER && selectedGroup.length > 0 ? (
               <MailPreviewContainer />
-            ) : selectedMailId ? (
+            ) : selectedMail ? (
               <MailDetail />
             ) : null}
           </div>

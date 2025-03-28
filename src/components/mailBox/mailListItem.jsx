@@ -63,7 +63,7 @@ const MailListItem = ({ mail }) => {
           </div>
           <div className="mailListItem-title-container">
             {/* 첨부 파일 존재 시 아이콘 표시 */}
-            {mail.isFileExist && (
+            {mail.fileNameList && (
               <img
                 src="/src/assets/icons/attachment.svg"
                 alt="Attachment icon for email"
@@ -81,7 +81,7 @@ const MailListItem = ({ mail }) => {
           </span>
           <div className="mailListItem-title-container">
             {/* 첨부 파일 존재 시 아이콘 표시 */}
-            {mail.isFileExist && (
+            {mail.fileNameList && (
               <img
                 src="/src/assets/icons/attachment.svg"
                 alt="Attachment icon for email"

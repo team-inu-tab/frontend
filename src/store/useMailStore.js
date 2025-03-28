@@ -20,7 +20,7 @@ export const useMailStore = create((set) => ({
   error: null,
 
   // 선택된 메일
-  selectedMailId: null, // 선택된 개별 메일 id - mailDetail을 보여주기 위함
+  selectedMail: null, // 선택된 개별 메일  - mailDetail을 보여주기 위함
   selectedGroup: [], // 선택된 메일 그룹(받은사람 묶어보기 정렬) - mailPreview를 위함
 
   isExpanded: false, // mailDetailMax 확장 여부
@@ -77,7 +77,7 @@ export const useMailStore = create((set) => ({
   setError: (error) => set({ error }),
 
   // 선택된 메일 설정 함수
-  setSelectedMailId: (id) => set({ selectedMailId: id }),
+  setSelectedMail: (mail) => set({ selectedMail: { ...mail } }),
   setSelectedGroup: (mails) =>
     set(() => {
       const updatedMails = mails.map((mail) => ({ ...mail }));
