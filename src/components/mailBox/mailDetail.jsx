@@ -1,5 +1,4 @@
 import "@components/mailBox/css/mailDetail.css";
-import { useEffect, useState } from "react";
 import { useMailStore } from "../../store";
 import ExpandArrow from "@assets/icons/expandArrow.svg?react";
 import { useMailApi } from "@/hooks/useMailApi";
@@ -11,42 +10,16 @@ import FileItem from "./fileItem";
  * @returns {JSX.Element | null} 메일 상세 정보 UI (선택된 메일이 없으면 null 반환)
  */
 const MailDetail = () => {
-  const [mailDetail, setMailDetail] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const selectedMailId = useMailStore((state) => state.selectedMailId); // 현재 선택된 메일 id 가져오기
+  const selectedMail = useMailStore((state) => state.selectedMail); // 현재 선택된 메일 가져오기
   const toggleExpanded = useMailStore((state) => state.toggleExpanded);
 
   const formatReceiveDate = useFormattedDate();
 
-  const { fetchMailDetail, getFile } = useMailApi();
-
-  useEffect(() => {
-    if (!selectedMailId) return;
-
-    const load = async () => {
-      setIsLoading(true);
-      try {
-        const detail = await fetchMailDetail(selectedMailId);
-        setMailDetail(detail);
-      } catch (error) {
-        console.error("Error fetching mail detail:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    load();
-  }, [selectedMailId]);
+  const { getFile } = useMailApi();
 
   // 선택된 메일이 없으면 화면에 표시하지 않음
-  if (!selectedMailId) {
+  if (!selectedMail) {
     return <div>No mail selected</div>;
-  }
-
-  // 메일 상세 정보가 로딩 중일 경우
-  if (!mailDetail) {
-    return <div>{isLoading ? "Loading..." : ""}</div>;
   }
 
   return (
@@ -55,12 +28,12 @@ const MailDetail = () => {
         {/* 메일 제목 및 발신자 정보 */}
         <div className="mailDetail-header">
           <div className="mailDetail-header-container">
-            <span className="mailDetail-title">{mailDetail.title}</span>
+            <span className="mailDetail-title">{selectedMail.title}</span>
             <span className="mailDetail-sender">
-              보낸사람: {mailDetail.sender}
+              보낸사람: {selectedMail.sender}
             </span>
             <span className="mailDetail-sender">
-              받는사람: {mailDetail.receiver}
+              받는사람: {selectedMail.receiver}
             </span>
           </div>
           {/* 확장 버튼 */}
@@ -68,17 +41,22 @@ const MailDetail = () => {
         </div>
 
         {/* 첨부 파일 */}
-        {mailDetail.fileName.length > 0 && (
+        {selectedMail.fileNameList.length > 0 && (
           <div className="mailDetail-files">
             <span className="mailDetail-files-title">
-              첨부파일 {mailDetail.file.length}개
+              첨부파일 {selectedMail.fileNameList.length}개
             </span>
             <div className="mailDetail-files-list">
-              {mailDetail.file.map((fileName, index) => (
+              {selectedMail.fileNameList.map((file) => (
                 <FileItem
-                  key={index}
-                  fileName={fileName}
-                  onClick={() => getFile({ emailId: mailDetail.id, fileName })}
+                  key={file.attachmentId}
+                  fileName={file.fileName}
+                  onClick={() =>
+                    getFile({
+                      emailId: selectedMail.id,
+                      attachmentId: file.attachmentId,
+                    })
+                  }
                 />
               ))}
             </div>
@@ -86,13 +64,13 @@ const MailDetail = () => {
         )}
 
         {/* 메일 본문 내용 */}
-        <div className="mailDetail-content">{mailDetail.content}</div>
+        <div className="mailDetail-content">{selectedMail.content}</div>
       </div>
 
       {/* 메일 수신 시간 정보 */}
       <div className="mailDetail-footer">
         <span className="mailDetail-receiveAt">
-          {formatReceiveDate(mailDetail.receiveAt ?? mailDetail.sendAt)}
+          {formatReceiveDate(selectedMail.receiveAt ?? selectedMail.sendAt)}
         </span>
       </div>
     </div>
