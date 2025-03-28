@@ -18,31 +18,13 @@ function Signin() {
   const [selectedJob, setSelectedJob] = useState("");
   const jobData = { data: ["학생", "직장인"] };
 
-  const BASE_URL = "https://maeilmail.co.kr/api";
   const navigation = useNavigate();
-  const { getToken } = useMailApi();
-
-  const refresh = () => {
-    fetch(`${BASE_URL}/oauth2/reissue`, {
-      method: "POST",
-      credentials: "include",
-    }).then((res) => {
-      if (res.status === 200) {
-        const accessToken = res.headers.get("Authorization");
-        if (accessToken) {
-          sessionStorage.setItem("accessToken", accessToken);
-        }
-      } else {
-        alert("토큰 저장 실패");
-      }
-    });
-  };
+  const { getToken, refresh } = useMailApi();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      refresh();
+      refresh(); // 엑세스 토큰 발급
     }, 100);
-
     return () => clearTimeout(timer);
   }, []);
 
