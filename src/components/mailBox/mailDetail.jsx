@@ -55,6 +55,7 @@ const MailDetail = () => {
                     getFile({
                       emailId: selectedMail.id,
                       attachmentId: file.attachmentId,
+                      fileName: file.fileName,
                     })
                   }
                 />

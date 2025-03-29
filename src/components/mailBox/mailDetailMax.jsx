@@ -51,6 +51,7 @@ const MailDetailMax = () => {
                     getFile({
                       emailId: selectedMail.id,
                       attachmentId: file.attachmentId,
+                      fileName: file.fileName,
                     })
                   }
                 />
