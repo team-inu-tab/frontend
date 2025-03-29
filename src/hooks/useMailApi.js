@@ -20,12 +20,13 @@ api.interceptors.request.use((config) => {
 
 // 401 응답 시 refresh 시도 후 api 재요청
 api.interceptors.response.use(
-  (response) => response,
+  (response) => response, // 응답이 성공한 경우 그대로 반환
   async (error) => {
-    const originalRequest = error.config;
+    const originalRequest = error.config; // 원래 요청 정보를 저장
 
     if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true; // 무한루프 방지용
+      originalRequest._retry = true;
+
       try {
         const res = await fetch(`${BASE_URL}/oauth2/reissue`, {
           method: "POST",
@@ -34,20 +35,19 @@ api.interceptors.response.use(
 
         if (res.status === 200) {
           const newToken = res.headers.get("Authorization");
+
           if (newToken) {
             useAuthStore.getState().setAccessToken(newToken);
             originalRequest.headers["Authorization"] = newToken;
-            return api(originalRequest); // 요청 재시도
+            return api(originalRequest); // 재요청
           }
         }
+      } catch (err) {
         useAuthStore.getState().clearAccessToken();
         alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-      } catch {
-        useAuthStore.getState().clearAccessToken();
-        alert("세션 복구 실패");
+        return Promise.reject(err);
       }
     }
-
     return Promise.reject(error);
   }
 );
@@ -88,8 +88,9 @@ export const useMailApi = () => {
     try {
       const res = await api.get("/mails/receive");
       return res.data;
-    } catch {
+    } catch (error) {
       alert("받은 메일 조회 실패");
+      throw error;
     }
   };
 
@@ -98,8 +99,9 @@ export const useMailApi = () => {
     try {
       const res = await api.get("/mails/send");
       return res.data;
-    } catch {
+    } catch (error) {
       alert("보낸 메일 조회 실패");
+      throw error;
     }
   };
 
@@ -108,8 +110,9 @@ export const useMailApi = () => {
     try {
       const res = await api.get("/mails/draft");
       return res.data;
-    } catch {
+    } catch (error) {
       alert("임시 메일 조회 실패");
+      throw error;
     }
   };
 
@@ -118,8 +121,9 @@ export const useMailApi = () => {
     try {
       const res = await api.get("/mails/important");
       return res.data;
-    } catch {
+    } catch (error) {
       alert("중요 메일 조회 실패");
+      throw error;
     }
   };
 
@@ -128,13 +132,14 @@ export const useMailApi = () => {
     try {
       const res = await api.get("/mails/self");
       return res.data;
-    } catch {
+    } catch (error) {
       alert("내게 쓴 메일 조회 실패");
+      throw error;
     }
   };
 
   // 첨부파일 상세보기
-  const getFile = async ({ emailId, attachmentId }) => {
+  const getFile = async ({ emailId, attachmentId, fileName }) => {
     try {
       const res = await api.get(`/mails/${emailId}/file/${attachmentId}`, {
         responseType: "blob",
@@ -143,13 +148,14 @@ export const useMailApi = () => {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = attachmentId;
+      a.download = fileName;
       document.body.appendChild(a);
       a.click();
       a.remove();
       window.URL.revokeObjectURL(url);
-    } catch {
+    } catch (error) {
       alert("파일 다운로드 실패");
+      throw error;
     }
   };
 

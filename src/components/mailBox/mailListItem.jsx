@@ -17,7 +17,7 @@ import { useMediaQuery } from "react-responsive";
  */
 const MailListItem = ({ mail }) => {
   const toggleCheckbox = useCheckboxStore((state) => state.toggleCheckbox); // 메일 선택 관련 함수 가져오기
-  const setSelectedMailId = useMailStore((state) => state.setSelectedMailId); // 현재 선택된 메일을 설정하는 함수
+  const setSelectedMail = useMailStore((state) => state.setSelectedMail); // 현재 선택된 메일을 설정하는 함수
 
   const formatReceiveDate = useFormattedDate(); // 날짜 포맷 변경
   const isImportant = mail.isImportant; // 중요 메일 여부
@@ -25,10 +25,7 @@ const MailListItem = ({ mail }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 425px)" });
 
   return (
-    <div
-      className="mailListItem-wrapper"
-      onClick={() => setSelectedMailId(mail.id)}
-    >
+    <div className="mailListItem-wrapper" onClick={() => setSelectedMail(mail)}>
       {/* 메일 선택 체크박스 */}
       <label className="mailListItem-custom-checkBox">
         <input

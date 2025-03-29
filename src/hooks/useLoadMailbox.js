@@ -66,14 +66,5 @@ export const useLoadMailbox = (type) => {
     };
 
     load();
-  }, [
-    type,
-    setReceivedMails,
-    setSentMails,
-    setDraftMails,
-    setSelfSentMails,
-    setImportantMails,
-    setStatus,
-    setError,
-  ]);
+  }, [type]);
 };
