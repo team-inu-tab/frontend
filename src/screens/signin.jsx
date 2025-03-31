@@ -51,7 +51,7 @@ function Signin() {
           {
             withCredentials: true,
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: accessToken,
             },
           }
         );
@@ -68,7 +68,7 @@ function Signin() {
           {
             withCredentials: true,
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: accessToken,
             },
           }
         );
