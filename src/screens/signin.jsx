@@ -37,7 +37,7 @@ function Signin() {
 
   const handleSubmit = async () => {
     try {
-      const accessToken = getToken();
+      const accessToken = await getToken();
 
       if (selectedJob === "학교") {
         const payload = {
