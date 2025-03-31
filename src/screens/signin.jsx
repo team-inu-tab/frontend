@@ -23,7 +23,7 @@ function Signin() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      refresh(); // 엑세스 토큰 발급
+      refresh();
     }, 100);
     return () => clearTimeout(timer);
   }, []);
@@ -51,7 +51,7 @@ function Signin() {
           {
             withCredentials: true,
             headers: {
-              Authorization: accessToken,
+              Authorization: `Bearer ${accessToken}`,
             },
           }
         );
@@ -68,7 +68,7 @@ function Signin() {
           {
             withCredentials: true,
             headers: {
-              Authorization: accessToken,
+              Authorization: `Bearer ${accessToken}`,
             },
           }
         );
