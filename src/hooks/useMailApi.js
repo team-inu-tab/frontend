@@ -9,7 +9,7 @@ const api = axios.create({
   withCredentials: true,
 });
 
-// api 요청 시 accessToken 자동 포함
+// 요청 인터셉터 - accessToken 자동 추가
 api.interceptors.request.use((config) => {
   const token = useAuthStore.getState().accessToken;
   if (token) {
@@ -18,36 +18,63 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// 401 응답 시 refresh 시도 후 api 재요청
+// 중복 refresh 방지용 플래그 & 대기열
+let isRefreshing = false;
+let refreshSubscribers = [];
+
+const subscribeTokenRefresh = (cb) => {
+  refreshSubscribers.push(cb);
+};
+
+const onRefreshed = (newToken) => {
+  refreshSubscribers.forEach((cb) => cb(newToken));
+  refreshSubscribers = [];
+};
+
+// 응답 인터셉터 - 401 에러 시 토큰 재발급 및 재요청
 api.interceptors.response.use(
-  (response) => response, // 응답이 성공한 경우 그대로 반환
+  (response) => response,
   async (error) => {
-    const originalRequest = error.config; // 원래 요청 정보를 저장
+    const originalRequest = error.config;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      try {
-        const res = await fetch(`${BASE_URL}/oauth2/reissue`, {
-          method: "POST",
-          credentials: "include",
-        });
+      if (!isRefreshing) {
+        isRefreshing = true;
 
-        if (res.status === 200) {
-          const newToken = res.headers.get("Authorization");
+        try {
+          const res = await fetch(`${BASE_URL}/oauth2/reissue`, {
+            method: "POST",
+            credentials: "include",
+          });
 
-          if (newToken) {
-            useAuthStore.getState().setAccessToken(newToken);
-            originalRequest.headers["Authorization"] = newToken;
-            return api(originalRequest); // 재요청
+          if (res.status === 200) {
+            const newToken = res.headers.get("Authorization");
+            if (newToken) {
+              useAuthStore.getState().setAccessToken(newToken);
+              onRefreshed(newToken);
+              isRefreshing = false;
+            }
+          } else {
+            throw new Error("리프레시 실패");
           }
+        } catch (err) {
+          isRefreshing = false;
+          useAuthStore.getState().clearAccessToken();
+          alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+          return Promise.reject(err);
         }
-      } catch (err) {
-        useAuthStore.getState().clearAccessToken();
-        alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-        return Promise.reject(err);
       }
+
+      return new Promise((resolve) => {
+        subscribeTokenRefresh((newToken) => {
+          originalRequest.headers["Authorization"] = newToken;
+          resolve(api(originalRequest));
+        });
+      });
     }
+
     return Promise.reject(error);
   }
 );
@@ -78,73 +105,69 @@ export const useMailApi = () => {
         useAuthStore.getState().setAccessToken(accessToken);
         return accessToken;
       }
-    } else {
-      throw new Error("토큰 저장 실패");
     }
+
+    throw new Error("토큰 저장 실패");
   };
 
   // 받은 메일함 조회
   const fetchReceiveMails = async () => {
-    try {
-      const res = await api.get("/mails/receive");
-      return res.data;
-    } catch (error) {
-      alert("받은 메일 조회 실패");
-      throw error;
-    }
+    const res = await api.get("/mails/receive");
+    return res.data;
   };
 
-  // 보낸 메일함 조회
   const fetchSentMails = async () => {
-    try {
-      const res = await api.get("/mails/send");
-      return res.data;
-    } catch (error) {
-      alert("보낸 메일 조회 실패");
-      throw error;
-    }
+    const res = await api.get("/mails/send");
+    return res.data;
   };
 
-  // 임시 메일함 조회
   const fetchDraftMails = async () => {
-    try {
-      const res = await api.get("/mails/draft");
-      return res.data;
-    } catch (error) {
-      alert("임시 메일 조회 실패");
-      throw error;
-    }
+    const res = await api.get("/mails/draft");
+    return res.data;
   };
 
-  // 중요 메일함 조회
   const fetchImportantMails = async () => {
-    try {
-      const res = await api.get("/mails/important");
-      return res.data;
-    } catch (error) {
-      alert("중요 메일 조회 실패");
-      throw error;
-    }
+    const res = await api.get("/mails/important");
+    return res.data;
   };
 
-  // 내게 쓴 메일함 조회
   const fetchSelfSentMails = async () => {
-    try {
-      const res = await api.get("/mails/self");
-      return res.data;
-    } catch (error) {
-      alert("내게 쓴 메일 조회 실패");
-      throw error;
-    }
+    const res = await api.get("/mails/self");
+    return res.data;
   };
 
-  // 첨부파일 상세보기
+  // 첨부파일 다운로드 (base64 디코딩)
   const getFile = async ({ emailId, attachmentId, fileName }) => {
     try {
       const res = await api.get(`/mails/${emailId}/file/${attachmentId}`, {
-        responseType: "blob",
+        responseType: "text",
       });
-      const blob = res.data;
+
+      const base64 = res.data;
+      const extension = fileName.split(".").pop().toLowerCase();
+
+      const mimeTypes = {
+        pdf: "application/pdf",
+        ppt: "application/vnd.ms-powerpoint",
+        pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        zip: "application/zip",
+        jpg: "image/jpeg",
+        png: "image/png",
+      };
+
+      const mimeType = mimeTypes[extension] || "application/octet-stream";
+
+      const byteCharacters = atob(base64.trim());
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: mimeType });
+
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -155,6 +178,7 @@ export const useMailApi = () => {
       window.URL.revokeObjectURL(url);
     } catch (error) {
       alert("파일 다운로드 실패");
+      console.error(error);
       throw error;
     }
   };
