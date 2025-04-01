@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import "@css/signin.css";
 import symbolLogo from "@assets/images/symbolLogo.svg";
 import Circle from "@components/signin/circle.jsx";
@@ -10,6 +9,7 @@ import InputLine from "@assets/images/inputLine.svg";
 import backGround from "@assets/images/backGround.svg";
 import { useNavigate } from "react-router-dom";
 import { useMailApi } from "@hooks/useMailApi.js";
+import { api } from "@hooks/useMailApi";
 
 function Signin() {
   const [affiliation, setAffiliation] = useState("");
@@ -19,14 +19,7 @@ function Signin() {
   const jobData = { data: ["학생", "직장인"] };
 
   const navigation = useNavigate();
-  const { getToken, refresh } = useMailApi();
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      refresh();
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
+  const { getToken } = useMailApi();
 
   const renderJobText = (value) => {
     setSelectedJob(value);
@@ -37,7 +30,7 @@ function Signin() {
 
   const handleSubmit = async () => {
     try {
-      const accessToken = await getToken();
+      await getToken();
 
       if (selectedJob === "학교") {
         const payload = {
@@ -45,34 +38,26 @@ function Signin() {
           studentDepartment: department,
           studentNum: Number(position),
         };
-        const response = await axios.post(
-          "https://maeilmail.co.kr/api/users/info/student",
-          payload,
-          {
-            withCredentials: true,
-            headers: {
-              Authorization: accessToken,
-            },
-          }
-        );
-        console.log("학교 정보 저장 완료:", response.data);
-      } else if (selectedJob === "회사") {
-        const payload = {
-          company: affiliation,
-          workerDepartment: department,
-          position: position,
-        };
-        const response = await axios.post(
-          "https://maeilmail.co.kr/api/users/info/worker",
-          payload,
-          {
-            withCredentials: true,
-            headers: {
-              Authorization: accessToken,
-            },
-          }
-        );
-        console.log("회사 정보 저장 완료:", response.data);
+        const res = await api.post("/users/info/student", payload);
+        console.log("학교 정보 저장 완료:", res.data);
+
+        // } else if (selectedJob === "회사") {
+        //   const payload = {
+        //     company: affiliation,
+        //     workerDepartment: department,
+        //     position: position,
+        //   };
+        //   const response = await axios.post(
+        //     "https://maeilmail.co.kr/api/users/info/worker",
+        //     payload,
+        //     {
+        //       withCredentials: true,
+        //       headers: {
+        //         Authorization: accessToken,
+        //       },
+        //     }
+        //   );
+        //   console.log("회사 정보 저장 완료:", response.data);
       }
       navigation("/mail/receive");
     } catch (error) {

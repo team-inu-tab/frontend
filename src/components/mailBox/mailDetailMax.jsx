@@ -15,7 +15,7 @@ const MailDetailMax = () => {
 
   // 선택된 메일이 없으면 화면에 표시하지 않음
   if (!selectedMail) {
-    return <div>No mail selected</div>;
+    return null;
   }
 
   return (
@@ -37,7 +37,7 @@ const MailDetailMax = () => {
             )}
           </div>
           {/* 확장 버튼 */}
-          <ExpandArrow onClick={toggleExpanded} />
+          <ExpandArrow className="expandArrow-icon" onClick={toggleExpanded} />
         </div>
 
         {/* 첨부 파일 */}

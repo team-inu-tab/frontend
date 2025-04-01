@@ -18,69 +18,8 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// 중복 refresh 방지용 플래그 & 대기열
-let isRefreshing = false;
-let refreshSubscribers = [];
-
-const subscribeTokenRefresh = (cb) => {
-  refreshSubscribers.push(cb);
-};
-
-const onRefreshed = (newToken) => {
-  refreshSubscribers.forEach((cb) => cb(newToken));
-  refreshSubscribers = [];
-};
-
-// 응답 인터셉터 - 401 에러 시 토큰 재발급 및 재요청
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      if (!isRefreshing) {
-        isRefreshing = true;
-
-        try {
-          const res = await fetch(`${BASE_URL}/oauth2/reissue`, {
-            method: "POST",
-            credentials: "include",
-          });
-
-          if (res.status === 200) {
-            const newToken = res.headers.get("Authorization");
-            if (newToken) {
-              useAuthStore.getState().setAccessToken(newToken);
-              onRefreshed(newToken);
-              isRefreshing = false;
-            }
-          } else {
-            throw new Error("리프레시 실패");
-          }
-        } catch (err) {
-          isRefreshing = false;
-          useAuthStore.getState().clearAccessToken();
-          alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-          return Promise.reject(err);
-        }
-      }
-
-      return new Promise((resolve) => {
-        subscribeTokenRefresh((newToken) => {
-          originalRequest.headers["Authorization"] = newToken;
-          resolve(api(originalRequest));
-        });
-      });
-    }
-
-    return Promise.reject(error);
-  }
-);
-
 export const useMailApi = () => {
-  // 엑세스 토큰 가져오기
+  // 엑세스 토큰 가져오기/호출
   const getToken = async () => {
     let token = useAuthStore.getState().accessToken;
 
@@ -112,32 +51,49 @@ export const useMailApi = () => {
 
   // 받은 메일함 조회
   const fetchReceiveMails = async () => {
+    await getToken();
     const res = await api.get("/mails/receive");
     return res.data;
   };
 
+  // 보낸 메일함 조회
   const fetchSentMails = async () => {
+    await getToken();
     const res = await api.get("/mails/send");
     return res.data;
   };
 
+  // 임시 보관 메일함 조회
   const fetchDraftMails = async () => {
+    await getToken();
     const res = await api.get("/mails/draft");
     return res.data;
   };
 
+  // 중요 메일함 조회
   const fetchImportantMails = async () => {
+    await getToken();
     const res = await api.get("/mails/important");
     return res.data;
   };
 
+  // 내게 쓴 메일함 조회
   const fetchSelfSentMails = async () => {
+    await getToken();
     const res = await api.get("/mails/self");
     return res.data;
   };
 
-  // 첨부파일 다운로드 (base64 디코딩)
+  // 스팸 메일함 조회
+  const fetchSpamMails = async () => {
+    await getToken();
+    const res = await api.get("/mails/spam");
+    return res.data;
+  };
+
+  // 파일 상세 보기 - 첨부파일 다운로드
   const getFile = async ({ emailId, attachmentId, fileName }) => {
+    await getToken();
     try {
       const res = await api.get(`/mails/${emailId}/file/${attachmentId}`, {
         responseType: "text",
@@ -183,6 +139,18 @@ export const useMailApi = () => {
     }
   };
 
+  // 스팸 차단
+  const markAsSpam = async (mailId) => {
+    const res = await api.post(`/mails/spam/${mailId}`);
+    return res.data;
+  };
+
+  // 스팸 해제
+  const unmarkAsSpam = async (mailId) => {
+    const res = await api.delete(`/mails/spam/${mailId}`);
+    return res.data;
+  };
+
   return {
     getToken,
     refresh,
@@ -191,6 +159,11 @@ export const useMailApi = () => {
     fetchDraftMails,
     fetchImportantMails,
     fetchSelfSentMails,
+    fetchSpamMails,
+    markAsSpam,
+    unmarkAsSpam,
     getFile,
   };
 };
+
+export { api };

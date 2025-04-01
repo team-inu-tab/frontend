@@ -1,9 +1,15 @@
 import "@components/mailBox/css/mailListHeader.css";
 import { useState } from "react";
-import { useCheckboxStore, useSortStore, SORT_OPTIONS } from "../../store";
+import {
+  useCheckboxStore,
+  useSortStore,
+  SORT_OPTIONS,
+  useMailStore,
+} from "../../store";
 import Search from "@assets/icons/search.svg?react";
 import Arrow from "@assets/icons/arrow.svg?react";
 import { useLocation } from "react-router-dom";
+import { useMailApi } from "../../hooks/useMailApi";
 
 /**
  * MailListHeader - 메일함 목록 상단의 헤더 컴포넌트
@@ -12,9 +18,22 @@ import { useLocation } from "react-router-dom";
 const MailListHeader = () => {
   const location = useLocation();
 
-  const selectedCount = useCheckboxStore((state) => state.selectedCount);
-  const selectAll = useCheckboxStore((state) => state.selectAll);
   const changeSortOption = useSortStore((state) => state.changeSortOption);
+  const checkAll = useCheckboxStore((state) => state.checkAll);
+  const uncheckAll = useCheckboxStore((state) => state.uncheckAll);
+  const isAllChecked = useCheckboxStore((state) => state.isAllChecked);
+  const isIndeterminate = useCheckboxStore((state) => state.isIndeterminate);
+  const getCheckedIds = useCheckboxStore((state) => state.getCheckedIds);
+  const receiveMails = useMailStore((state) => state.receiveMails);
+  const sentMails = useMailStore((state) => state.sentMails);
+  const draftMails = useMailStore((state) => state.draftMails);
+  const importantMails = useMailStore((state) => state.importantMails);
+  const deletedMails = useMailStore((state) => state.deletedMails);
+  const scheduledMails = useMailStore((state) => state.scheduledMails);
+  const selfSentMails = useMailStore((state) => state.selfSentMails);
+  const spamMails = useMailStore((state) => state.spamMails);
+
+  const { markAsSpam, unmarkAsSpam } = useMailApi();
 
   const [isSortOptionOpen, setIsSortOptionOpen] = useState(false); // 정렬 옵션 상태
 
@@ -29,46 +48,60 @@ const MailListHeader = () => {
 
   // 메일 기능 도구 기본값
   let mailTools = <></>;
+  let boxType = "";
+  let mails = [];
 
   /**
    * 현재 위치에 따라 헤더 내용 동적으로 변경
    */
   switch (true) {
     case location.pathname.includes("/receive"):
+      boxType = "receive";
+      mails = receiveMails;
       mailTools = (
         <>
           <button>답장</button>
           <button>전달</button>
           <button>중요</button>
-          <button>스팸차단</button>
+          <button onClick={handleMarkSpam}>스팸차단</button>
         </>
       );
       break;
+
     case location.pathname.includes("/important"):
+      boxType = "important";
+      mails = importantMails;
       mailTools = (
         <>
           <button>답장</button>
           <button>전달</button>
           <button>중요</button>
-          <button>스팸차단</button>
+          <button onClick={handleMarkSpam}>스팸차단</button>
         </>
       );
       break;
+
     case location.pathname.includes("/deleted"):
+      boxType = "deleted";
+      mails = deletedMails;
       mailTools = (
         <>
           <button>복원</button>
           <button>영구삭제</button>
-          <button>스팸차단</button>
+          <button onClick={handleMarkSpam}>스팸차단</button>
         </>
       );
       break;
 
     case location.pathname.includes("/draft"):
+      boxType = "draft";
+      mails = draftMails;
       mailTools = <></>;
       break;
 
     case location.pathname.includes("/scheduled"):
+      boxType = "scheduled";
+      mails = scheduledMails;
       mailTools = (
         <>
           <button>전달</button>
@@ -79,6 +112,8 @@ const MailListHeader = () => {
       break;
 
     case location.pathname.includes("/selfsent"):
+      boxType = "selfsent";
+      mails = selfSentMails;
       mailTools = (
         <>
           <button>전달</button>
@@ -89,6 +124,8 @@ const MailListHeader = () => {
       break;
 
     case location.pathname.includes("/sent"):
+      boxType = "sent";
+      mails = sentMails;
       mailTools = (
         <>
           <button>답장</button>
@@ -99,10 +136,12 @@ const MailListHeader = () => {
       break;
 
     case location.pathname.includes("/spam"):
+      boxType = "spam";
+      mails = spamMails;
       mailTools = (
         <>
           <button>영구삭제</button>
-          <button>스팸해제</button>
+          <button onClick={handleUnmarkSpam}>스팸해제</button>
         </>
       );
       break;
@@ -110,6 +149,42 @@ const MailListHeader = () => {
     default:
       mailTools = null;
   }
+
+  const mailIds = mails.map((mail) => mail.id);
+
+  const selectedCount = useCheckboxStore(
+    (state) => state.checkedByBox[boxType]?.size || 0
+  );
+
+  const selectedIds = getCheckedIds(boxType);
+
+  // 스팸 차단
+  const handleMarkSpam = async () => {
+    try {
+      // 선택된 메일들을 순회하며 스팸 등록
+      await Promise.all(selectedIds.map((id) => markAsSpam(id)));
+
+      // 완료 후 체크 상태 초기화
+      uncheckAll(boxType);
+
+      alert("스팸 메일함으로 이동되었습니다.");
+    } catch (error) {
+      console.error("스팸 등록 실패", error);
+      alert("스팸 등록에 실패했습니다.");
+    }
+  };
+
+  // 스팸 해제
+  const handleUnmarkSpam = async () => {
+    try {
+      await Promise.all(selectedIds.map((id) => unmarkAsSpam(id)));
+      uncheckAll("spam");
+      alert("스팸 해제 완료!");
+    } catch (error) {
+      console.error("스팸 해제 실패", error);
+      alert("스팸 해제 중 문제가 발생했습니다.");
+    }
+  };
 
   return (
     <div className="mailListHeader-wrapper">
@@ -120,7 +195,15 @@ const MailListHeader = () => {
           <label className="mailListHeader-custom-checkBox">
             <input
               type="checkbox"
-              onChange={(e) => selectAll(e.target.checked)}
+              checked={isAllChecked(boxType, mailIds)}
+              ref={(el) => {
+                if (el) el.indeterminate = isIndeterminate(boxType, mailIds);
+              }}
+              onChange={(e) => {
+                e.target.checked
+                  ? checkAll(boxType, mailIds)
+                  : uncheckAll(boxType);
+              }}
             />
             <span className="checkmark"></span>
           </label>

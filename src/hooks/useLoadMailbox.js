@@ -8,6 +8,7 @@ export const useLoadMailbox = (type) => {
   const setDraftMails = useMailStore((state) => state.setDraftMails);
   const setSelfSentMails = useMailStore((state) => state.setSelfSentMails);
   const setImportantMails = useMailStore((state) => state.setImportantMails);
+  const setSpamMails = useMailStore((state) => state.setSpamMails);
   const setGroupedReceiveMails = useMailStore(
     (state) => state.setGroupedReceiveMails
   );
@@ -23,6 +24,7 @@ export const useLoadMailbox = (type) => {
     fetchDraftMails,
     fetchImportantMails,
     fetchSelfSentMails,
+    fetchSpamMails,
   } = useMailApi();
 
   useEffect(() => {
@@ -53,6 +55,10 @@ export const useLoadMailbox = (type) => {
           case "self":
             data = await fetchSelfSentMails();
             setSelfSentMails(data);
+            break;
+          case "spam":
+            data = await fetchSpamMails();
+            setSpamMails(data);
             break;
           default:
             throw new Error("메일 타입을 찾을 수 없습니다.");
