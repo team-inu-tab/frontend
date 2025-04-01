@@ -18,67 +18,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// 중복 refresh 방지용 플래그 & 대기열
-let isRefreshing = false;
-let refreshSubscribers = [];
-
-const subscribeTokenRefresh = (cb) => {
-  refreshSubscribers.push(cb);
-};
-
-const onRefreshed = (newToken) => {
-  refreshSubscribers.forEach((cb) => cb(newToken));
-  refreshSubscribers = [];
-};
-
-// 응답 인터셉터 - 401 에러 시 토큰 재발급 및 재요청
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      if (!isRefreshing) {
-        isRefreshing = true;
-
-        try {
-          const res = await fetch(`${BASE_URL}/oauth2/reissue`, {
-            method: "POST",
-            credentials: "include",
-          });
-
-          if (res.status === 200) {
-            const newToken = res.headers.get("Authorization");
-            if (newToken) {
-              useAuthStore.getState().setAccessToken(newToken);
-              onRefreshed(newToken);
-              isRefreshing = false;
-            }
-          } else {
-            throw new Error("리프레시 실패");
-          }
-        } catch (err) {
-          isRefreshing = false;
-          useAuthStore.getState().clearAccessToken();
-          alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-          return Promise.reject(err);
-        }
-      }
-
-      return new Promise((resolve) => {
-        subscribeTokenRefresh((newToken) => {
-          originalRequest.headers["Authorization"] = newToken;
-          resolve(api(originalRequest));
-        });
-      });
-    }
-
-    return Promise.reject(error);
-  }
-);
-
 export const useMailApi = () => {
   // 엑세스 토큰 가져오기/호출
   const getToken = async () => {
@@ -200,3 +139,5 @@ export const useMailApi = () => {
     getFile,
   };
 };
+
+export { api };
