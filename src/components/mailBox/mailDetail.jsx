@@ -18,45 +18,45 @@ const MailDetail = () => {
 
   const [imagePreviews, setImagePreviews] = useState([]);
 
-  useEffect(() => {
-    const loadImages = async () => {
-      if (!selectedMail) return;
+  // useEffect(() => {
+  //   const loadImages = async () => {
+  //     if (!selectedMail) return;
 
-      console.log("selectedMail:", selectedMail);
-      console.log("fileNameList:", selectedMail.fileNameList);
+  //     console.log("selectedMail:", selectedMail);
+  //     console.log("fileNameList:", selectedMail.fileNameList);
 
-      const imageExtensions = ["jpg", "jpeg", "png", "gif", "webp"];
-      const imageFiles = selectedMail.fileNameList.filter((file) => {
-        const ext = file.fileName.split(".").pop().toLowerCase();
-        return imageExtensions.includes(ext);
-      });
+  //     const imageExtensions = ["jpg", "jpeg", "png", "gif", "webp"];
+  //     const imageFiles = selectedMail.fileNameList.filter((file) => {
+  //       const ext = file.fileName.split(".").pop().toLowerCase();
+  //       return imageExtensions.includes(ext);
+  //     });
 
-      const previews = await Promise.all(
-        imageFiles.map(async (file) => {
-          try {
-            const res = await fetch(
-              `/api/mails/${selectedMail.id}/file/${file.attachmentId}`
-            );
-            const blob = await res.blob();
-            const url = URL.createObjectURL(blob);
-            return { url, fileName: file.fileName };
-          } catch (err) {
-            console.error("이미지 미리보기 실패:", file.fileName, err);
-            return null;
-          }
-        })
-      );
+  //     const previews = await Promise.all(
+  //       imageFiles.map(async (file) => {
+  //         try {
+  //           const res = await fetch(
+  //             `/api/mails/${selectedMail.id}/file/${file.attachmentId}`
+  //           );
+  //           const blob = await res.blob();
+  //           const url = URL.createObjectURL(blob);
+  //           return { url, fileName: file.fileName };
+  //         } catch (err) {
+  //           console.error("이미지 미리보기 실패:", file.fileName, err);
+  //           return null;
+  //         }
+  //       })
+  //     );
 
-      setImagePreviews(previews.filter(Boolean)); // null 제거
-    };
+  //     setImagePreviews(previews.filter(Boolean)); // null 제거
+  //   };
 
-    loadImages();
+  //   loadImages();
 
-    // cleanup: blob URL 해제
-    return () => {
-      imagePreviews.forEach((img) => URL.revokeObjectURL(img.url));
-    };
-  }, [selectedMail]);
+  //   // cleanup: blob URL 해제
+  //   return () => {
+  //     imagePreviews.forEach((img) => URL.revokeObjectURL(img.url));
+  //   };
+  // }, [selectedMail]);
 
   // 선택된 메일이 없으면 화면에 표시하지 않음
   if (!selectedMail) {

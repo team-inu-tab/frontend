@@ -6,6 +6,11 @@ const LoginTest = () => {
   const [fileName, setFileName] = useState("");
   const fileInputRef = useRef(null);
 
+  const handleLogin = () => {
+    window.location.href =
+      "http://maeilmail.co.kr/api/oauth2/authorization/google";
+  };
+
   const getDraftEmails = async () => {
     try {
       const response = await fetch("https://maeilmail.co.kr/api/mails/draft", {
@@ -272,6 +277,7 @@ const LoginTest = () => {
     <div>
       <h1>login Success</h1>
       <h5>로그인 성공 후 refresh 필수!!</h5>
+      <button onClick={handleLogin}>Login</button>
       <button onClick={getHello}>get hello</button>
       <button onClick={refresh} style={{ color: "orange" }}>
         refresh
