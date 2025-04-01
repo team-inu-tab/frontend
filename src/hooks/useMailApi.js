@@ -141,10 +141,42 @@ export const useMailApi = () => {
   // 첨부파일 상세보기
   const getFile = async ({ emailId, attachmentId, fileName }) => {
     try {
+      // base64 문자열 받기 (텍스트 응답)
       const res = await api.get(`/mails/${emailId}/file/${attachmentId}`, {
-        responseType: "blob",
+        responseType: "text", // 또는 기본값 (json 아님)
       });
-      const blob = res.data;
+
+      const base64 = res.data;
+
+      // 확장자 추출
+      const extension = fileName.split(".").pop().toLowerCase();
+
+      // MIME 타입 매핑 (필요한 포맷만 추가)
+      const mimeTypes = {
+        pdf: "application/pdf",
+        ppt: "application/vnd.ms-powerpoint",
+        pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        zip: "application/zip",
+        jpg: "image/jpeg",
+        png: "image/png",
+      };
+
+      const mimeType = mimeTypes[extension] || "application/octet-stream"; // 기본값
+
+      // base64 → Uint8Array 변환
+      const byteCharacters = atob(base64.trim());
+      const byteNumbers = new Array(byteCharacters.length);
+
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: mimeType });
+
+      // 다운로드 트리거
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -155,6 +187,7 @@ export const useMailApi = () => {
       window.URL.revokeObjectURL(url);
     } catch (error) {
       alert("파일 다운로드 실패");
+      console.error(error);
       throw error;
     }
   };
