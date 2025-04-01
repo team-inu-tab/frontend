@@ -21,10 +21,11 @@ function Landing() {
       <p className="serviceText">Maeil, MAIL.</p>
       <img src={landingAI} className="landingAILogo"></img>
       <p className="introText">생성형 AI를 이용한 메일 자동 교정 서비스</p>
-      <button className="serviceStartButton" onClick={handleLogin}>
-        <img src={serviceStartButton} className="buttonImg"></img>
-        Start now
-      </button>
+
+      <div className="buttonContainer" onClick={handleLogin}>
+        <img src={serviceStartButton} className="serviceStartButton"/>
+      </div>
+      
       <p className="catchphraseShadow">Type less, let Tab do the rest.</p>
       <p className="catchphrase1">Type less, let Tab do the rest.</p>
       <p className="catchphrase2">타이핑은 최소로, 완성은 탭으로.</p>
