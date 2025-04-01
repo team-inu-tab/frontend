@@ -83,7 +83,7 @@ const MailDetail = () => {
         </div>
 
         {/* 첨부 파일 */}
-        {selectedMail.fileNameList.length > 0 && (
+        {selectedMail?.fileNameList?.length > 0 && (
           <div className="mailDetail-files">
             <span className="mailDetail-files-title">
               첨부파일 {selectedMail.fileNameList.length}개
