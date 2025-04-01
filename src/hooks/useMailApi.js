@@ -141,12 +141,14 @@ export const useMailApi = () => {
 
   // 스팸 차단
   const markAsSpam = async (mailId) => {
+    await getToken();
     const res = await api.post(`/mails/spam/${mailId}`);
     return res.data;
   };
 
   // 스팸 해제
   const unmarkAsSpam = async (mailId) => {
+    await getToken();
     const res = await api.delete(`/mails/spam/${mailId}`);
     return res.data;
   };

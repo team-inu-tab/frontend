@@ -46,6 +46,36 @@ const MailListHeader = () => {
     toggleOption();
   };
 
+  const selectedIds = getCheckedIds(boxType);
+
+  // 스팸 차단
+  const handleMarkSpam = async () => {
+    try {
+      // 선택된 메일들을 순회하며 스팸 등록
+      await Promise.all(selectedIds.map((id) => markAsSpam(id)));
+
+      // 완료 후 체크 상태 초기화
+      uncheckAll(boxType);
+
+      alert("스팸 메일함으로 이동되었습니다.");
+    } catch (error) {
+      console.error("스팸 등록 실패", error);
+      alert("스팸 등록에 실패했습니다.");
+    }
+  };
+
+  // 스팸 해제
+  const handleUnmarkSpam = async () => {
+    try {
+      await Promise.all(selectedIds.map((id) => unmarkAsSpam(id)));
+      uncheckAll("spam");
+      alert("스팸 해제 완료!");
+    } catch (error) {
+      console.error("스팸 해제 실패", error);
+      alert("스팸 해제 중 문제가 발생했습니다.");
+    }
+  };
+
   // 메일 기능 도구 기본값
   let mailTools = <></>;
   let boxType = "";
@@ -155,36 +185,6 @@ const MailListHeader = () => {
   const selectedCount = useCheckboxStore(
     (state) => state.checkedByBox[boxType]?.size || 0
   );
-
-  const selectedIds = getCheckedIds(boxType);
-
-  // 스팸 차단
-  const handleMarkSpam = async () => {
-    try {
-      // 선택된 메일들을 순회하며 스팸 등록
-      await Promise.all(selectedIds.map((id) => markAsSpam(id)));
-
-      // 완료 후 체크 상태 초기화
-      uncheckAll(boxType);
-
-      alert("스팸 메일함으로 이동되었습니다.");
-    } catch (error) {
-      console.error("스팸 등록 실패", error);
-      alert("스팸 등록에 실패했습니다.");
-    }
-  };
-
-  // 스팸 해제
-  const handleUnmarkSpam = async () => {
-    try {
-      await Promise.all(selectedIds.map((id) => unmarkAsSpam(id)));
-      uncheckAll("spam");
-      alert("스팸 해제 완료!");
-    } catch (error) {
-      console.error("스팸 해제 실패", error);
-      alert("스팸 해제 중 문제가 발생했습니다.");
-    }
-  };
 
   return (
     <div className="mailListHeader-wrapper">
