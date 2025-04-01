@@ -9,6 +9,7 @@ import {
 import Search from "@assets/icons/search.svg?react";
 import Arrow from "@assets/icons/arrow.svg?react";
 import { useLocation } from "react-router-dom";
+import { useMailApi } from "../../hooks/useMailApi";
 
 /**
  * MailListHeader - 메일함 목록 상단의 헤더 컴포넌트
@@ -22,6 +23,7 @@ const MailListHeader = () => {
   const uncheckAll = useCheckboxStore((state) => state.uncheckAll);
   const isAllChecked = useCheckboxStore((state) => state.isAllChecked);
   const isIndeterminate = useCheckboxStore((state) => state.isIndeterminate);
+  const getCheckedIds = useCheckboxStore((state) => state.getCheckedIds);
   const receiveMails = useMailStore((state) => state.receiveMails);
   const sentMails = useMailStore((state) => state.sentMails);
   const draftMails = useMailStore((state) => state.draftMails);
@@ -30,6 +32,8 @@ const MailListHeader = () => {
   const scheduledMails = useMailStore((state) => state.scheduledMails);
   const selfSentMails = useMailStore((state) => state.selfSentMails);
   const spamMails = useMailStore((state) => state.spamMails);
+
+  const { markAsSpam, unmarkAsSpam } = useMailApi();
 
   const [isSortOptionOpen, setIsSortOptionOpen] = useState(false); // 정렬 옵션 상태
 
@@ -59,7 +63,7 @@ const MailListHeader = () => {
           <button>답장</button>
           <button>전달</button>
           <button>중요</button>
-          <button>스팸차단</button>
+          <button onClick={handleMarkSpam}>스팸차단</button>
         </>
       );
       break;
@@ -72,7 +76,7 @@ const MailListHeader = () => {
           <button>답장</button>
           <button>전달</button>
           <button>중요</button>
-          <button>스팸차단</button>
+          <button onClick={handleMarkSpam}>스팸차단</button>
         </>
       );
       break;
@@ -84,7 +88,7 @@ const MailListHeader = () => {
         <>
           <button>복원</button>
           <button>영구삭제</button>
-          <button>스팸차단</button>
+          <button onClick={handleMarkSpam}>스팸차단</button>
         </>
       );
       break;
@@ -137,7 +141,7 @@ const MailListHeader = () => {
       mailTools = (
         <>
           <button>영구삭제</button>
-          <button>스팸해제</button>
+          <button onClick={handleUnmarkSpam}>스팸해제</button>
         </>
       );
       break;
@@ -151,6 +155,36 @@ const MailListHeader = () => {
   const selectedCount = useCheckboxStore(
     (state) => state.checkedByBox[boxType]?.size || 0
   );
+
+  const selectedIds = getCheckedIds(boxType);
+
+  // 스팸 차단
+  const handleMarkSpam = async () => {
+    try {
+      // 선택된 메일들을 순회하며 스팸 등록
+      await Promise.all(selectedIds.map((id) => markAsSpam(id)));
+
+      // 완료 후 체크 상태 초기화
+      uncheckAll(boxType);
+
+      alert("스팸 메일함으로 이동되었습니다.");
+    } catch (error) {
+      console.error("스팸 등록 실패", error);
+      alert("스팸 등록에 실패했습니다.");
+    }
+  };
+
+  // 스팸 해제
+  const handleUnmarkSpam = async () => {
+    try {
+      await Promise.all(selectedIds.map((id) => unmarkAsSpam(id)));
+      uncheckAll("spam");
+      alert("스팸 해제 완료!");
+    } catch (error) {
+      console.error("스팸 해제 실패", error);
+      alert("스팸 해제 중 문제가 발생했습니다.");
+    }
+  };
 
   return (
     <div className="mailListHeader-wrapper">

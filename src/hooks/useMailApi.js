@@ -56,31 +56,42 @@ export const useMailApi = () => {
     return res.data;
   };
 
+  // 보낸 메일함 조회
   const fetchSentMails = async () => {
     await getToken();
     const res = await api.get("/mails/send");
     return res.data;
   };
 
+  // 임시 보관 메일함 조회
   const fetchDraftMails = async () => {
     await getToken();
     const res = await api.get("/mails/draft");
     return res.data;
   };
 
+  // 중요 메일함 조회
   const fetchImportantMails = async () => {
     await getToken();
     const res = await api.get("/mails/important");
     return res.data;
   };
 
+  // 내게 쓴 메일함 조회
   const fetchSelfSentMails = async () => {
     await getToken();
     const res = await api.get("/mails/self");
     return res.data;
   };
 
-  // 첨부파일 다운로드 (base64 디코딩)
+  // 스팸 메일함 조회
+  const fetchSpamMails = async () => {
+    await getToken();
+    const res = await api.get("/mails/spam");
+    return res.data;
+  };
+
+  // 파일 상세 보기 - 첨부파일 다운로드
   const getFile = async ({ emailId, attachmentId, fileName }) => {
     await getToken();
     try {
@@ -128,6 +139,18 @@ export const useMailApi = () => {
     }
   };
 
+  // 스팸 차단
+  const markAsSpam = async (mailId) => {
+    const res = await api.post(`/mails/spam/${mailId}`);
+    return res.data;
+  };
+
+  // 스팸 해제
+  const unmarkAsSpam = async (mailId) => {
+    const res = await api.delete(`/mails/spam/${mailId}`);
+    return res.data;
+  };
+
   return {
     getToken,
     refresh,
@@ -136,6 +159,9 @@ export const useMailApi = () => {
     fetchDraftMails,
     fetchImportantMails,
     fetchSelfSentMails,
+    fetchSpamMails,
+    markAsSpam,
+    unmarkAsSpam,
     getFile,
   };
 };
