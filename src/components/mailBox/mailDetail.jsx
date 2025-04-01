@@ -22,6 +22,9 @@ const MailDetail = () => {
     const loadImages = async () => {
       if (!selectedMail) return;
 
+      console.log("selectedMail:", selectedMail);
+      console.log("fileNameList:", selectedMail.fileNameList);
+
       const imageExtensions = ["jpg", "jpeg", "png", "gif", "webp"];
       const imageFiles = selectedMail.fileNameList.filter((file) => {
         const ext = file.fileName.split(".").pop().toLowerCase();
@@ -79,7 +82,7 @@ const MailDetail = () => {
             )}
           </div>
           {/* 확장 버튼 */}
-          <ExpandArrow onClick={toggleExpanded} />
+          <ExpandArrow className="expandArrow-icon" onClick={toggleExpanded} />
         </div>
 
         {/* 첨부 파일 */}

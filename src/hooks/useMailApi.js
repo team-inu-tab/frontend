@@ -80,7 +80,7 @@ api.interceptors.response.use(
 );
 
 export const useMailApi = () => {
-  // 엑세스 토큰 가져오기
+  // 엑세스 토큰 가져오기/호출
   const getToken = async () => {
     let token = useAuthStore.getState().accessToken;
 
@@ -112,32 +112,38 @@ export const useMailApi = () => {
 
   // 받은 메일함 조회
   const fetchReceiveMails = async () => {
+    await getToken();
     const res = await api.get("/mails/receive");
     return res.data;
   };
 
   const fetchSentMails = async () => {
+    await getToken();
     const res = await api.get("/mails/send");
     return res.data;
   };
 
   const fetchDraftMails = async () => {
+    await getToken();
     const res = await api.get("/mails/draft");
     return res.data;
   };
 
   const fetchImportantMails = async () => {
+    await getToken();
     const res = await api.get("/mails/important");
     return res.data;
   };
 
   const fetchSelfSentMails = async () => {
+    await getToken();
     const res = await api.get("/mails/self");
     return res.data;
   };
 
   // 첨부파일 다운로드 (base64 디코딩)
   const getFile = async ({ emailId, attachmentId, fileName }) => {
+    await getToken();
     try {
       const res = await api.get(`/mails/${emailId}/file/${attachmentId}`, {
         responseType: "text",

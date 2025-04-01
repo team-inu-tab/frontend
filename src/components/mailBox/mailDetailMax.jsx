@@ -37,7 +37,7 @@ const MailDetailMax = () => {
             )}
           </div>
           {/* 확장 버튼 */}
-          <ExpandArrow onClick={toggleExpanded} />
+          <ExpandArrow className="expandArrow-icon" onClick={toggleExpanded} />
         </div>
 
         {/* 첨부 파일 */}

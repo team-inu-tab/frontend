@@ -43,6 +43,11 @@
   line-height: normal;
 }
 
+.expandArrow-icon {
+  width: 6rem;
+  height: 6rem;
+}
+
 .mailDetail-files {
   gap: 0.5rem;
   margin-bottom: 1.5rem;
