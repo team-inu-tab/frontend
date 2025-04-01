@@ -5,8 +5,8 @@
     font-weight: 100 900;
     font-style: normal;
   }
-  
-.landingBackground{
+    
+  .landingBackground {
     position: absolute;
     margin-top: -1%;
     background-image: url('@assets/images/LandingBackground.svg');
@@ -16,34 +16,34 @@
     min-height: 420vh;
     min-width: 99.4vw;
     z-index: -1;
-}
-
-.landingSymbolLogo {
+  }
+  
+  .landingSymbolLogo {
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 40%;
-    margin-right: 40%;
     top: 5.2%;
-    left: 6%;
+    left: 50%;
+    transform: translateX(-50%);
     width: 6.875rem;
     height: 5.1875rem;
-}
-
-.serviceText{
+  }
+    
+  .serviceText {
     position: absolute;
-    top: 5.2%;
-    left: 27.8%;
+    left: 50%;
+    transform: translateX(-50%);
     font-family: "SUIT";
-    font-size: 8rem;
     font-style: normal;
     font-weight: 200;
     line-height: normal;
     color: #2F3438;
-}
-
-.landingAILogo {
+    font-size: clamp(4rem, calc(1rem + 8vw), 8rem);
+    top: calc(2.2% + 5.1875rem + 1rem);
+  }
+    
+  .landingAILogo {
     position: absolute;
     display: flex;
     align-items: center;
@@ -52,140 +52,127 @@
     height: 1.9375rem;
     aspect-ratio: 1/1;
     top: 12.88%;
-    left: 8.6%;
+    left: 50%;
+    transform: translateX(-50%);
     margin-top: 4%;
     margin-bottom: 4%;
-    margin-left: 40%;
-    margin-right: 40%;
-}
-
-.introText{
+  }
+  
+  .introText {
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    top: 14.68%;
-    left: 8.6%;
-    margin-top: 3%;
-    margin-left: 30%;
-    margin-right: 30%;
+    top: 15.48%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
     color: #2F3438;
     font-family: "SUIT";
-    font-size: 1.25rem;
+    font-size: clamp(1rem, calc(1rem + 1vw), 1.25rem);
+    text-align: center;
     font-style: normal;
     font-weight: 200;
     line-height: normal;
-
-}
-
-.serviceStartButton{
+  }
+  
+  .buttonContainer {
     position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    top: 22.8%;
-    left: 43%;
+    display: inline-block;
+    width: 13.5625rem;
+    height: 4.75rem;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    z-index: 1;
+  }
+  
+  .serviceStartButton {
+    position: relative;
+    display: block;
     width: 12.5625rem;
     height: 3.75rem;
     padding: 0.5rem;
-
-    border-radius: 1rem;
-    border: 4px solid #BFBDE6;
-    background: #FFFFFF;
     outline: none;
-
-    cursor: pointer;
-
-    color: #000000;
-    font-family: "SUIT";
-    font-size: 1.25rem;
-    font-style: normal;
-    font-weight: 200;
-    line-height: normal;
-}
-
-.buttonImg {
-    position: relative;
-    width: 1.62rem;
-    height: 1.62rem;
-    flex-shrink: 0;
-    aspect-ratio: 25.92/25.92;
-    margin-left: 2.25%;
-    margin-right: 3.375%;
-    pointer-events: none;
-}
-
-.catchphraseShadow {
+  }
+  
+  .catchphraseShadow {
     position: absolute;
     display: flex;
-    top: 28.8%;
-    left: 5.4%;
-    margin-left: 25%;
-    margin-right: 25%;
-    
-    font-family: "SUIT";
-    font-size: 3rem;
-    font-style: normal;
-    font-weight: 200;
-    line-height: normal;
-    background: linear-gradient(90deg, #8C4CF6 0%, #5947F5 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: blur(5.449999809265137px);
-}
-
-.catchphrase1 {
-    position: absolute;
-    display: flex;
-    top: 28.8%;
-    left: 5.4%;
-    margin-left: 25%;
-    margin-right: 25%;
-    
-    font-family: "SUIT";
-    font-size: 3rem;
-    font-style: normal;
-    font-weight: 200;
-    line-height: normal;
-    background: linear-gradient(90deg, #8C4CF6 0%, #5947F5 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.catchphrase2 {
-    position: absolute;
-    display: flex;
-    top: 31.8%;
-    left: 15.4%;
-    margin-left: 25%;
-    margin-right: 25%;
-    font-family: "SUIT";
-    font-size: 1.25rem;
-    font-style: normal;
-    font-weight: 200;
-    line-height: normal;
-}
-
-.subState {
-    position: absolute;
-    display: flex;
-    justify-items: center;
     align-items: center;
-    top: 37.5%;
-    left: 43.3%;
-
+    justify-content: center;
+    top: 28.8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    text-align: center;
+    font-family: "SUIT";
+    font-size: clamp(2.5rem, calc(2rem + 1vw), 3rem);
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+    background: linear-gradient(90deg, #8C4CF6 0%, #5947F5 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: blur(5.45px);
+  }
+  
+  .catchphrase1 {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 28.8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    text-align: center;
+    font-family: "SUIT";
+    font-size: clamp(2.5rem, calc(2rem + 1vw), 3rem);
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+    background: linear-gradient(90deg, #8C4CF6 0%, #5947F5 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .catchphrase2 {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 31.8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    text-align: center;
+    font-family: "SUIT";
+    font-size: clamp(1rem, calc(0.8rem + 1vw), 1.25rem);
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+  }
+  
+  .subState {
+    position: absolute;
+    top: 30%;
+    left: 53.8%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    text-align: center;
     color: #2F3438;
     font-family: "SUIT";
-    font-size: 1.25rem;
+    font-size: clamp(1rem, calc(0.8rem + 1vw), 1.25rem);
     font-style: normal;
     font-weight: 200;
     line-height: normal;
-}
-
-.functionContainer {
+  }
+  
+  .functionContainer {
     position: absolute;
     display: flex;
     justify-items: center;
@@ -193,9 +180,9 @@
     top: 41.8%;
     width: 92.5%;
     height: 16%;
-}
-
-.function1Wrapper {
+  }
+  
+  .function1Wrapper {
     position: relative;
     display: grid;
     justify-items: center;
@@ -203,55 +190,52 @@
     width: 32%;
     height: 80%;
     margin-left: 7%;
-}
-
-.function1 {
+  }
+  
+  .function1 {
     position: relative;
     width: 3.75rem;
     height: 3.75rem;
     margin-bottom: -3%;
     aspect-ratio: 1/1;
-}
-
-.functionIntro1 {
+  }
+  
+  .functionIntro1 {
     position: relative;
     color: #2F3438;
-
     font-family: "SUIT";
-    font-size: 1.25rem;
+    font-size: clamp(1rem, calc(1rem + 0.5vw), 1.25rem);
     font-style: normal;
     font-weight: 200;
     line-height: normal;
     margin-bottom: 41.9375%;
-}
-
-.functionState1 {
+  }
+  
+  .functionState1 {
     position: relative;
     padding-left: 3%;
-}
-
-.function2Wrapper {
+  }
+  
+  .function2Wrapper {
     position: relative;
     display: grid;
     justify-items: center;
     align-items: center;
-
     width: 32%;
     height: 80%;
-}
-
-.funtion2 {
+  }
+  
+  .function2 {
     position: relative;
-    width: 3.875rem;
-    height: 3.875rem;
+    width: 1.78125rem;
+    height: 1.78125rem;
     aspect-ratio: 1/1;
-}
-
-.functionIntro2 {
+  }
+  
+  .functionIntro2 {
     position: relative;
     margin-top: 2%;
     margin-bottom: 40.4%;
-
     font-family: "SUIT";
     font-size: 1.25rem;
     font-style: normal;
@@ -261,44 +245,401 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-}
-
-.funcState2 {
+  }
+  
+  .funcState2 {
     position: relative;
-}
-
-.function3Wrapper {
+  }
+  
+  .function3Wrapper {
     position: relative;
     display: grid;
     justify-items: center;
     align-items: center;
-
     width: 32%;
     height: 80%;
-}
-
-.function3 {
+  }
+  
+  .function3 {
     position: relative;
     display: flex;
-    
     width: 3.5625rem;
     height: 3.5625rem;
     aspect-ratio: 1/1;
-}
-
-.functionIntro3{
+  }
+  
+  .functionIntro3 {
     position: relative;
     margin-top: 2%;
     margin-bottom: 40.4%;
     color: #2F3438;
-
     font-family: "SUIT";
-    font-size: 1.25rem;
+    font-size: clamp(1rem, calc(1rem + 0.5vw), 1.25rem);
     font-style: normal;
     font-weight: 200;
     line-height: normal;
-}
-
-.funcState3 {
+  }
+  
+  .funcState3 {
     position: relative;
-}
+  }
+  
+  /* 기존 태블릿 이하 (최대 폭 768px) */
+  @media screen and (max-width: 768px) {
+    .landingSymbolLogo {
+      top: 6%;
+      width: 3.97590361rem;
+      height: 3rem;
+    }
+    
+    .serviceText {
+      font-size: clamp(3rem, calc(1rem + 6vw), 6rem);
+      top: calc(3.2% + 5.1875rem + 1rem);
+    }
+  
+    .landingAILogo {
+      width: 1.5rem;
+      height: 1.5rem;
+      top: calc(7.2% + 5.1875rem + 1rem);
+      margin-top: 3%;
+      margin-bottom: 3%;
+    }
+  
+    .introText {
+      top: calc(8.6% + 5.1875rem + 1rem);
+      font-size: clamp(0.9rem, calc(0.9rem + 1vw), 0.8rem);
+      width: 80%;
+    }
+  
+    .buttonContainer {
+      top: calc(11.2% + 5.1875rem + 1rem);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 11rem;
+      height: 4.25rem;
+    }
+    
+    .serviceStartButton {
+      width: 10rem;
+      height: 3.5rem;
+    }
+  
+    .catchphraseShadow,
+    .catchphrase1 {
+      top: calc(18.2% + 5.1875rem + 1rem);
+      font-size: clamp(2.2rem, calc(1.8rem + 1vw), 1.8rem);
+      width: 80%;
+    }
+    .catchphrase2 {
+      top: calc(20.2% + 5.1875rem + 1rem);
+      font-size: clamp(0.9rem, calc(0.8rem + 1vw), 1.1rem);
+    }
+  
+    .subState {
+      top: calc(24.2% + 5.1875rem + 1rem);
+      width: 60%;
+      font-size: clamp(0.9rem, calc(0.8rem + 1vw), 1.1rem);
+    }
+  
+    .functionContainer {
+      top: 45%;
+      height: 18%;
+    }
+  
+    .function1Wrapper,
+    .function2Wrapper,
+    .function3Wrapper {
+      width: 30%;
+      height: 75%;
+    }
+  
+    .functionIntro1,
+    .functionIntro2,
+    .functionIntro3 {
+      font-size: clamp(0.9rem, calc(0.9rem + 0.5vw), 1.1rem);
+      margin-top: -24%;
+      margin-bottom: 30%;
+    }
+  
+    .function1 {
+      width: clamp(1.78125rem, calc(3rem + 0.5vw), 0.8rem);
+      height: clamp(1.78125rem, calc(3rem + 0.5vw), 0.8rem);
+    }
+  
+    .funtion2 {
+      width: clamp(1.28rem, calc(1.28rem + 0.05vw), 0.4rem);
+      height: clamp(1.28rem, calc(1.28rem + 0.05vw), 0.4rem);
+    }
+        
+    .function3 {
+      width: clamp(1.78125rem, calc(3rem + 0.5vw), 0.8rem);
+      height: clamp(1.78125rem, calc(3rem + 0.5vw), 0.8rem);
+    }
+  
+    .funcState1 {
+      width: clamp(12rem, calc(3rem + 0.5vw), 1.8rem);
+      height: clamp(12rem, calc(3rem + 0.5vw), 1.8rem);
+    }
+  
+    .funcState2 {
+      width: clamp(12.5rem, calc(3rem + 0.5vw), 1.8rem);
+      height: clamp(12.5rem, calc(3rem + 0.5vw), 1.8rem);
+    }
+  
+    .funcState3 {
+      width: clamp(12rem, calc(3rem + 0.5vw), 1.8rem);
+      height: clamp(12rem, calc(3rem + 0.5vw), 1.8rem);
+    }
+  }
+  
+  /* 1024px 노트북 (최소 1024px ~ 최대 1279px) */
+  @media screen and (min-width: 1024px) and (max-width: 1279px) {
+    .landingSymbolLogo {
+      top: 5.2%;
+      width: 6.5rem;
+      height: 5rem;
+    }
+    .serviceText {
+      top: calc(2.2% + 5.1875rem + 1rem);
+      font-size: clamp(4rem, calc(1rem + 8vw), 8rem);
+    }
+    .landingAILogo {
+      width: 1.75rem;
+      height: 1.75rem;
+      top: 12.88%;
+    }
+    .introText {
+      top: 15.48%;
+      font-size: clamp(1rem, calc(1rem + 1vw), 1.25rem);
+      width: 40%;
+    }
+    .buttonContainer {
+      top: 20%;
+      width: 13.5625rem;
+      height: 4.75rem;
+    }
+    .serviceStartButton {
+      width: 12.5625rem;
+      height: 3.75rem;
+    }
+    .catchphraseShadow,
+    .catchphrase1 {
+      top: 28.8%;
+      font-size: clamp(2.5rem, calc(2rem + 1vw), 3rem);
+      width: 50%;
+    }
+    .catchphrase2 {
+      top: 31.8%;
+      font-size: clamp(1rem, calc(0.8rem + 1vw), 1.25rem);
+    }
+    .subState {
+      top: 30%;
+      width: 30%;
+      font-size: clamp(1rem, calc(0.8rem + 1vw), 1.25rem);
+    }
+    .functionContainer {
+      top: 41.8%;
+      width: 92.5%;
+      height: 16%;
+    }
+    .function1Wrapper,
+    .function2Wrapper,
+    .function3Wrapper {
+      width: 32%;
+      height: 80%;
+    }
+    .function1 {
+      width: 3.75rem;
+      height: 3.75rem;
+    }
+    .functionIntro1 {
+      font-size: clamp(1rem, calc(1rem + 0.5vw), 1.25rem);
+      margin-bottom: 41.9375%;
+    }
+    .function2 {
+      width: 3.875rem;
+      height: 3.875rem;
+    }
+    .functionIntro2 {
+      font-size: 1.25rem;
+      margin-top: 2%;
+      margin-bottom: 40.4%;
+    }
+    .function3 {
+      width: 3.5625rem;
+      height: 3.5625rem;
+    }
+    .functionIntro3 {
+      font-size: clamp(1rem, calc(1rem + 0.5vw), 1.25rem);
+      margin-top: 2%;
+      margin-bottom: 40.4%;
+    }
+  }
+  
+  /* 1280px 노트북 (최소 1280px ~ 최대 1919px) */
+  @media screen and (min-width: 1280px) and (max-width: 1919px) {
+    .landingSymbolLogo {
+      top: 5.2%;
+      width: 7rem;
+      height: 5.3rem;
+    }
+    .serviceText {
+      top: calc(2.2% + 5.1875rem + 1rem);
+      font-size: clamp(4rem, calc(1.2rem + 8vw), 8rem);
+    }
+    .landingAILogo {
+      width: 1.9375rem;
+      height: 1.9375rem;
+      top: 12.88%;
+    }
+    .introText {
+      top: 15.48%;
+      font-size: clamp(1rem, calc(1rem + 1vw), 1.25rem);
+      width: 40%;
+    }
+    .buttonContainer {
+      top: 20%;
+      width: 13.5625rem;
+      height: 4.75rem;
+    }
+    .serviceStartButton {
+      width: 12.5625rem;
+      height: 3.75rem;
+    }
+    .catchphraseShadow,
+    .catchphrase1 {
+      top: 28.8%;
+      font-size: clamp(2.5rem, calc(2rem + 1vw), 3rem);
+      width: 50%;
+    }
+    .catchphrase2 {
+      top: 31.8%;
+      font-size: clamp(1rem, calc(0.8rem + 1vw), 1.25rem);
+    }
+    .subState {
+      top: 30%;
+      width: 30%;
+      font-size: clamp(1rem, calc(0.8rem + 1vw), 1.25rem);
+    }
+    .functionContainer {
+      top: 41.8%;
+      width: 92.5%;
+      height: 16%;
+    }
+    .function1Wrapper,
+    .function2Wrapper,
+    .function3Wrapper {
+      width: 32%;
+      height: 80%;
+    }
+    .function1 {
+      width: 3.75rem;
+      height: 3.75rem;
+    }
+    .functionIntro1 {
+      font-size: clamp(1rem, calc(1rem + 0.5vw), 1.25rem);
+      margin-bottom: 41.9375%;
+    }
+    .function2 {
+      width: 3.875rem;
+      height: 3.875rem;
+    }
+    .functionIntro2 {
+      font-size: 1.25rem;
+      margin-top: 2%;
+      margin-bottom: 40.4%;
+    }
+    .function3 {
+      width: 3.5625rem;
+      height: 3.5625rem;
+    }
+    .functionIntro3 {
+      font-size: clamp(1rem, calc(1rem + 0.5vw), 1.25rem);
+      margin-top: 2%;
+      margin-bottom: 40.4%;
+    }
+  }
+  
+  /* 1920px PC (1920px 이상) */
+  @media screen and (min-width: 1920px) {
+    .landingSymbolLogo {
+      top: 5.2%;
+      width: 8rem;
+      height: 6rem;
+    }
+    .serviceText {
+      top: calc(2.5% + 5.1875rem + 1rem);
+      font-size: clamp(4rem, calc(1.5rem + 8vw), 8rem);
+    }
+    .landingAILogo {
+      width: 2rem;
+      height: 2rem;
+      top: 12.88%;
+    }
+    .introText {
+      top: 15.48%;
+      font-size: clamp(1rem, calc(1.1rem + 1vw), 1.3rem);
+      width: 40%;
+    }
+    .buttonContainer {
+      top: 20%;
+      width: 14rem;
+      height: 5rem;
+    }
+    .serviceStartButton {
+      width: 13rem;
+      height: 4rem;
+    }
+    .catchphraseShadow,
+    .catchphrase1 {
+      top: 28.8%;
+      font-size: clamp(2.5rem, calc(2.2rem + 1vw), 3rem);
+      width: 50%;
+    }
+    .catchphrase2 {
+      top: 31.8%;
+      font-size: clamp(1rem, calc(0.9rem + 1vw), 1.25rem);
+    }
+    .subState {
+      top: 30%;
+      width: 30%;
+      font-size: clamp(1rem, calc(0.9rem + 1vw), 1.25rem);
+    }
+    .functionContainer {
+      top: 41.8%;
+      width: 92.5%;
+      height: 16%;
+    }
+    .function1Wrapper,
+    .function2Wrapper,
+    .function3Wrapper {
+      width: 32%;
+      height: 80%;
+    }
+    .function1 {
+      width: 3.75rem;
+      height: 3.75rem;
+    }
+    .functionIntro1 {
+      font-size: clamp(1rem, calc(1rem + 0.5vw), 1.25rem);
+      margin-bottom: 41.9375%;
+    }
+    .function2 {
+      width: 3.875rem;
+      height: 3.875rem;
+    }
+    .functionIntro2 {
+      font-size: 1.25rem;
+      margin-top: 2%;
+      margin-bottom: 40.4%;
+    }
+    .function3 {
+      width: 3.5625rem;
+      height: 3.5625rem;
+    }
+    .functionIntro3 {
+      font-size: clamp(1rem, calc(1rem + 0.5vw), 1.25rem);
+      margin-top: 2%;
+      margin-bottom: 40.4%;
+    }
+  }
