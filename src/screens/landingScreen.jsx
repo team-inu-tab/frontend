@@ -22,10 +22,9 @@ function Landing() {
       <img src={landingAI} className="landingAILogo"></img>
       <p className="introText">생성형 AI를 이용한 메일 자동 교정 서비스</p>
 
-      <div className="buttonContainer" onClick={handleLogin}>
-        <img src={serviceStartButton} className="serviceStartButton"/>
-      </div>
-      
+      <img src={serviceStartButton} className="serviceStartButton" onClick={handleLogin}/>
+  
+
       <p className="catchphraseShadow">Type less, let Tab do the rest.</p>
       <p className="catchphrase1">Type less, let Tab do the rest.</p>
       <p className="catchphrase2">타이핑은 최소로, 완성은 탭으로.</p>
@@ -36,7 +35,7 @@ function Landing() {
           <img src={function1} className="function1"></img>
           <p className="functionIntro1">Type</p>
           <img src={functionState1} className="funcState1"></img>
-        </div>
+      </div>
 
         <div className="function2Wrapper">
           <img src={function2} className="function2"></img>
