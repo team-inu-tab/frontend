@@ -11,14 +11,49 @@ import checkCompImg from '@assets/images/sendCompCheck.svg';
 function MailWriteModal() {
     const [isAiOn, setIsAiOn] = useState(false);
     const [isSendClick, setIsSendClick] = useState(false)
+    const [mailTitle, setMailTitle] = useState('');
+    const [recieverTitle, setRecieverTitle] = useState('');
+    const [mailBody, setMailBody] = useState('');
+
+    const sendMail = async () => {
+      const payload = {
+        toEmail: recieverTitle,
+        subject: mailTitle,
+        body: mailBody
+      };
+  
+      try {
+        const response = await fetch("https://maeilmail.co.kr/api/mails/send", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+  
+        if (!response.ok) {
+          throw new Error("메일 전송 실패");
+        }
+        console.log("메일 전송 성공");
+      } catch (error) {
+        console.error("메일 전송 중 오류 발생:", error);
+      }
+    };
 
     return (
       <MailContainer>
-        <input className='mailTitle' placeholder='제목을 입력하세요.'/>
+        <input className='mailTitle' 
+                placeholder='제목을 입력하세요.' 
+                value={mailTitle} 
+                onChange={(e) => setMailTitle(e.target.value)}
+                />
 
         <div className='recieverTitleContainer'>
             <text className='recieverLabel'>받는사람</text>
-            <input className='recieverTitle'/>
+            <input className='recieverTitle'
+                    value={recieverTitle} 
+                    onChange={(e) => setRecieverTitle(e.target.value)}
+            />
             <text className='toMeText'>내게 쓰기</text>
             <input type='checkbox' className='isToMe'></input>
         </div>
@@ -42,11 +77,20 @@ function MailWriteModal() {
             onChange={() => setIsAiOn(!isAiOn)}/>
         </div>
 
-        <WriteContainer className={isAiOn ? 'writeContainer on' : 'writeContainer'} />
+        <WriteContainer className={isAiOn ? 'writeContainer on' : 'writeContainer'} 
+                        value={mailBody}
+                        onChange={setMailBody}
+        />
 
         <div className='buttonContainer'>
           <button className='reservationButton'>예약하기</button>
-          <button className="sendButton" onClick={() => setIsSendClick(true)}>전송하기</button>
+          <button className="sendButton" 
+                  onClick={() => {
+                    sendMail();
+                    setIsSendClick(true);}}
+          >
+          전송하기
+          </button>
         </div>
 
         {isSendClick && <img src={CompImg} className="compImg" />}
