@@ -1,6 +1,6 @@
 import "@components/menu/css/menuBar.css";
-import SubMenu from "@components/menu/subMenu";
-import MenuItem from "@components/menu/menuItem";
+import SubMenu from "@components/menu/subMenu.jsx";
+import MenuItem from "@components/menu/menuItem.jsx";
 import { useMenuStore } from "@store";
 import MailWriteModal from "@components/common/mailWriteModal.jsx";
 
