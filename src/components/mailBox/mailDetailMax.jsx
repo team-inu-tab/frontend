@@ -25,12 +25,16 @@ const MailDetailMax = () => {
         <div className="mailDetailMax-header">
           <div className="mailDetailMax-header-container">
             <span className="mailDetailMax-title">{selectedMail.title}</span>
-            <span className="mailDetail-sender">
-              보낸사람: {selectedMail.sender}
-            </span>
-            <span className="mailDetail-sender">
-              받는사람: {selectedMail.receiver}
-            </span>
+            {selectedMail.sender && (
+              <span className="mailDetail-sender">
+                보낸사람: {selectedMail.sender}
+              </span>
+            )}
+            {selectedMail.receiver && (
+              <span className="mailDetail-sender">
+                받는사람: {selectedMail.receiver}
+              </span>
+            )}
           </div>
           {/* 확장 버튼 */}
           <ExpandArrow onClick={toggleExpanded} />

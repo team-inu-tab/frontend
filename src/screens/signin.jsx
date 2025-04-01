@@ -23,7 +23,7 @@ function Signin() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      refresh(); // 엑세스 토큰 발급
+      refresh();
     }, 100);
     return () => clearTimeout(timer);
   }, []);
@@ -37,7 +37,7 @@ function Signin() {
 
   const handleSubmit = async () => {
     try {
-      const accessToken = getToken();
+      const accessToken = await getToken();
 
       if (selectedJob === "학교") {
         const payload = {
