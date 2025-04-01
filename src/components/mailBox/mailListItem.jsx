@@ -3,6 +3,7 @@ import { useCheckboxStore, useMailStore } from "../../store";
 import Star from "@assets/icons/star.svg?react";
 import { useFormattedDate } from "../../hooks/useFormattedDate";
 import { useMediaQuery } from "react-responsive";
+import { useLocation } from "react-router-dom";
 
 /**
  * MailListItem - 개별 메일 항목을 렌더링하는 컴포넌트
@@ -16,7 +17,10 @@ import { useMediaQuery } from "react-responsive";
  * @returns {JSX.Element} 메일 리스트 항목 컴포넌트
  */
 const MailListItem = ({ mail }) => {
-  const toggleCheckbox = useCheckboxStore((state) => state.toggleCheckbox); // 메일 선택 관련 함수 가져오기
+  const location = useLocation();
+
+  const toggleCheck = useCheckboxStore((state) => state.toggleCheck);
+  const isChecked = useCheckboxStore((state) => state.isChecked);
   const setSelectedMail = useMailStore((state) => state.setSelectedMail); // 현재 선택된 메일을 설정하는 함수
 
   const formatReceiveDate = useFormattedDate(); // 날짜 포맷 변경
@@ -24,14 +28,55 @@ const MailListItem = ({ mail }) => {
 
   const isMobile = useMediaQuery({ query: "(max-width: 425px)" });
 
+  let boxType = "";
+
+  /**
+   * 현재 위치에 따라 헤더 내용 동적으로 변경
+   */
+  switch (true) {
+    case location.pathname.includes("/receive"):
+      boxType = "receive";
+      break;
+
+    case location.pathname.includes("/important"):
+      boxType = "important";
+      break;
+
+    case location.pathname.includes("/deleted"):
+      boxType = "deleted";
+      break;
+
+    case location.pathname.includes("/draft"):
+      boxType = "draft";
+      break;
+
+    case location.pathname.includes("/scheduled"):
+      boxType = "scheduled";
+      break;
+
+    case location.pathname.includes("/selfsent"):
+      boxType = "selfsent";
+      break;
+
+    case location.pathname.includes("/sent"):
+      boxType = "sent";
+      break;
+
+    case location.pathname.includes("/spam"):
+      boxType = "spam";
+      break;
+
+    default:
+  }
+
   return (
     <div className="mailListItem-wrapper" onClick={() => setSelectedMail(mail)}>
       {/* 메일 선택 체크박스 */}
       <label className="mailListItem-custom-checkBox">
         <input
           type="checkbox"
-          checked={mail.isChecked}
-          onChange={(e) => toggleCheckbox(mail.id, e.target.checked)}
+          checked={isChecked(boxType, mail.id)}
+          onChange={() => toggleCheck(boxType, mail.id)}
         />
         <span className="checkmark"></span>
       </label>

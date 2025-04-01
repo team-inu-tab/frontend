@@ -1,77 +1,54 @@
 import { create } from "zustand";
-import { useSortStore, SORT_OPTIONS } from "./useSortStore";
 
-export const useCheckboxStore = create((set) => ({
-  // mails: [],
-  selectedCount: 0,
+export const useCheckboxStore = create((set, get) => ({
+  // 메일함별로 선택된 메일 ID들을 저장
+  checkedByBox: {
+    receive: new Set(),
+    important: new Set(),
+    deleted: new Set(),
+    draft: new Set(),
+    scheduled: new Set(),
+    selfsent: new Set(),
+    sent: new Set(),
+    spam: new Set(),
+  },
 
-  // // 전체 메일 업데이트
-  // setMails: (mails) =>
-  //   set(() => {
-  //     const updatedMails = mails.map((mail) => ({
-  //       ...mail,
-  //       isChecked: mail.isChecked ?? false,
-  //     }));
-  //     return {
-  //       mails: updatedMails,
-  //       selectedCount: updatedMails.filter((mail) => mail.isChecked).length,
-  //     };
-  //   }),
+  // 개별 메일 체크박스 토글
+  toggleCheck: (box, id) => {
+    const updated = new Set(get().checkedByBox[box]);
+    updated.has(id) ? updated.delete(id) : updated.add(id); // 이미 선택된 상태면 제거
+    set((state) => ({
+      checkedByBox: { ...state.checkedByBox, [box]: updated },
+    }));
+  },
 
-  // 메일 전체 선택
-  selectAll: (isChecked) =>
-    set((state) => {
-      const sortOption = useSortStore.getState().sortOption;
+  // 전체 선택
+  checkAll: (box, ids) =>
+    set((state) => ({
+      checkedByBox: { ...state.checkedByBox, [box]: new Set(ids) },
+    })),
 
-      if (sortOption === SORT_OPTIONS.TIME) {
-        const updatedMails = state.mails.map((mail) => ({
-          ...mail,
-          isChecked,
-        }));
-        return {
-          mails: updatedMails,
-          selectedCount: isChecked ? updatedMails.length : 0,
-        };
-      } else {
-        const updatedGroupedMails = state.mails.map((group) => ({
-          ...group,
-          mailItems: group.mailItems.map((mail) => ({ ...mail, isChecked })),
-        }));
-        return {
-          mails: updatedGroupedMails,
-          selectedCount: isChecked
-            ? updatedGroupedMails.flatMap((group) => group.mailItems).length
-            : 0,
-        };
-      }
-    }),
+  // 전체 선택 해제
+  uncheckAll: (box) =>
+    set((state) => ({
+      checkedByBox: { ...state.checkedByBox, [box]: new Set() },
+    })),
 
-  // 개별 선택
-  toggleCheckbox: (id, isChecked) =>
-    set((state) => {
-      const sortOption = useSortStore.getState().sortOption;
+  // 특정 메일 ID가 선택되었는지 여부 반환
+  isChecked: (box, id) => get().checkedByBox[box]?.has(id) ?? false,
 
-      if (sortOption === SORT_OPTIONS.TIME) {
-        const updatedMails = state.mails.map((mail) =>
-          mail.id === id ? { ...mail, isChecked } : mail
-        );
-        return {
-          mails: updatedMails,
-          selectedCount: updatedMails.filter((mail) => mail.isChecked).length,
-        };
-      } else {
-        const updatedGroupedMails = state.mails.map((group) => ({
-          ...group,
-          mailItems: group.mailItems.map((mail) =>
-            mail.id === id ? { ...mail, isChecked } : mail
-          ),
-        }));
-        return {
-          mails: updatedGroupedMails,
-          selectedCount: updatedGroupedMails
-            .flatMap((group) => group.mailItems)
-            .filter((mail) => mail.isChecked).length,
-        };
-      }
-    }),
+  // 모든 메일이 선택된 상태인지 확인 (헤더 체크박스에 사용)
+  isAllChecked: (box, ids) =>
+    ids.length > 0 && ids.every((id) => get().checkedByBox[box]?.has(id)),
+
+  // 일부만 선택된 상태인지 확인 (헤더 체크박스에 사용)
+  isIndeterminate: (box, ids) => {
+    const checked = get().checkedByBox[box] ?? new Set();
+    return (
+      ids.some((id) => checked.has(id)) && !ids.every((id) => checked.has(id))
+    );
+  },
+
+  // 선택된 메일 ID 목록 반환 (선택한 항목에 대한 후처리에 사용 가능)
+  getCheckedIds: (box) => Array.from(get().checkedByBox[box] ?? []),
 }));
