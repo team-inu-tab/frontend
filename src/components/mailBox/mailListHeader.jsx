@@ -10,6 +10,7 @@ import Search from "@assets/icons/search.svg?react";
 import Arrow from "@assets/icons/arrow.svg?react";
 import { useLocation } from "react-router-dom";
 import { useMailApi } from "../../hooks/useMailApi";
+import { getMailBoxConfig } from "../../utils/getMailBoxConfig";
 
 /**
  * MailListHeader - 메일함 목록 상단의 헤더 컴포넌트
@@ -46,139 +47,64 @@ const MailListHeader = () => {
     toggleOption();
   };
 
-  const selectedIds = getCheckedIds(boxType);
+  // boxType, mails 먼저 가져오기
+  const { boxType, mails } = getMailBoxConfig({
+    pathname: location.pathname,
+    stores: {
+      receiveMails,
+      sentMails,
+      draftMails,
+      importantMails,
+      deletedMails,
+      scheduledMails,
+      selfSentMails,
+      spamMails,
+    },
+    actions: {},
+  });
 
   // 스팸 차단
   const handleMarkSpam = async () => {
+    const ids = getCheckedIds(boxType);
     try {
-      // 선택된 메일들을 순회하며 스팸 등록
-      await Promise.all(selectedIds.map((id) => markAsSpam(id)));
-
-      // 완료 후 체크 상태 초기화
+      await Promise.all(ids.map((id) => markAsSpam(id)));
       uncheckAll(boxType);
-
-      alert("스팸 메일함으로 이동되었습니다.");
-    } catch (error) {
-      console.error("스팸 등록 실패", error);
-      alert("스팸 등록에 실패했습니다.");
+      alert("스팸 등록 완료!");
+    } catch {
+      alert("스팸 등록 실패");
     }
   };
 
   // 스팸 해제
   const handleUnmarkSpam = async () => {
+    const ids = getCheckedIds(boxType);
     try {
-      await Promise.all(selectedIds.map((id) => unmarkAsSpam(id)));
-      uncheckAll("spam");
+      await Promise.all(ids.map((id) => unmarkAsSpam(id)));
+      uncheckAll(boxType);
       alert("스팸 해제 완료!");
-    } catch (error) {
-      console.error("스팸 해제 실패", error);
-      alert("스팸 해제 중 문제가 발생했습니다.");
+    } catch {
+      alert("스팸 해제 실패");
     }
   };
 
-  // 메일 기능 도구 기본값
-  let mailTools = <></>;
-  let boxType = "";
-  let mails = [];
-
-  /**
-   * 현재 위치에 따라 헤더 내용 동적으로 변경
-   */
-  switch (true) {
-    case location.pathname.includes("/receive"):
-      boxType = "receive";
-      mails = receiveMails;
-      mailTools = (
-        <>
-          <button>답장</button>
-          <button>전달</button>
-          <button>중요</button>
-          <button onClick={handleMarkSpam}>스팸차단</button>
-        </>
-      );
-      break;
-
-    case location.pathname.includes("/important"):
-      boxType = "important";
-      mails = importantMails;
-      mailTools = (
-        <>
-          <button>답장</button>
-          <button>전달</button>
-          <button>중요</button>
-          <button onClick={handleMarkSpam}>스팸차단</button>
-        </>
-      );
-      break;
-
-    case location.pathname.includes("/deleted"):
-      boxType = "deleted";
-      mails = deletedMails;
-      mailTools = (
-        <>
-          <button>복원</button>
-          <button>영구삭제</button>
-          <button onClick={handleMarkSpam}>스팸차단</button>
-        </>
-      );
-      break;
-
-    case location.pathname.includes("/draft"):
-      boxType = "draft";
-      mails = draftMails;
-      mailTools = <></>;
-      break;
-
-    case location.pathname.includes("/scheduled"):
-      boxType = "scheduled";
-      mails = scheduledMails;
-      mailTools = (
-        <>
-          <button>전달</button>
-          <button>보내기취소</button>
-          <button>시간변경</button>
-        </>
-      );
-      break;
-
-    case location.pathname.includes("/selfsent"):
-      boxType = "selfsent";
-      mails = selfSentMails;
-      mailTools = (
-        <>
-          <button>전달</button>
-          <button>중요</button>
-          <button>수정</button>
-        </>
-      );
-      break;
-
-    case location.pathname.includes("/sent"):
-      boxType = "sent";
-      mails = sentMails;
-      mailTools = (
-        <>
-          <button>답장</button>
-          <button>전달</button>
-          <button>중요</button>
-        </>
-      );
-      break;
-
-    case location.pathname.includes("/spam"):
-      boxType = "spam";
-      mails = spamMails;
-      mailTools = (
-        <>
-          <button>영구삭제</button>
-          <button onClick={handleUnmarkSpam}>스팸해제</button>
-        </>
-      );
-      break;
-
-    default:
-      mailTools = null;
-  }
+  // mailTools 재계산
+  const { mailTools } = getMailBoxConfig({
+    pathname: location.pathname,
+    stores: {
+      receiveMails,
+      sentMails,
+      draftMails,
+      importantMails,
+      deletedMails,
+      scheduledMails,
+      selfSentMails,
+      spamMails,
+    },
+    actions: {
+      handleMarkSpam,
+      handleUnmarkSpam,
+    },
+  });
 
   const mailIds = mails.map((mail) => mail.id);
 
