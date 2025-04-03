@@ -51,7 +51,15 @@
     font-size: 0.9rem;
     z-index: 1;
 }
-
+.nameInput {
+    position: absolute;
+    top: 34%;
+    left: 36%;
+    border: none;
+    outline: none;
+    font-size: 0.9rem;
+    font-family: 'SUIT-Regular';
+}
 .affiliationInput {
     position: absolute;
     top: 42%;
