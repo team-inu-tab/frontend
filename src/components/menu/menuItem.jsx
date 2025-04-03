@@ -20,16 +20,13 @@ const MenuItem = ({ title, isMenuBarOpen }) => {
   /**
    * title 값에 따라 아이콘 이미지 경로 및 한글 메뉴명을 설정
    */
-  const { Icon, titleName, link, onClick } = useMemo(() => {
+  const { Icon, titleName, link } = useMemo(() => {
     switch (title) {
       case "write":
         return {
           Icon: Write,
           titleName: "메일 쓰기",
           link: null,
-          onClick: () => {
-            toggleWriteModal();
-          },
         };
       case "notification":
         return {
@@ -60,18 +57,14 @@ const MenuItem = ({ title, isMenuBarOpen }) => {
 
   const isActive = location.pathname === `${link}`;
 
-  return (
-    <Link
-      to={link}
-      className={`menuItem-wrapper ${isMenuBarOpen ? "" : "menuItem-close"}`}
-      onClick={onClick}
-    >
-      {/* 마우스 hover 시 나타나는 왼쪽 바 (선택된 메뉴 강조 효과) */}
+  // 공통된 내부 렌더링 블럭
+  const content = (
+    <>
+      {/* 강조 바 */}
       <div
         className={`menuItem-leftBar ${isMenuBarOpen ? "" : "menuItem-close"}`}
       />
-
-      {/* 메뉴 아이콘과 텍스트 */}
+      {/* 아이콘 + 텍스트 */}
       <div
         className={`menuItem-container ${
           isMenuBarOpen ? "" : "menuItem-close"
@@ -88,8 +81,7 @@ const MenuItem = ({ title, isMenuBarOpen }) => {
           {titleName}
         </span>
       </div>
-
-      {/* (메뉴바가 닫혀 있을 때) 마우스 hover 시 나타나는 텍스트 칩 */}
+      {/* 닫힌 메뉴바용 hover 툴팁 */}
       <div
         className={`menuItem-shadowBox ${
           isMenuBarOpen ? "" : "menuItem-close"
@@ -97,6 +89,28 @@ const MenuItem = ({ title, isMenuBarOpen }) => {
       >
         <span className="menuItem-text">{titleName}</span>
       </div>
+    </>
+  );
+
+  if (title === "write") {
+    return (
+      <div
+        role="button"
+        tabIndex={0}
+        className={`menuItem-wrapper ${isMenuBarOpen ? "" : "menuItem-close"}`}
+        onClick={toggleWriteModal}
+      >
+        {content}
+      </div>
+    );
+  }
+
+  return (
+    <Link
+      to={link}
+      className={`menuItem-wrapper ${isMenuBarOpen ? "" : "menuItem-close"}`}
+    >
+      {content}
     </Link>
   );
 };
