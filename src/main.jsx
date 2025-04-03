@@ -5,11 +5,10 @@ import { RouterProvider } from "react-router-dom";
 import router from "@routes/router.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    {/* <RouterProvider router={router} /> */}
+    <RouterProvider router={router} />
     {/* <MailWriteModal></MailWriteModal> */}
     {/* <TextEditor></TextEditor> */}
     {/* <Signin></Signin> */}
     {/* <AddInfoComp></AddInfoComp> */}
-    <MailWriteModal/>
   </StrictMode>
 );
