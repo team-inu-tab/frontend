@@ -26,6 +26,15 @@ const MailListItem = ({ mail }) => {
   const formatReceiveDate = useFormattedDate(); // 날짜 포맷 변경
   const isImportant = mail.isImportant; // 중요 메일 여부
 
+  const extractSenderName = (rawSender) => {
+    if (!rawSender) return "";
+
+    return rawSender
+      .replace(/^"(.*)"\s*<.*>$/, "$1")
+      .replace(/^(.*?)\s*<.*>$/, "$1")
+      .trim();
+  };
+
   const isMobile = useMediaQuery({ query: "(max-width: 425px)" });
 
   let boxType = "";
@@ -94,7 +103,8 @@ const MailListItem = ({ mail }) => {
           <div className="mailListItem-mailInfo-m">
             {/* 발신자 이름 */}
             <span className="mailListItem-sender">
-              {mail.sender ?? mail.receiver}
+              {extractSenderName(mail.sender) ??
+                extractSenderName(mail.receiver)}
             </span>
             {/* 메일 수신 시간 */}
             <span className="mailListItem-receiveAt">
@@ -105,7 +115,7 @@ const MailListItem = ({ mail }) => {
           </div>
           <div className="mailListItem-title-container">
             {/* 첨부 파일 존재 시 아이콘 표시 */}
-            {mail.fileNameList && (
+            {mail.fileNameList && mail.fileNameList.length > 0 && (
               <img
                 src="/src/assets/icons/attachment.svg"
                 alt="Attachment icon for email"
@@ -119,7 +129,7 @@ const MailListItem = ({ mail }) => {
         <div className="mailListItem-mailInfo">
           {/* 발신자 이름 */}
           <span className="mailListItem-sender">
-            {mail.sender ?? mail.receiver}
+            {extractSenderName(mail.sender) ?? extractSenderName(mail.receiver)}
           </span>
           <div className="mailListItem-title-container">
             {/* 첨부 파일 존재 시 아이콘 표시 */}
