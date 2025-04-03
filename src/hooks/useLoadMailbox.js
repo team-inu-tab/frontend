@@ -36,6 +36,9 @@ export const useLoadMailbox = (type) => {
         switch (type) {
           case "receive":
             data = await fetchReceiveMails();
+            console.log("📦 fetchDraftMails 응답:", data); // 전체 객체
+            console.log("✅ data.mails:", data.mails); // 반드시 배열
+            console.log("✅ isArray:", Array.isArray(data.mails)); // true 이어야 함
             setReceivedMails(data.mails);
             setGroupedReceiveMails(data.mails);
             break;
