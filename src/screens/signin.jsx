@@ -4,121 +4,87 @@ import symbolLogo from "@assets/images/symbolLogo.svg";
 import Circle from "@components/signin/circle.jsx";
 import Container from "@components/signin/parentContainer.jsx";
 import CompleteButton from "@components/signin/completeButton.jsx";
-import DropDown from "@components/signin/dropDown.jsx";
 import InputLine from "@assets/images/inputLine.svg";
 import backGround from "@assets/images/backGround.svg";
 import { useNavigate } from "react-router-dom";
 import { useMailApi } from "@hooks/useMailApi.js";
 import { api } from "@hooks/useMailApi";
+import { use } from "react";
 
 function Signin() {
   const [affiliation, setAffiliation] = useState("");
   const [department, setDepartment] = useState("");
   const [position, setPosition] = useState("");
-  const [selectedJob, setSelectedJob] = useState("");
-  const jobData = { data: ["학생", "직장인"] };
+  const [studentName, setStudentName] = useState("");
 
   const navigation = useNavigate();
   const { getToken } = useMailApi();
 
-  const renderJobText = (value) => {
-    setSelectedJob(value);
-    if (value === "학생") setSelectedJob("학교");
-    else if (value === "직장인") setSelectedJob("회사");
-    else setSelectedJob("");
-  };
-
   const handleSubmit = async () => {
     try {
       await getToken();
-
-      if (selectedJob === "학교") {
-        const payload = {
-          schoolName: affiliation,
-          studentDepartment: department,
-          studentNum: Number(position),
-        };
-        const res = await api.post("/users/info/student", payload);
-        console.log("학교 정보 저장 완료:", res.data);
-
-        // } else if (selectedJob === "회사") {
-        //   const payload = {
-        //     company: affiliation,
-        //     workerDepartment: department,
-        //     position: position,
-        //   };
-        //   const response = await axios.post(
-        //     "https://maeilmail.co.kr/api/users/info/worker",
-        //     payload,
-        //     {
-        //       withCredentials: true,
-        //       headers: {
-        //         Authorization: accessToken,
-        //       },
-        //     }
-        //   );
-        //   console.log("회사 정보 저장 완료:", response.data);
-      }
+      const payload = {
+        studentName: studentName,
+        schoolName: affiliation,
+        studentDepartment: department,
+        studentNum: Number(position),
+      };
+      const res = await api.post("/users/info/student", payload);
+      console.log("학교 정보 저장 완료:", res.data);
       navigation("/mail/receive");
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("정보 전송 실패:", error);
     }
   };
+
+  const isFormComplete =
+    studentName.trim() !== "" &&
+    affiliation.trim() !== "" &&
+    department.trim() !== "" &&
+    position.trim() !== "";
 
   return (
     <Container>
       <img src={backGround} className="backGround" />
       <Circle className="formContainer">
         <img src={symbolLogo} className="symbolLogo" />
-        <span className="jobPlaceHolder">직업</span>
+        <span className="jobPlaceHolder">이름</span>
+        <input
+          className="nameInput"
+          value={studentName}
+          onChange={(e) => setStudentName(e.target.value)}
+        ></input>
         <img src={InputLine} className="inputLine1"></img>
 
-        <DropDown data={jobData.data} onSelect={renderJobText} />
-        <span className="jobText">{selectedJob}</span>
-        {selectedJob && (
-          <input
-            className="affiliationInput"
-            value={affiliation}
-            onChange={(e) => setAffiliation(e.target.value)}
-          ></input>
-        )}
+        <span className="jobText">학교</span>
+        <input
+          className="affiliationInput"
+          value={affiliation}
+          onChange={(e) => setAffiliation(e.target.value)}
+        ></input>
 
-        {selectedJob === "학교" && (
-          <span className="departmentPlaceHolder">학과</span>
-        )}
-        {selectedJob === "회사" && (
-          <span className="departmentPlaceHolder">부서</span>
-        )}
+        <span className="departmentPlaceHolder">학과</span>
+        <img src={InputLine} className="inputLine2"></img>
 
-        {selectedJob && <img src={InputLine} className="inputLine2"></img>}
+        <input
+          className="departmentInput"
+          value={department}
+          onChange={(e) => setDepartment(e.target.value)}
+        ></input>
 
-        {selectedJob && (
-          <input
-            className="departmentInput"
-            value={department}
-            onChange={(e) => setDepartment(e.target.value)}
-          ></input>
-        )}
-
-        {selectedJob === "학교" && (
-          <span className="positionPlaceHolder">학번</span>
-        )}
-        {selectedJob === "회사" && (
-          <span className="positionPlaceHolder">직책</span>
-        )}
-
-        {selectedJob && (
-          <input
+        <span className="positionPlaceHolder">학번</span>
+        <input
             className="positionInput"
             value={position}
             onChange={(e) => setPosition(e.target.value)}
-          ></input>
-        )}
+        ></input>
 
         <CompleteButton
           className="addInfoCompleteButton"
           text="입력완료"
           onClick={handleSubmit}
+          disabled={!isFormComplete}
         ></CompleteButton>
       </Circle>
     </Container>
