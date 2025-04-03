@@ -20,10 +20,25 @@ const MailBoxLayout = () => {
     setSelectedMail(null);
   }, [location.pathname]);
 
+  // 모달 열릴 때 스크롤 방지
+  useEffect(() => {
+    if (isWriteModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [isWriteModalOpen]);
+
   return (
     <div className="mailBoxLayout-wrapper">
-      {isWriteModalOpen && <MailWriteModal />} {/* 모달 조건부 렌더링 */}
-      {!isMobile && <MenuBar />}
+      {/* 모달 조건부 렌더링 */}
+      {isWriteModalOpen && (
+        <>
+          <div className="modal-overlay" />
+          <MailWriteModal />
+        </>
+      )}
+      <MenuBar />
       <div
         className={`mailBoxLayout-container ${
           isMenuBarOpen ? "menuBar-open" : ""
