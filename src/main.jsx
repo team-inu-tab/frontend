@@ -10,5 +10,6 @@ createRoot(document.getElementById("root")).render(
     {/* <TextEditor></TextEditor> */}
     {/* <Signin></Signin> */}
     {/* <AddInfoComp></AddInfoComp> */}
+    <MailWriteModal/>
   </StrictMode>
 );
