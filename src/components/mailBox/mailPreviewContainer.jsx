@@ -9,6 +9,10 @@ import { useMailStore } from "../../store";
 const MailPreviewContainer = () => {
   const selectedGroup = useMailStore((state) => state.selectedGroup); // 현재 선택된 메일 정보 가져오기
 
+  if (!Array.isArray(selectedGroup) || selectedGroup.length === 0) {
+    return null;
+  }
+
   return (
     <div className="mailPreviewContainer-wrapper">
       {selectedGroup.map((mail) => (

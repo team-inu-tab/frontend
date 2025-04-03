@@ -9,12 +9,14 @@ import MailWriteModal from "../common/mailWriteModal";
 
 const MailBoxLayout = () => {
   const setSelectedMail = useMailStore((state) => state.setSelectedMail);
+  const setSelectedGroup = useMailStore((state) => state.setSelectedGroup);
   const isMenuBarOpen = useMenuStore((state) => state.isMenuBarOpen);
   const isWriteModalOpen = useWriteStore((state) => state.isWriteModalOpen);
   const location = useLocation(); // 라우팅 경로
 
   useEffect(() => {
     setSelectedMail(null);
+    setSelectedGroup([]);
   }, [location.pathname]);
 
   // 모달 열릴 때 스크롤 방지
