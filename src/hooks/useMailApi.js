@@ -88,6 +88,7 @@ export const useMailApi = () => {
   const fetchSpamMails = async () => {
     await getToken();
     const res = await api.get("/mails/spam");
+    console.log("Spam API 응답:", res.data);
     return res.data;
   };
 

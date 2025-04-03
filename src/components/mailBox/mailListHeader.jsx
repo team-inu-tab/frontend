@@ -1,5 +1,5 @@
 import "@components/mailBox/css/mailListHeader.css";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   useCheckboxStore,
   useSortStore,
@@ -18,6 +18,7 @@ import { getMailBoxConfig } from "../../utils/getMailBoxConfig";
  */
 const MailListHeader = () => {
   const location = useLocation();
+  const checkboxRef = useRef(null);
 
   const changeSortOption = useSortStore((state) => state.changeSortOption);
   const checkAll = useCheckboxStore((state) => state.checkAll);
@@ -107,10 +108,17 @@ const MailListHeader = () => {
   });
 
   const mailIds = mails.map((mail) => mail.id);
+  console.log("mailIds:", mailIds);
 
   const selectedCount = useCheckboxStore(
     (state) => state.checkedByBox[boxType]?.size || 0
   );
+
+  useEffect(() => {
+    if (checkboxRef.current) {
+      checkboxRef.current.indeterminate = isIndeterminate(boxType, mailIds);
+    }
+  }, [boxType, mailIds, isIndeterminate(boxType, mailIds)]);
 
   return (
     <div className="mailListHeader-wrapper">
@@ -122,9 +130,7 @@ const MailListHeader = () => {
             <input
               type="checkbox"
               checked={isAllChecked(boxType, mailIds)}
-              ref={(el) => {
-                if (el) el.indeterminate = isIndeterminate(boxType, mailIds);
-              }}
+              ref={checkboxRef}
               onChange={(e) => {
                 e.target.checked
                   ? checkAll(boxType, mailIds)
