@@ -123,7 +123,7 @@ const MailListItem = ({ mail }) => {
           </span>
           <div className="mailListItem-title-container">
             {/* 첨부 파일 존재 시 아이콘 표시 */}
-            {mail.fileNameList && (
+            {mail.fileNameList && mail.fileNameList.length > 0 && (
               <img
                 src="/src/assets/icons/attachment.svg"
                 alt="Attachment icon for email"
