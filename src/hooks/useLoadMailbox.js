@@ -36,31 +36,44 @@ export const useLoadMailbox = (type) => {
         switch (type) {
           case "receive":
             data = await fetchReceiveMails();
-            console.log("📦 fetchDraftMails 응답:", data); // 전체 객체
-            console.log("✅ data.mails:", data.emails); // 반드시 배열
-            console.log("✅ isArray:", Array.isArray(data.emails)); // true 이어야 함
+            console.log("응답:", data);
+            console.log("data.mails:", data.emails);
             setReceivedMails(data.emails);
             setGroupedReceiveMails(data.emails);
             break;
           case "sent":
             data = await fetchSentMails();
+            console.log("응답:", data);
+            console.log("data.mails:", data.emails);
             setGroupedSentMails(data.emails);
             setSentMails(data.emails);
             break;
           case "draft":
             data = await fetchDraftMails();
+            console.log("응답:", data);
+            console.log("data.mails:", data.emails);
+
             setDraftMails(data.emails);
             break;
           case "important":
             data = await fetchImportantMails();
+            console.log("응답:", data);
+            console.log("data.mails:", data.emails);
+
             setImportantMails(data.emails);
             break;
           case "self":
             data = await fetchSelfSentMails();
+            console.log("응답:", data);
+            console.log("data.mails:", data.emails);
+
             setSelfSentMails(data.emails);
             break;
           case "spam":
             data = await fetchSpamMails();
+            console.log("응답:", data);
+            console.log("data.mails:", data.emails);
+
             setSpamMails(data.emails);
             break;
           default:

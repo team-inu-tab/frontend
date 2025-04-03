@@ -11,9 +11,8 @@ export const useMailStore = create((set) => ({
   selfSentMails: [],
   spamMails: [],
 
-  // 메일 리스트 (그룹)
-  groupedReceiveMails: [],
-  groupedSentMails: [],
+  // 메일 그룹 리스트 (받은/보낸 메일)
+  groupedMails: [],
 
   // 상태 및 에러
   status: "idle", // "idle" | "loading" | "succeeded" | "failed"
@@ -36,10 +35,10 @@ export const useMailStore = create((set) => ({
   setSpamMails: (mails) => set({ spamMails: mails }),
 
   // 그룹화 설정 함수
-  setGroupedReceiveMails: (mails) =>
+  setGroupedMails: (mails) =>
     set(() => {
       const groupedMap = mails.reduce((acc, mail) => {
-        const key = mail.sender ?? "unknown";
+        const key = mail.sender ?? mail.receiver;
         if (!acc[key]) acc[key] = [];
         acc[key].push(mail);
         return acc;
@@ -54,24 +53,7 @@ export const useMailStore = create((set) => ({
 
       return { groupedReceiveMails: groupedArray };
     }),
-  setGroupedSentMails: (mails) =>
-    set(() => {
-      const groupedMap = mails.reduce((acc, mail) => {
-        const key = mail.receiver ?? "unknown";
-        if (!acc[key]) acc[key] = [];
-        acc[key].push(mail);
-        return acc;
-      }, {});
 
-      const groupedArray = Object.entries(groupedMap).map(
-        ([receiver, mailItems]) => ({
-          receiver,
-          mailItems,
-        })
-      );
-
-      return { groupedSentMails: groupedArray };
-    }),
   // 상태 처리
   setStatus: (status) => set({ status }),
   setError: (error) => set({ error }),

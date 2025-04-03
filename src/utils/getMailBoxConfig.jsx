@@ -17,6 +17,7 @@ export const getMailBoxConfig = ({ pathname, stores, actions }) => {
     return {
       boxType: "receive",
       mails: receiveMails,
+      isSortOption: true,
       mailTools: (
         <>
           <button>답장</button>
@@ -32,6 +33,7 @@ export const getMailBoxConfig = ({ pathname, stores, actions }) => {
     return {
       boxType: "important",
       mails: importantMails,
+      isSortOption: false,
       mailTools: (
         <>
           <button>답장</button>
@@ -47,6 +49,7 @@ export const getMailBoxConfig = ({ pathname, stores, actions }) => {
     return {
       boxType: "deleted",
       mails: deletedMails,
+      isSortOption: false,
       mailTools: (
         <>
           <button>복원</button>
@@ -61,6 +64,7 @@ export const getMailBoxConfig = ({ pathname, stores, actions }) => {
     return {
       boxType: "draft",
       mails: draftMails,
+      isSortOption: false,
       mailTools: <></>,
     };
   }
@@ -69,6 +73,7 @@ export const getMailBoxConfig = ({ pathname, stores, actions }) => {
     return {
       boxType: "scheduled",
       mails: scheduledMails,
+      isSortOption: false,
       mailTools: (
         <>
           <button>전달</button>
@@ -83,6 +88,7 @@ export const getMailBoxConfig = ({ pathname, stores, actions }) => {
     return {
       boxType: "selfsent",
       mails: selfSentMails,
+      isSortOption: false,
       mailTools: (
         <>
           <button>전달</button>
@@ -97,6 +103,7 @@ export const getMailBoxConfig = ({ pathname, stores, actions }) => {
     return {
       boxType: "sent",
       mails: sentMails,
+      isSortOption: true,
       mailTools: (
         <>
           <button>답장</button>
@@ -111,6 +118,7 @@ export const getMailBoxConfig = ({ pathname, stores, actions }) => {
     return {
       boxType: "spam",
       mails: spamMails,
+      isSortOption: false,
       mailTools: (
         <>
           <button>영구삭제</button>
