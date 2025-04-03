@@ -1,15 +1,13 @@
 import "@components/mailBox/css/mailDetailMax.css";
 import { useMailStore } from "../../store";
 import ExpandArrow from "@assets/icons/expandArrow.svg?react";
-import { useFormattedDate } from "../../hooks/useFormattedDate";
 import { useMailApi } from "@/hooks/useMailApi";
 import FileItem from "./fileItem";
+import { formatReceiveDate } from "../../utils/emailUtils";
 
 const MailDetailMax = () => {
   const selectedMail = useMailStore((state) => state.selectedMail); // 현재 선택된 메일 가져오기
   const toggleExpanded = useMailStore((state) => state.toggleExpanded);
-
-  const formatReceiveDate = useFormattedDate();
 
   const { getFile } = useMailApi();
 
