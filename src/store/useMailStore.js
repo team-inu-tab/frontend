@@ -38,20 +38,24 @@ export const useMailStore = create((set) => ({
   setGroupedMails: (mails) =>
     set(() => {
       const groupedMap = mails.reduce((acc, mail) => {
-        const key = mail.sender ?? mail.receiver;
+        const key = mail.sender ?? mail.receiver ?? "unknown";
         if (!acc[key]) acc[key] = [];
         acc[key].push(mail);
         return acc;
       }, {});
 
       const groupedArray = Object.entries(groupedMap).map(
-        ([sender, mailItems]) => ({
-          sender,
-          mailItems,
+        ([contact, mailItems]) => ({
+          sender: contact,
+          mailItems: mailItems.sort((a, b) => {
+            const dateA = new Date(a.receiveAt ?? a.sendAt ?? 0).getTime();
+            const dateB = new Date(b.receiveAt ?? b.sendAt ?? 0).getTime();
+            return dateA - dateB; // 오래된 순 정렬
+          }),
         })
       );
 
-      return { groupedReceiveMails: groupedArray };
+      return { groupedMails: groupedArray };
     }),
 
   // 상태 처리

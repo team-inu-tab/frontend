@@ -5,15 +5,10 @@ import SenderGroupedList from "../../components/mailBox/senderGroupedList";
 import MailPreviewContainer from "../../components/mailBox/mailPreviewContainer";
 import MailDetail from "../../components/mailBox/mailDetail";
 import MailDetailMax from "../../components/mailBox/mailDetailMax";
-import { useLoadMailbox } from "../../hooks/useLoadMailbox";
-import { useMediaQuery } from "react-responsive";
-import { useEffect, useState } from "react";
+import { useInitMailbox } from "../../hooks/useInitMailbox";
 
 const ReceiveMailScreen = () => {
-  useLoadMailbox("receive");
-
-  const isMobile = useMediaQuery({ query: "(max-width: 425px)" });
-  const [showPreview, setShowPreview] = useState(false);
+  useInitMailbox();
 
   const sortOption = useSortStore((state) => state.sortOption);
   const selectedGroup = useMailStore((state) => state.selectedGroup);
@@ -25,18 +20,8 @@ const ReceiveMailScreen = () => {
   );
   const status = useMailStore((state) => state.status);
 
-  useEffect(() => {
-    if (isMobile && (selectedMail || selectedGroup.length > 0)) {
-      setShowPreview(true);
-    }
-  }, [selectedMail, selectedGroup, isMobile]);
-
   return (
-    <div
-      className={`MailScreen-container ${
-        isMobile && showPreview ? "show-preview" : ""
-      }`}
-    >
+    <div className="MailScreen-container">
       {isExpanded ? (
         <MailDetailMax />
       ) : (

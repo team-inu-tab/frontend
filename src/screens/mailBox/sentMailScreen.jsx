@@ -4,11 +4,11 @@ import MailDetailMax from "../../components/mailBox/mailDetailMax";
 import MailPreviewContainer from "../../components/mailBox/mailPreviewContainer";
 import SenderGroupedList from "../../components/mailBox/senderGroupedList";
 import TimeSortedList from "../../components/mailBox/timeSortedList";
-import { useLoadMailbox } from "../../hooks/useLoadMailbox";
 import { SORT_OPTIONS, useMailStore, useSortStore } from "../../store";
+import { useInitMailbox } from "../../hooks/useInitMailbox";
 
 const SentMailScreen = () => {
-  useLoadMailbox("sent");
+  useInitMailbox();
 
   const sortOption = useSortStore((state) => state.sortOption);
   const selectedGroup = useMailStore((state) => state.selectedGroup);
