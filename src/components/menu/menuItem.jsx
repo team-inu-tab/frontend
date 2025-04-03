@@ -5,6 +5,7 @@ import Write from "@assets/icons/write.svg?react";
 import Notification from "@assets/icons/notification.svg?react";
 import Profile from "@assets/icons/profile.svg?react";
 import Settings from "@assets/icons/settings.svg?react";
+import { useWriteStore } from "../../store/useWriteStore";
 
 /**
  * MenuItem - 개별 메뉴 아이템 컴포넌트
@@ -14,17 +15,21 @@ import Settings from "@assets/icons/settings.svg?react";
  */
 const MenuItem = ({ title, isMenuBarOpen }) => {
   const location = useLocation();
+  const toggleWriteModal = useWriteStore((state) => state.toggleWriteModal);
 
   /**
    * title 값에 따라 아이콘 이미지 경로 및 한글 메뉴명을 설정
    */
-  const { Icon, titleName, link } = useMemo(() => {
+  const { Icon, titleName, link, onClick } = useMemo(() => {
     switch (title) {
       case "write":
         return {
           Icon: Write,
           titleName: "메일 쓰기",
           link: null,
+          onClick: () => {
+            toggleWriteModal();
+          },
         };
       case "notification":
         return {
@@ -59,6 +64,7 @@ const MenuItem = ({ title, isMenuBarOpen }) => {
     <Link
       to={link}
       className={`menuItem-wrapper ${isMenuBarOpen ? "" : "menuItem-close"}`}
+      onClick={onClick}
     >
       {/* 마우스 hover 시 나타나는 왼쪽 바 (선택된 메뉴 강조 효과) */}
       <div

@@ -192,7 +192,7 @@ const SenderGroupedList = ({ mails }) => {
         mails.map((group, index) => (
           <SenderGroupedItem
             key={index}
-            sender={group.sender}
+            sender={group.sender ?? group.receiver}
             mailItems={group.mailItems}
           />
         ))
