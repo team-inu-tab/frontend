@@ -17,7 +17,7 @@ export const formatReceiveDate = (isoDate) => {
  * @returns {string} 이름 부분만 추출된 문자열
  */
 export const extractSenderName = (rawSender) => {
-  if (!rawSender) return "";
+  if (!rawSender) return null;
 
   // "이름" <이메일> 형식
   if (/^".*"\s*<.*>$/.test(rawSender)) {

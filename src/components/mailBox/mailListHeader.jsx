@@ -48,8 +48,8 @@ const MailListHeader = () => {
     toggleOption();
   };
 
-  // boxType, mails 먼저 가져오기
-  const { boxType, mails } = getMailBoxConfig({
+  // 1. boxType, mails, isSortOption 먼저 가져오기
+  const { boxType, mails, isSortOption } = getMailBoxConfig({
     pathname: location.pathname,
     stores: {
       receiveMails,
@@ -88,7 +88,7 @@ const MailListHeader = () => {
     }
   };
 
-  // mailTools 재계산
+  // 2. mailTools 재계산
   const { mailTools } = getMailBoxConfig({
     pathname: location.pathname,
     stores: {
@@ -108,7 +108,6 @@ const MailListHeader = () => {
   });
 
   const mailIds = mails.map((mail) => mail.id);
-  console.log("mailIds:", mailIds);
 
   const selectedCount = useCheckboxStore(
     (state) => state.checkedByBox[boxType]?.size || 0
@@ -157,30 +156,32 @@ const MailListHeader = () => {
         </div>
 
         {/* 정렬 옵션 */}
-        <div className="mailListHeader-sortOptions">
-          <button
-            className="mailListHeader-sortOptions-items"
-            onClick={toggleOption}
-          >
-            정렬
-            <Arrow
-              className={`mailListHeader-sortOptions-arrow ${
-                isSortOptionOpen ? "open" : ""
-              }`}
-            />
-          </button>
+        {isSortOption && (
+          <div className="mailListHeader-sortOptions">
+            <button
+              className="mailListHeader-sortOptions-items"
+              onClick={toggleOption}
+            >
+              정렬
+              <Arrow
+                className={`mailListHeader-sortOptions-arrow ${
+                  isSortOptionOpen ? "open" : ""
+                }`}
+              />
+            </button>
 
-          {isSortOptionOpen && (
-            <div className="mailListHeader-sortOptions-container">
-              <p onClick={() => handleSortOptionClick(SORT_OPTIONS.TIME)}>
-                시간순 보기
-              </p>
-              <p onClick={() => handleSortOptionClick(SORT_OPTIONS.SENDER)}>
-                받은사람 묶어보기
-              </p>
-            </div>
-          )}
-        </div>
+            {isSortOptionOpen && (
+              <div className="mailListHeader-sortOptions-container">
+                <p onClick={() => handleSortOptionClick(SORT_OPTIONS.TIME)}>
+                  시간순 보기
+                </p>
+                <p onClick={() => handleSortOptionClick(SORT_OPTIONS.SENDER)}>
+                  받은사람 묶어보기
+                </p>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* 메일 기능 도구 (예: 답장, 전달 등) */}
         <div className="mailListHeader-mailTools">{mailTools}</div>
