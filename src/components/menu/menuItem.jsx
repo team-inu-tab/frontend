@@ -1,7 +1,6 @@
 import "@components/menu/css/menuItem.css";
 import { Link, useLocation } from "react-router-dom";
 import { useMemo } from "react";
-import { props } from "react";
 import Write from "@assets/icons/write.svg?react";
 import Notification from "@assets/icons/notification.svg?react";
 import Profile from "@assets/icons/profile.svg?react";
@@ -13,7 +12,7 @@ import Settings from "@assets/icons/settings.svg?react";
  * @param {boolean} props.isMenuBarOpen - 메뉴바가 열려 있는지 여부
  * @returns {JSX.Element} 개별 메뉴 컴포넌트
  */
-const MenuItem = ({ title, isMenuBarOpen, onClick }) => {
+const MenuItem = ({ title, isMenuBarOpen }) => {
   const location = useLocation();
 
   /**
@@ -26,7 +25,6 @@ const MenuItem = ({ title, isMenuBarOpen, onClick }) => {
           Icon: Write,
           titleName: "메일 쓰기",
           link: null,
-          onClick: `${onClick}`
         };
       case "notification":
         return {

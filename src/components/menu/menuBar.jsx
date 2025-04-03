@@ -1,8 +1,7 @@
 import "@components/menu/css/menuBar.css";
-import SubMenu from "@components/menu/subMenu.jsx";
-import MenuItem from "@components/menu/menuItem.jsx";
+import SubMenu from "@components/menu/subMenu";
+import MenuItem from "@components/menu/menuItem";
 import { useMenuStore } from "@store";
-import MailWriteModal from "@components/common/mailWriteModal.jsx";
 
 /**
  * MenuBar - 네비게이션 메뉴바 컴포넌트
@@ -11,12 +10,6 @@ import MailWriteModal from "@components/common/mailWriteModal.jsx";
 const MenuBar = () => {
   const isMenuBarOpen = useMenuStore((state) => state.isMenuBarOpen);
   const toggleMenuBar = useMenuStore((state) => state.toggleMenuBar);
-  const [showMailWriteModal, setShowMailWriteModal] = useState(false);
-  const handleMenuItemClick = (title) => {
-    if (title === "write") {
-      setShowMailWriteModal(true);
-    }
-  };
 
   return (
     <div className={`menuBar-wrapper ${isMenuBarOpen ? "" : "menuBar-close"}`}>
@@ -48,7 +41,7 @@ const MenuBar = () => {
           isMenuBarOpen ? "" : "menuBar-close"
         }`}
       >
-        <MenuItem title="write" isMenuBarOpen={isMenuBarOpen} onClick={() => handleMenuItemClick("write")} />
+        <MenuItem title="write" isMenuBarOpen={isMenuBarOpen} />
         <SubMenu isMenuBarOpen={isMenuBarOpen} />
         <MenuItem title="notification" isMenuBarOpen={isMenuBarOpen} />
         <MenuItem title="profile" isMenuBarOpen={isMenuBarOpen} />
