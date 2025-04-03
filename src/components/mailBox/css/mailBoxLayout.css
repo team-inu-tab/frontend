@@ -16,6 +16,14 @@
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 999;
 }
+/* 모달 본체 */
+.modal-wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
 
 /* 메일함 헤더 + 컨텐츠 스타일 */
 .mailBoxLayout-container {
