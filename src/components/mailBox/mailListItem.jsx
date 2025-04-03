@@ -1,9 +1,9 @@
 import "@components/mailBox/css/mailListItem.css";
 import { useCheckboxStore, useMailStore } from "../../store";
 import Star from "@assets/icons/star.svg?react";
-import { useFormattedDate } from "../../hooks/useFormattedDate";
 import { useMediaQuery } from "react-responsive";
 import { useLocation } from "react-router-dom";
+import { extractSenderName, formatReceiveDate } from "../../utils/emailUtils";
 
 /**
  * MailListItem - 개별 메일 항목을 렌더링하는 컴포넌트
@@ -23,17 +23,7 @@ const MailListItem = ({ mail }) => {
   const isChecked = useCheckboxStore((state) => state.isChecked);
   const setSelectedMail = useMailStore((state) => state.setSelectedMail); // 현재 선택된 메일을 설정하는 함수
 
-  const formatReceiveDate = useFormattedDate(); // 날짜 포맷 변경
   const isImportant = mail.isImportant; // 중요 메일 여부
-
-  const extractSenderName = (rawSender) => {
-    if (!rawSender) return "";
-
-    return rawSender
-      .replace(/^"(.*)"\s*<.*>$/, "$1")
-      .replace(/^(.*?)\s*<.*>$/, "$1")
-      .trim();
-  };
 
   const isMobile = useMediaQuery({ query: "(max-width: 425px)" });
 

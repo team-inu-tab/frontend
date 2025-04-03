@@ -1,6 +1,7 @@
 import "@components/mailBox/css/mailPreviewItem.css";
 import { useMailStore } from "../../store";
 import ExpandArrow from "@assets/icons/expandArrow.svg?react";
+import { formatReceiveDate } from "../../utils/emailUtils";
 
 /**
  * MailPreviewItem - 메일 미리보기 항목을 표시하는 컴포넌트
@@ -66,7 +67,7 @@ const MailPreviewItem = ({ mail }) => {
               isSentByMe === true ? "" : "received"
             }`}
           >
-            {mail.receiveAt} 수신
+            {formatReceiveDate(mail.receiveAt)} 수신
           </span>
         </div>
       </div>

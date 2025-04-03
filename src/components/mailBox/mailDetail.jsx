@@ -2,9 +2,9 @@ import "@components/mailBox/css/mailDetail.css";
 import { useMailStore } from "../../store";
 import ExpandArrow from "@assets/icons/expandArrow.svg?react";
 import { useMailApi } from "@/hooks/useMailApi";
-import { useFormattedDate } from "../../hooks/useFormattedDate";
 import FileItem from "./fileItem";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { formatReceiveDate } from "../../utils/emailUtils";
 
 /**
  * MailDetail - 선택된 메일의 상세 내용을 표시하는 컴포넌트
@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 const MailDetail = () => {
   const selectedMail = useMailStore((state) => state.selectedMail); // 현재 선택된 메일 가져오기
   const toggleExpanded = useMailStore((state) => state.toggleExpanded);
-  const formatReceiveDate = useFormattedDate();
+
   const { getFile } = useMailApi();
 
   const [imagePreviews, setImagePreviews] = useState([]);
