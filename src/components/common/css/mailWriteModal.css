@@ -6,7 +6,7 @@
     left: 5%;
     border:none;
     outline: none;
-    font-size: 180%;
+    font-size: 1.5rem;
     font-weight: bold;
 }
 .mailTitle::placeholder{
@@ -36,14 +36,75 @@
 
 .recieverTitle{
     position: relative;
+    display: inline-block;
     margin-left: 2%;
-    width: 76%;
+    white-space: nowrap;
+    width: auto;
     height: 80%;
     font-weight: bold;
     color: #3E3D3D;
     border:none;
     outline: none;
     background-color: rgba(205, 217, 245, 0.1);
+    overflow: visible;
+}
+
+.tagify.recieverTitle {
+    border: none;
+    outline: none;
+  }
+
+.tagify {
+    width: auto;
+    min-height: 44px; 
+    display: inline-block; 
+    border: none;
+    outline: none;
+    white-space: nowrap;
+}
+
+.tagify.tagify {
+    --tags-disabled-bg: #748EEE;
+    --tag-bg: (#748EEE, 80%);
+    --tags-focus-border-color: #748EEE;
+    --tags-hover-border-color: #748EEE;
+    --tag-hover: #748EEE;
+    --tag-border-radius: 16px;
+    --tag-pad: 0.5em 0.5em;
+    --tag-remove-btn-color: #FFFFFF;
+}
+
+.tagify.tagify--empty {
+    border: none;
+    outline: none;
+}
+
+.tagify.tagify--focus {
+    box-shadow: none;
+    border: none;
+    outline: none;
+}
+
+.tagify__tag {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #748EEE;
+    border: none;
+    border-radius: 16px;
+    z-index: 1;
+}
+
+.tagify__tag-text {
+    color: #FFFFFF;
+    font-family: 'SUIT';
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.tagify__tag__removeBtn {
+    color: #ff0000;
 }
 
 .toMeText {

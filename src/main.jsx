@@ -6,10 +6,11 @@ import router from "@routes/router.jsx";
 import MailWriteModal from "@components/common/mailWriteModal.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    {/* <RouterProvider router={router} /> */}
     {/* <MailWriteModal></MailWriteModal> */}
     {/* <TextEditor></TextEditor> */}
     {/* <Signin></Signin> */}
     {/* <AddInfoComp></AddInfoComp> */}
+    <MailWriteModal/>
   </StrictMode>
 );
