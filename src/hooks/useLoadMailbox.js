@@ -58,6 +58,7 @@ export const useLoadMailbox = (type) => {
             break;
           case "spam":
             data = await fetchSpamMails();
+            console.log("스팸 메일 불러옴:", data);
             setSpamMails(data);
             break;
           default:
