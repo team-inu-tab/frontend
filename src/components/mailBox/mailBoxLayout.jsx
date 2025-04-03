@@ -32,7 +32,10 @@ const MailBoxLayout = () => {
       {isWriteModalOpen && (
         <>
           <div className="modal-overlay" />
-          <MailWriteModal />
+          <div className="modal-wrapper">
+            {/* 모달 내부 내용 */}
+            <MailWriteModal />
+          </div>
         </>
       )}
       <MenuBar />
