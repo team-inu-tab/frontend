@@ -37,32 +37,31 @@ export const useLoadMailbox = (type) => {
           case "receive":
             data = await fetchReceiveMails();
             console.log("📦 fetchDraftMails 응답:", data); // 전체 객체
-            console.log("✅ data.mails:", data.mails); // 반드시 배열
-            console.log("✅ isArray:", Array.isArray(data.mails)); // true 이어야 함
-            setReceivedMails(data.mails);
-            setGroupedReceiveMails(data.mails);
+            console.log("✅ data.mails:", data.emails); // 반드시 배열
+            console.log("✅ isArray:", Array.isArray(data.emails)); // true 이어야 함
+            setReceivedMails(data.emails);
+            setGroupedReceiveMails(data.emails);
             break;
           case "sent":
             data = await fetchSentMails();
-            setGroupedSentMails(data.mails);
-            setSentMails(data.mails);
+            setGroupedSentMails(data.emails);
+            setSentMails(data.emails);
             break;
           case "draft":
             data = await fetchDraftMails();
-            setDraftMails(data.mails);
+            setDraftMails(data.emails);
             break;
           case "important":
             data = await fetchImportantMails();
-            setImportantMails(data.mails);
+            setImportantMails(data.emails);
             break;
           case "self":
             data = await fetchSelfSentMails();
-            setSelfSentMails(data.mails);
+            setSelfSentMails(data.emails);
             break;
           case "spam":
             data = await fetchSpamMails();
-            console.log("스팸 메일 불러옴:", data.mails);
-            setSpamMails(data.mails);
+            setSpamMails(data.emails);
             break;
           default:
             throw new Error("메일 타입을 찾을 수 없습니다.");
