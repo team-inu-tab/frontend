@@ -15,7 +15,7 @@ const SentMailScreen = () => {
   const selectedMail = useMailStore((state) => state.selectedMail);
   const isExpanded = useMailStore((state) => state.isExpanded);
   const sentMails = useMailStore((state) => state.sentMails);
-  const groupedSentMails = useMailStore((state) => state.groupedSentMails);
+  const groupedMails = useMailStore((state) => state.groupedMails);
   const status = useMailStore((state) => state.status);
 
   return (
@@ -31,7 +31,7 @@ const SentMailScreen = () => {
             ) : sortOption === SORT_OPTIONS.TIME ? (
               <TimeSortedList mails={sentMails} />
             ) : (
-              <SenderGroupedList mails={groupedSentMails} />
+              <SenderGroupedList mails={groupedMails} />
             )}
           </div>
 

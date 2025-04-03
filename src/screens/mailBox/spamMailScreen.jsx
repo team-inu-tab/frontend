@@ -1,16 +1,13 @@
+import "@screens/mailBox/css/mailScreen.css";
 import MailDetail from "../../components/mailBox/mailDetail";
 import MailDetailMax from "../../components/mailBox/mailDetailMax";
-import MailPreviewContainer from "../../components/mailBox/mailPreviewContainer";
-import SenderGroupedList from "../../components/mailBox/senderGroupedList";
 import TimeSortedList from "../../components/mailBox/timeSortedList";
 import { useLoadMailbox } from "../../hooks/useLoadMailbox";
-import { SORT_OPTIONS, useMailStore, useSortStore } from "../../store";
+import { useMailStore } from "../../store";
 
 const SpamMailScreen = () => {
   useLoadMailbox("spam");
 
-  const sortOption = useSortStore((state) => state.sortOption);
-  const selectedGroup = useMailStore((state) => state.selectedGroup);
   const selectedMail = useMailStore((state) => state.selectedMail);
   const isExpanded = useMailStore((state) => state.isExpanded);
   const spamMails = useMailStore((state) => state.spamMails);
@@ -26,20 +23,14 @@ const SpamMailScreen = () => {
           <div className="MailScreen-list">
             {status === "loading" ? (
               <p>📩 메일을 불러오는 중...</p>
-            ) : sortOption === SORT_OPTIONS.TIME ? (
-              <TimeSortedList mails={spamMails} />
             ) : (
-              <SenderGroupedList />
+              <TimeSortedList mails={spamMails} />
             )}
           </div>
 
-          {/* 오른쪽: 선택된 항목에 따라 변경 */}
+          {/* 오른쪽: 메일 상세 내용 */}
           <div className="MailScreen-preview">
-            {sortOption === SORT_OPTIONS.SENDER && selectedGroup.length > 0 ? (
-              <MailPreviewContainer />
-            ) : selectedMail ? (
-              <MailDetail />
-            ) : null}
+            {selectedMail ? <MailDetail /> : null}
           </div>
         </>
       )}

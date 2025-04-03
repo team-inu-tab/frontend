@@ -15,9 +15,7 @@ const ReceiveMailScreen = () => {
   const selectedMail = useMailStore((state) => state.selectedMail);
   const isExpanded = useMailStore((state) => state.isExpanded);
   const receiveMails = useMailStore((state) => state.receiveMails);
-  const groupedReceiveMails = useMailStore(
-    (state) => state.groupedReceiveMails
-  );
+  const groupedMails = useMailStore((state) => state.groupedMails);
   const status = useMailStore((state) => state.status);
 
   return (
@@ -33,7 +31,7 @@ const ReceiveMailScreen = () => {
             ) : sortOption === SORT_OPTIONS.TIME ? (
               <TimeSortedList mails={receiveMails} />
             ) : (
-              <SenderGroupedList mails={groupedReceiveMails} />
+              <SenderGroupedList mails={groupedMails} />
             )}
           </div>
 
