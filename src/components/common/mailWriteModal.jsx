@@ -57,15 +57,15 @@ function MailWriteModal() {
   const { refresh } = useMailApi();
 
   const sendMail = async () => {
-    await refresh();
-    await getToken();
-    
     const payload = {
       toEmail: recieverTitle,
       subject: mailTitle,
       body: mailBody,
     };
     try {
+      await refresh();
+      await getToken();
+      
       const res = await api.post("mails/send", payload);
       if (!res.ok) {
         throw new Error("메일 전송 실패");
