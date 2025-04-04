@@ -9,7 +9,8 @@ import CompImg from '@assets/images/SendComplete.svg';
 import checkCompImg from '@assets/images/sendCompCheck.svg';
 import Tagify from '@yaireo/tagify';
 import '@yaireo/tagify/dist/tagify.css';
-import { api } from "@hooks/useMailApi.js";
+import { useMailApi } from "@hooks/useMailApi.js";
+import { api } from "@hooks/useMailApi";
 
 function MailWriteModal() {
   const [isAiOn, setIsAiOn] = useState(false);
