@@ -3,8 +3,9 @@ import { useMailStore } from "../../store";
 import ExpandArrow from "@assets/icons/expandArrow.svg?react";
 import { useMailApi } from "@/hooks/useMailApi";
 import FileItem from "./fileItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatReceiveDate } from "../../utils/emailUtils";
+import { parseGmailContent } from "../../utils/parseGmailContent";
 
 /**
  * MailDetail - 선택된 메일의 상세 내용을 표시하는 컴포넌트
@@ -14,49 +15,23 @@ const MailDetail = () => {
   const selectedMail = useMailStore((state) => state.selectedMail); // 현재 선택된 메일 가져오기
   const toggleExpanded = useMailStore((state) => state.toggleExpanded);
 
+  const [decodedBody, setDecodedBody] = useState("");
+
   const { getFile } = useMailApi();
 
-  const [imagePreviews, setImagePreviews] = useState([]);
-
-  // useEffect(() => {
-  //   const loadImages = async () => {
-  //     if (!selectedMail) return;
-
-  //     console.log("selectedMail:", selectedMail);
-  //     console.log("fileNameList:", selectedMail.fileNameList);
-
-  //     const imageExtensions = ["jpg", "jpeg", "png", "gif", "webp"];
-  //     const imageFiles = selectedMail.fileNameList.filter((file) => {
-  //       const ext = file.fileName.split(".").pop().toLowerCase();
-  //       return imageExtensions.includes(ext);
-  //     });
-
-  //     const previews = await Promise.all(
-  //       imageFiles.map(async (file) => {
-  //         try {
-  //           const res = await fetch(
-  //             `/api/mails/${selectedMail.id}/file/${file.attachmentId}`
-  //           );
-  //           const blob = await res.blob();
-  //           const url = URL.createObjectURL(blob);
-  //           return { url, fileName: file.fileName };
-  //         } catch (err) {
-  //           console.error("이미지 미리보기 실패:", file.fileName, err);
-  //           return null;
-  //         }
-  //       })
-  //     );
-
-  //     setImagePreviews(previews.filter(Boolean)); // null 제거
-  //   };
-
-  //   loadImages();
-
-  //   // cleanup: blob URL 해제
-  //   return () => {
-  //     imagePreviews.forEach((img) => URL.revokeObjectURL(img.url));
-  //   };
-  // }, [selectedMail]);
+  // content 파싱 및 이미지 포함 본문 렌더링
+  useEffect(() => {
+    const load = async () => {
+      if (selectedMail?.content) {
+        const html = await parseGmailContent(
+          selectedMail.content,
+          selectedMail.id
+        );
+        setDecodedBody(html);
+      }
+    };
+    load();
+  }, [selectedMail]);
 
   // 선택된 메일이 없으면 화면에 표시하지 않음
   if (!selectedMail?.id) {
@@ -110,23 +85,10 @@ const MailDetail = () => {
         )}
 
         {/* 메일 본문 내용 */}
-        <div className="mailDetail-content">{selectedMail.content}</div>
-
-        {/* 이미지 미리보기 */}
-        {imagePreviews.length > 0 && (
-          <div>
-            <div>
-              {imagePreviews.map((img) => (
-                <img
-                  key={img.fileName}
-                  src={img.url}
-                  alt={img.fileName}
-                  style={{ maxWidth: "100%", marginBottom: "1rem" }}
-                />
-              ))}
-            </div>
-          </div>
-        )}
+        <div
+          className="mailDetail-content"
+          dangerouslySetInnerHTML={{ __html: decodedBody }}
+        />
       </div>
 
       {/* 메일 수신 시간 정보 */}
