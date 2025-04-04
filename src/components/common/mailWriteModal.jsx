@@ -54,9 +54,12 @@ function MailWriteModal() {
 
   // 메일 발신
   const { getToken } = useMailApi();
+  const { refresh } = useMailApi();
 
   const sendMail = async () => {
+    await refresh();
     await getToken();
+    
     const payload = {
       toEmail: recieverTitle,
       subject: mailTitle,
