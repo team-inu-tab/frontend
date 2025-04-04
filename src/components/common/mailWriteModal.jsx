@@ -36,6 +36,18 @@ function MailWriteModal() {
     };
   }, []);
 
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === 'Escape') {
+        setIsAiOn(false);
+      }
+    };
+    document.addEventListener('keydown', handleEscKey);
+    return () => {
+      document.removeEventListener('keydown', handleEscKey);
+    };
+  }, []);
+  
   const sendMail = async () => {
     const payload = {
       toEmail: recieverTitle,
@@ -92,7 +104,7 @@ function MailWriteModal() {
 
       <div className="switchContainer">
         {isAiOn && <img src={aiOnLogo} className="aiOnLogo" alt="ai on logo" />}
-        <p className={`aiText ${isAiOn ? 'on' : ''}`}>AI 도우미</p>
+        <p className={`aiText ${isAiOn ? 'on' : ''}`}>TabAI</p>
         <ToggleSwitch
           className="aiToggleSwitch"
           checked={isAiOn}
@@ -118,10 +130,6 @@ function MailWriteModal() {
           전송하기
         </button>
       </div>
-
-      {isSendClick && <img src={CompImg} className="compImg" alt="complete" />}
-      {/* {isSendClick && <img src={checkCompImg} className="sendCheck" alt="check" />}
-          {isSendClick && <text className="sendCompText">전송완료</text>} */}
     </MailContainer>
   );
 }

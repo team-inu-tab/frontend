@@ -6,11 +6,13 @@
     left: 5%;
     border:none;
     outline: none;
+    font-family: 'SUIT';
     font-size: 1.5rem;
     font-weight: bold;
 }
 .mailTitle::placeholder{
     color: #3E3D3D;
+    font-family: 'SUIT';
 }
 
 .recieverTitleContainer{
@@ -32,6 +34,7 @@
 .recieverLabel{
     font-weight: lighter;
     color: #3E3D3D;
+    font-family: 'SUIT';
 }
 
 .recieverTitle{
@@ -178,18 +181,22 @@
     position: absolute;
     display: flex;
     top: 10%;
-    left: 2%;
-    width: 2.5%;
+    left: 2.4%;
+    width: 1rem;
+    height: auto;
 }
 
 .attachedLabel{
     position: absolute;
     display: flex;
-    top: 10%;
-    left: 5.5%;
+    top: -4.8%;
+    left: 4.8%;
     color: #3E3D3D;
-    font-size: 1.2rem;
-    font-weight: lighter;
+    font-family: 'SUIT';
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
     opacity: 0.3;
 }
 
@@ -202,24 +209,29 @@
 
 .aiOnLogo {
     position: absolute;
-    display: flex;
-    top: 40%;
-    left: 0.5%;
-    width: 1.5%;
+    display: inline-block;
+    transform: translateY(-50%);
+    width: 0.63475rem;
+    height: 0.6875rem;
+    top: 0.8rem;
 }
 
 .aiText {
-    position: relative;
+    position: absolute;
     display: inline-block;
-    top: 40%;
-    left: 2.5%;
+    transform: translateY(-36%);
+    left: 0.54rem;
+    font-family: 'SUIT';
     font-weight: bold;
+    font-size: 0.875rem;
     color: #000000;
 }
 
 .aiText.on {
-    position: relative;
+    position: absolute;
     display: inline-block;
+    transform: translateY(-36%);
+    padding-left: 0.3rem;
     font-weight: bold;
     background: linear-gradient(
       90deg, 
@@ -247,8 +259,6 @@
 .aiToggleSwitch {
     position: relative;
     display: flex;
-    top: 0.8em;
-    left: 2em;
 }
 
 .writeContainer {
@@ -256,6 +266,8 @@
     display: flex;
     bottom: 1.5%;
     flex-shrink: 0;
+    font-family: 'SUIT';
+    font-size: 0.6875rem;
 }
 
 .writeContainer.on {

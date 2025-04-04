@@ -1,8 +1,11 @@
 .toggle-switch {
-    position: relative;
+    position: absolute;
     display: inline-block;
     width: 42px;
     height: 18px;
+    bottom: 0.5rem;
+    left: 3.6rem;
+
   }
   
   .toggle-slider {
