@@ -153,6 +153,40 @@ export const useMailApi = () => {
     return res.data;
   };
 
+  // 메일 임시 삭제
+  const deleteTemporaryMails = async (selectedMailIds) => {
+    await getToken();
+    const res = await api.delete("/mails/trash/temporary", {
+      data: {
+        selectedMailIds,
+      },
+    });
+    return res.data;
+  };
+
+  // 메일 영구 삭제
+  const deletePermanentMails = async (selectedMailIds) => {
+    await getToken();
+    const res = await api.delete("/mails/trash/permanent", {
+      data: {
+        selectedMailIds,
+      },
+    });
+    return res.data;
+  };
+
+  // 특정 사용자와 주고받은 메일 조회
+  const searchMailsByUserEmail = async (userEmail, pageToken = "") => {
+    await getToken();
+    const res = await api.post(
+      `/mails/search/userEmail?pageToken=${pageToken}`,
+      {
+        userEmail,
+      }
+    );
+    return res.data;
+  };
+
   return {
     getToken,
     refresh,
@@ -165,6 +199,9 @@ export const useMailApi = () => {
     markAsSpam,
     unmarkAsSpam,
     getFile,
+    deleteTemporaryMails,
+    deletePermanentMails,
+    searchMailsByUserEmail,
   };
 };
 

@@ -25,9 +25,9 @@ export const useInitMailbox = () => {
 
         const allMails = [...receiveMails, ...sentMails];
 
-        setReceivedMails(receiveMails);
-        setSentMails(sentMails);
-        setGroupedMails(allMails);
+        setReceivedMails(receiveMails); // 받은 메일 저장
+        setSentMails(sentMails); // 보낸 메일 저장
+        setGroupedMails(allMails); // 받은 메일 + 보낸 메일 저장
 
         setStatus("succeeded");
       } catch (err) {
