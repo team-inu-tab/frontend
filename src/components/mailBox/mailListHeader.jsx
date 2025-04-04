@@ -124,7 +124,8 @@ const MailListHeader = () => {
     if (!searchInput.trim()) return;
     try {
       const res = await searchMailsByUserEmail(searchInput.trim());
-      console.log("🔍 검색 결과:", res.emails);
+      console.log("검색어:", searchInput.trim());
+      console.log("검색 결과:", res.emails);
     } catch {
       alert("검색 실패");
     }
