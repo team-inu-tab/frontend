@@ -114,16 +114,16 @@
 }
 
 .writeField {
-    display: flex;
-    position: absolute;
-    width: 95%;
-    height: 65%;
-    top: 25%;
-    overflow-y: auto;
-    resize: none;
-    font-size: 1.2em;
-    outline: none;
-    border: none;
+  position: absolute;
+  display: flex;
+  width: 95%;
+  height: 65%;
+  top: 1.6rem;
+  overflow-y: auto;
+  resize: none;
+  font-size: 1.2em;
+  outline: none;
+  border: none;
 }
 
 .writeField.on {
@@ -131,7 +131,7 @@
   position: absolute;
   width: 95%;
   height: 65%;
-  top: 25%;
+  top: 1.6rem;
   overflow-y: auto;
   resize: none;
   font-size: 1.2em;
