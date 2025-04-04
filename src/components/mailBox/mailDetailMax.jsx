@@ -4,12 +4,32 @@ import ExpandArrow from "@assets/icons/expandArrow.svg?react";
 import { useMailApi } from "@/hooks/useMailApi";
 import FileItem from "./fileItem";
 import { formatReceiveDate } from "../../utils/emailUtils";
+import { useEffect, useState } from "react";
+import { parseGmailContent } from "../../utils/parseGmailContent";
 
 const MailDetailMax = () => {
   const selectedMail = useMailStore((state) => state.selectedMail); // 현재 선택된 메일 가져오기
   const toggleExpanded = useMailStore((state) => state.toggleExpanded);
 
+  const [decodedBody, setDecodedBody] = useState("");
+  const [extractedAttachments, setExtractedAttachments] = useState([]);
+
   const { getFile } = useMailApi();
+
+  // content 파싱 및 이미지 포함 본문, 첨부파일 렌더링
+  useEffect(() => {
+    const load = async () => {
+      if (selectedMail?.content) {
+        const { html, attachments } = await parseGmailContent(
+          selectedMail.content,
+          selectedMail.id
+        );
+        setDecodedBody(html);
+        setExtractedAttachments(attachments);
+      }
+    };
+    load();
+  }, [selectedMail]);
 
   // 선택된 메일이 없으면 화면에 표시하지 않음
   if (!selectedMail) {
@@ -45,7 +65,7 @@ const MailDetailMax = () => {
               첨부파일 {selectedMail.fileNameList.length}개
             </span>
             <div className="mailDetail-files-list">
-              {selectedMail.fileNameList.map((file) => (
+              {extractedAttachments.map((file) => (
                 <FileItem
                   key={file.attachmentId}
                   fileName={file.fileName}
@@ -63,7 +83,10 @@ const MailDetailMax = () => {
         )}
 
         {/* 메일 본문 내용 */}
-        <div className="mailDetailMax-content">{selectedMail.content}</div>
+        <div
+          className="mailDetail-content"
+          dangerouslySetInnerHTML={{ __html: decodedBody }}
+        />
       </div>
 
       {/* 메일 수신 시간 정보 */}
