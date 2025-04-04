@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { extractEmailAddress } from "../utils/emailUtils";
 
 export const useMailStore = create((set) => ({
   // 메일 리스트 (시간순)
@@ -38,7 +39,10 @@ export const useMailStore = create((set) => ({
   setGroupedMails: (mails) =>
     set(() => {
       const groupedMap = mails.reduce((acc, mail) => {
-        const key = mail.sender ?? mail.receiver ?? "unknown";
+        const key =
+          extractEmailAddress(mail.sender) ??
+          extractEmailAddress(mail.receiver) ??
+          "unknown";
         if (!acc[key]) acc[key] = [];
         acc[key].push(mail);
         return acc;

@@ -179,7 +179,7 @@ export const useMailApi = () => {
   const searchMailsByUserEmail = async (userEmail, pageToken = "") => {
     await getToken();
     const res = await api.post(
-      `/mails/search/userEmail?pageToken=${pageToken}`,
+      `/mails/search/${userEmail}?pageToken=${pageToken}`,
       {
         userEmail,
       }

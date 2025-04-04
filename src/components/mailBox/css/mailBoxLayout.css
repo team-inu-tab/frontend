@@ -52,7 +52,7 @@
 
 /* 메일 컨텐츠 공통 스타일 */
 .mailBoxLayout-common {
-  padding: 1rem 1rem 0;
+  padding: 0.5rem 0.5rem 0;
   width: 100%;
   box-sizing: border-box;
   height: 80vh;
