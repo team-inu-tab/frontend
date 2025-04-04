@@ -9,6 +9,7 @@ import CompImg from '@assets/images/SendComplete.svg';
 import checkCompImg from '@assets/images/sendCompCheck.svg';
 import Tagify from '@yaireo/tagify';
 import '@yaireo/tagify/dist/tagify.css';
+import { api } from "@hooks/useMailApi";
 
 function MailWriteModal() {
   const [isAiOn, setIsAiOn] = useState(false);
@@ -20,6 +21,7 @@ function MailWriteModal() {
   const tagifyInputRef = useRef(null);
   let tagifyInstance = null;
 
+  // 메일 주소 작성 후 엔터 클릭 시 태깅
   useEffect(() => {
     if (tagifyInputRef.current) {
       tagifyInstance = new Tagify(tagifyInputRef.current, {
@@ -36,6 +38,7 @@ function MailWriteModal() {
     };
   }, []);
 
+  // esc 눌렀을 때 AI 기능 off
   useEffect(() => {
     const handleEscKey = (event) => {
       if (event.key === 'Escape') {
@@ -47,24 +50,20 @@ function MailWriteModal() {
       document.removeEventListener('keydown', handleEscKey);
     };
   }, []);
-  
+
+  // 메일 발신
+  const { getToken } = useMailApi();
+
   const sendMail = async () => {
+    await getToken();
     const payload = {
       toEmail: recieverTitle,
       subject: mailTitle,
       body: mailBody,
     };
-
     try {
-      const response = await fetch("https://maeilmail.co.kr/api/mails/send", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
+      const res = await api.post("mails/send", payload);
+      if (!res.ok) {
         throw new Error("메일 전송 실패");
       }
       console.log("메일 전송 성공");
