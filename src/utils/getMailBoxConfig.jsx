@@ -10,7 +10,7 @@ export const getMailBoxConfig = ({ pathname, stores, actions }) => {
     spamMails,
   } = stores;
 
-  const { handleMarkSpam, handleUnmarkSpam } = actions;
+  const { handleMarkSpam, handleUnmarkSpam, handleDeletePermanent } = actions;
 
   // boxType, mails, mailTools 반환
   if (pathname.includes("/receive")) {
@@ -53,7 +53,7 @@ export const getMailBoxConfig = ({ pathname, stores, actions }) => {
       mailTools: (
         <>
           <button>복원</button>
-          <button>영구삭제</button>
+          <button onClick={handleDeletePermanent}>영구삭제</button>
           <button onClick={handleMarkSpam}>스팸차단</button>
         </>
       ),
@@ -121,7 +121,7 @@ export const getMailBoxConfig = ({ pathname, stores, actions }) => {
       isSortOption: false,
       mailTools: (
         <>
-          <button>영구삭제</button>
+          <button onClick={handleDeletePermanent}>영구삭제</button>
           <button onClick={handleUnmarkSpam}>스팸해제</button>
         </>
       ),

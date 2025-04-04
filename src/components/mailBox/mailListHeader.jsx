@@ -20,6 +20,9 @@ const MailListHeader = () => {
   const location = useLocation();
   const checkboxRef = useRef(null);
 
+  const [isSortOptionOpen, setIsSortOptionOpen] = useState(false); // 정렬 옵션 상태
+  const [searchInput, setSearchInput] = useState(""); // 검색어
+
   const changeSortOption = useSortStore((state) => state.changeSortOption);
   const checkAll = useCheckboxStore((state) => state.checkAll);
   const uncheckAll = useCheckboxStore((state) => state.uncheckAll);
@@ -35,9 +38,13 @@ const MailListHeader = () => {
   const selfSentMails = useMailStore((state) => state.selfSentMails);
   const spamMails = useMailStore((state) => state.spamMails);
 
-  const { markAsSpam, unmarkAsSpam } = useMailApi();
-
-  const [isSortOptionOpen, setIsSortOptionOpen] = useState(false); // 정렬 옵션 상태
+  const {
+    markAsSpam,
+    unmarkAsSpam,
+    deleteTemporaryMails,
+    deletePermanentMails,
+    searchMailsByUserEmail,
+  } = useMailApi();
 
   // 정렬 옵션 열림/닫힘 상태를 토글하는 함수
   const toggleOption = () => setIsSortOptionOpen((prev) => !prev);
@@ -88,6 +95,41 @@ const MailListHeader = () => {
     }
   };
 
+  // 임시 삭제
+  const handleDeleteTemporary = async () => {
+    const ids = getCheckedIds(boxType);
+    try {
+      await deleteTemporaryMails(ids);
+      uncheckAll(boxType);
+      alert("휴지통으로 이동했습니다.");
+    } catch {
+      alert("삭제 실패");
+    }
+  };
+
+  // 영구 삭제
+  const handleDeletePermanent = async () => {
+    const ids = getCheckedIds(boxType);
+    try {
+      await deletePermanentMails(ids);
+      uncheckAll(boxType);
+      alert("영구 삭제 완료!");
+    } catch {
+      alert("삭제 실패");
+    }
+  };
+
+  // 이메일 검색
+  const handleSearch = async () => {
+    if (!searchInput.trim()) return;
+    try {
+      const res = await searchMailsByUserEmail(searchInput.trim());
+      console.log("🔍 검색 결과:", res.emails);
+    } catch {
+      alert("검색 실패");
+    }
+  };
+
   // 2. mailTools 재계산
   const { mailTools } = getMailBoxConfig({
     pathname: location.pathname,
@@ -104,6 +146,7 @@ const MailListHeader = () => {
     actions: {
       handleMarkSpam,
       handleUnmarkSpam,
+      handleDeletePermanent,
     },
   });
 
@@ -150,6 +193,7 @@ const MailListHeader = () => {
             className={`mailActions-items ${
               selectedCount > 0 ? "selected" : ""
             }`}
+            onClick={handleDeleteTemporary}
           >
             삭제
           </button>
@@ -189,8 +233,17 @@ const MailListHeader = () => {
 
       {/* 검색창 */}
       <div className="mailListHeader-searchBar">
-        <input type="text" className="search-input" placeholder="메일 검색" />
-        <Search className="search-icon" />
+        <input
+          type="text"
+          className="search-input"
+          placeholder="이메일 검색"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSearch();
+          }}
+        />
+        <Search className="search-icon" onClick={handleSearch} />
       </div>
     </div>
   );
