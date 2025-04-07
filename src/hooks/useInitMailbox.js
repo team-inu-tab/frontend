@@ -10,8 +10,12 @@ export const useInitMailbox = () => {
   const setGroupedMails = useMailStore((s) => s.setGroupedMails);
   const setStatus = useMailStore((s) => s.setStatus);
   const setError = useMailStore((s) => s.setError);
+  const receiveMails = useMailStore((s) => s.receiveMails);
+  const sentMails = useMailStore((s) => s.sentMails);
 
   useEffect(() => {
+    if (status !== "idle") return;
+
     const init = async () => {
       setStatus("loading");
       try {
@@ -37,5 +41,5 @@ export const useInitMailbox = () => {
     };
 
     init();
-  }, []);
+  }, [receiveMails, sentMails]);
 };

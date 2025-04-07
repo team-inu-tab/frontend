@@ -8,7 +8,7 @@ import {
 } from "../../store";
 import Search from "@assets/icons/search.svg?react";
 import Arrow from "@assets/icons/arrow.svg?react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useMailApi } from "../../hooks/useMailApi";
 import { getMailBoxConfig } from "../../utils/getMailBoxConfig";
 
@@ -19,6 +19,7 @@ import { getMailBoxConfig } from "../../utils/getMailBoxConfig";
 const MailListHeader = () => {
   const location = useLocation();
   const checkboxRef = useRef(null);
+  const navigate = useNavigate();
 
   const [isSortOptionOpen, setIsSortOptionOpen] = useState(false); // 정렬 옵션 상태
   const [searchInput, setSearchInput] = useState(""); // 검색어
@@ -43,7 +44,7 @@ const MailListHeader = () => {
     unmarkAsSpam,
     deleteTemporaryMails,
     deletePermanentMails,
-    searchMailsByUserEmail,
+    deleteDraftMail,
   } = useMailApi();
 
   // 정렬 옵션 열림/닫힘 상태를 토글하는 함수
@@ -95,7 +96,7 @@ const MailListHeader = () => {
     }
   };
 
-  // 임시 삭제
+  // 메일 삭제 (임시)
   const handleDeleteTemporary = async () => {
     const ids = getCheckedIds(boxType);
     try {
@@ -107,7 +108,7 @@ const MailListHeader = () => {
     }
   };
 
-  // 영구 삭제
+  // 메일 삭제 (영구)
   const handleDeletePermanent = async () => {
     const ids = getCheckedIds(boxType);
     try {
@@ -119,16 +120,29 @@ const MailListHeader = () => {
     }
   };
 
-  // 이메일 검색
-  const handleSearch = async () => {
-    if (!searchInput.trim()) return;
+  // 임시 메일 삭제
+  const handleDeleteDraft = async () => {
+    const ids = getCheckedIds(boxType);
     try {
-      const res = await searchMailsByUserEmail(searchInput.trim());
-      console.log("검색어:", searchInput.trim());
-      console.log("검색 결과:", res.emails);
+      await deleteDraftMail(ids);
+      uncheckAll(boxType);
+      alert("영구 삭제 완료!");
     } catch {
-      alert("검색 실패");
+      alert("삭제 실패");
     }
+  };
+
+  // 헤더 삭제 버튼 클릭 시 - 임시 메일함일 경우 임시 메일 삭제
+  const handleDelete = () => {
+    if (boxType === "draft") {
+      handleDeleteDraft();
+    } else handleDeleteTemporary();
+  };
+
+  // 이메일 검색
+  const handleSearch = () => {
+    if (!searchInput.trim()) return;
+    navigate(`/search?query=${encodeURIComponent(searchInput.trim())}`);
   };
 
   // 2. mailTools 재계산
@@ -194,7 +208,7 @@ const MailListHeader = () => {
             className={`mailActions-items ${
               selectedCount > 0 ? "selected" : ""
             }`}
-            onClick={handleDeleteTemporary}
+            onClick={handleDelete}
           >
             삭제
           </button>

@@ -16,7 +16,6 @@ const MailDetail = () => {
   const toggleExpanded = useMailStore((state) => state.toggleExpanded);
 
   const [decodedBody, setDecodedBody] = useState("");
-  const [extractedAttachments, setExtractedAttachments] = useState([]);
 
   const { getFile } = useMailApi();
 
@@ -24,12 +23,11 @@ const MailDetail = () => {
   useEffect(() => {
     const load = async () => {
       if (selectedMail?.content) {
-        const { html, attachments } = await parseGmailContent(
+        const { html } = await parseGmailContent(
           selectedMail.content,
           selectedMail.id
         );
         setDecodedBody(html);
-        setExtractedAttachments(attachments);
       }
     };
     load();
@@ -39,6 +37,10 @@ const MailDetail = () => {
   if (!selectedMail?.id) {
     return null;
   }
+
+  // 중요 메일, 휴지통 메일함 mailType 구분
+  if (selectedMail.mailType === "received") selectedMail.receiver = null;
+  else if (selectedMail.mailType === "sent") selectedMail.sender = null;
 
   return (
     <div className="mailDetail-wrapper">
@@ -69,10 +71,13 @@ const MailDetail = () => {
               첨부파일 {selectedMail.fileNameList.length}개
             </span>
             <div className="mailDetail-files-list">
-              {extractedAttachments.map((file) => (
+              {selectedMail.fileNameList.map((file) => (
                 <FileItem
                   key={file.attachmentId}
                   fileName={file.fileName}
+                  emailId={selectedMail.id}
+                  attachmentId={file.attachmentId}
+                  isPreview={false}
                   onClick={() =>
                     getFile({
                       emailId: selectedMail.id,

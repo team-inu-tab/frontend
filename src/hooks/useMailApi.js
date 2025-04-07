@@ -91,6 +91,13 @@ export const useMailApi = () => {
     return res.data;
   };
 
+  // 휴지통 메일함 조회
+  const fetchDeletedMails = async () => {
+    await getToken();
+    const res = await api.get("/mails/trash");
+    return res.data;
+  };
+
   // 파일 상세 보기 - 첨부파일 다운로드
   const getFile = async ({ emailId, attachmentId, fileName }) => {
     await getToken();
@@ -136,6 +143,45 @@ export const useMailApi = () => {
       alert("파일 다운로드 실패");
       console.error(error);
       throw error;
+    }
+  };
+
+  // 파일 상세 보기 - 미리보기용 URL 생성
+  const getFilePreviewUrl = async ({ emailId, attachmentId, fileName }) => {
+    await getToken();
+
+    try {
+      const res = await api.get(`/mails/${emailId}/file/${attachmentId}`, {
+        responseType: "text",
+      });
+
+      const base64 = res.data.trim();
+
+      // base64 디코딩 → Uint8Array 생성
+      const byteCharacters = atob(base64);
+      const byteNumbers = Array.from(byteCharacters).map((c) =>
+        c.charCodeAt(0)
+      );
+      const byteArray = new Uint8Array(byteNumbers);
+
+      // MIME 타입 설정
+      const extension = fileName.split(".").pop().toLowerCase();
+      const mimeTypes = {
+        pdf: "application/pdf",
+        jpg: "image/jpeg",
+        png: "image/png",
+        // 기타 확장자는 뷰어 연동 필요
+      };
+      const mimeType = mimeTypes[extension] || "application/octet-stream";
+
+      // Blob → URL 생성
+      const blob = new Blob([byteArray], { type: mimeType });
+      const objectUrl = URL.createObjectURL(blob);
+
+      return objectUrl; // iframe/img의 src로 사용
+    } catch (error) {
+      console.error("파일 미리보기 생성 실패", error);
+      return null;
     }
   };
 
@@ -187,6 +233,28 @@ export const useMailApi = () => {
     return res.data;
   };
 
+  // 임시 메일 수정
+  const updateDraftMail = async ({ draftId, toEmail, subject, body }) => {
+    await getToken();
+    const res = await api.patch("/mails/draft", {
+      draftId,
+      toEmail,
+      subject,
+      body,
+    });
+    return res.data;
+  };
+  // 임시 메일 삭제
+  const deleteDraftMail = async (draftId) => {
+    await getToken();
+    const res = await api.delete("/mails/draft", {
+      data: {
+        draftId,
+      },
+    });
+    return res.data;
+  };
+
   return {
     getToken,
     refresh,
@@ -196,12 +264,16 @@ export const useMailApi = () => {
     fetchImportantMails,
     fetchSelfSentMails,
     fetchSpamMails,
+    fetchDeletedMails,
     markAsSpam,
     unmarkAsSpam,
     getFile,
+    getFilePreviewUrl,
     deleteTemporaryMails,
     deletePermanentMails,
     searchMailsByUserEmail,
+    updateDraftMail,
+    deleteDraftMail,
   };
 };
 
