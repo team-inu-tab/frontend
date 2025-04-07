@@ -26,6 +26,7 @@
 }
 
 .fileItem-name {
+  width: 100%;
   color: #000;
   font-size: 0.5rem;
   font-style: normal;

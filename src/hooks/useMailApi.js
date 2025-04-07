@@ -146,6 +146,45 @@ export const useMailApi = () => {
     }
   };
 
+  // 파일 상세 보기 - 미리보기용 URL 생성
+  const getFilePreviewUrl = async ({ emailId, attachmentId, fileName }) => {
+    await getToken();
+
+    try {
+      const res = await api.get(`/mails/${emailId}/file/${attachmentId}`, {
+        responseType: "text",
+      });
+
+      const base64 = res.data.trim();
+
+      // base64 디코딩 → Uint8Array 생성
+      const byteCharacters = atob(base64);
+      const byteNumbers = Array.from(byteCharacters).map((c) =>
+        c.charCodeAt(0)
+      );
+      const byteArray = new Uint8Array(byteNumbers);
+
+      // MIME 타입 설정
+      const extension = fileName.split(".").pop().toLowerCase();
+      const mimeTypes = {
+        pdf: "application/pdf",
+        jpg: "image/jpeg",
+        png: "image/png",
+        // 기타 확장자는 뷰어 연동 필요
+      };
+      const mimeType = mimeTypes[extension] || "application/octet-stream";
+
+      // Blob → URL 생성
+      const blob = new Blob([byteArray], { type: mimeType });
+      const objectUrl = URL.createObjectURL(blob);
+
+      return objectUrl; // iframe/img의 src로 사용
+    } catch (error) {
+      console.error("파일 미리보기 생성 실패", error);
+      return null;
+    }
+  };
+
   // 스팸 차단
   const markAsSpam = async (mailId) => {
     await getToken();
@@ -207,6 +246,7 @@ export const useMailApi = () => {
     markAsSpam,
     unmarkAsSpam,
     getFile,
+    getFilePreviewUrl,
     deleteTemporaryMails,
     deletePermanentMails,
     searchMailsByUserEmail,

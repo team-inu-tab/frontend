@@ -12,7 +12,6 @@ const MailDetailMax = () => {
   const toggleExpanded = useMailStore((state) => state.toggleExpanded);
 
   const [decodedBody, setDecodedBody] = useState("");
-  const [extractedAttachments, setExtractedAttachments] = useState([]);
 
   const { getFile } = useMailApi();
 
@@ -20,21 +19,24 @@ const MailDetailMax = () => {
   useEffect(() => {
     const load = async () => {
       if (selectedMail?.content) {
-        const { html, attachments } = await parseGmailContent(
+        const { html } = await parseGmailContent(
           selectedMail.content,
           selectedMail.id
         );
         setDecodedBody(html);
-        setExtractedAttachments(attachments);
       }
     };
     load();
   }, [selectedMail]);
 
   // 선택된 메일이 없으면 화면에 표시하지 않음
-  if (!selectedMail) {
+  if (!selectedMail?.id) {
     return null;
   }
+
+  // 중요 메일, 휴지통 메일함 mailType 구분
+  if (selectedMail.mailType === "received") selectedMail.receiver = null;
+  else if (selectedMail.mailType === "sent") selectedMail.sender = null;
 
   return (
     <div className="mailDetailMax-wrapper">
@@ -65,7 +67,7 @@ const MailDetailMax = () => {
               첨부파일 {selectedMail.fileNameList.length}개
             </span>
             <div className="mailDetail-files-list">
-              {extractedAttachments.map((file) => (
+              {selectedMail.fileNameList.map((file) => (
                 <FileItem
                   key={file.attachmentId}
                   fileName={file.fileName}
