@@ -48,16 +48,32 @@ export const useMailStore = create((set) => ({
         return acc;
       }, {});
 
-      const groupedArray = Object.entries(groupedMap).map(
-        ([contact, mailItems]) => ({
+      const groupedArray = Object.entries(groupedMap)
+        .map(([contact, mailItems]) => ({
           sender: contact,
           mailItems: mailItems.sort((a, b) => {
-            const dateA = new Date(a.receiveAt ?? a.sendAt ?? 0).getTime();
-            const dateB = new Date(b.receiveAt ?? b.sendAt ?? 0).getTime();
-            return dateA - dateB; // 오래된 순 정렬
+            const dateA = new Date(
+              a.receiveAt ?? a.sendAt ?? "1970-01-01"
+            ).getTime();
+            const dateB = new Date(
+              b.receiveAt ?? b.sendAt ?? "1970-01-01"
+            ).getTime();
+            return dateB - dateA; // 최신 순 정렬
           }),
-        })
-      );
+        }))
+        .sort((a, b) => {
+          const firstA = a.mailItems[0]; // 최신 메일
+          const firstB = b.mailItems[0];
+
+          const dateA = new Date(
+            firstA.receiveAt ?? firstA.sendAt ?? "1970-01-01"
+          ).getTime();
+          const dateB = new Date(
+            firstB.receiveAt ?? firstB.sendAt ?? "1970-01-01"
+          ).getTime();
+
+          return dateB - dateA; // 최신 순 정렬 (그룹 자체)
+        });
 
       return { groupedMails: groupedArray };
     }),
