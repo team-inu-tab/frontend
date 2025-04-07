@@ -8,7 +8,7 @@ import {
 } from "../../store";
 import Search from "@assets/icons/search.svg?react";
 import Arrow from "@assets/icons/arrow.svg?react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useMailApi } from "../../hooks/useMailApi";
 import { getMailBoxConfig } from "../../utils/getMailBoxConfig";
 
@@ -19,6 +19,7 @@ import { getMailBoxConfig } from "../../utils/getMailBoxConfig";
 const MailListHeader = () => {
   const location = useLocation();
   const checkboxRef = useRef(null);
+  const navigate = useNavigate();
 
   const [isSortOptionOpen, setIsSortOptionOpen] = useState(false); // 정렬 옵션 상태
   const [searchInput, setSearchInput] = useState(""); // 검색어
@@ -43,7 +44,6 @@ const MailListHeader = () => {
     unmarkAsSpam,
     deleteTemporaryMails,
     deletePermanentMails,
-    searchMailsByUserEmail,
   } = useMailApi();
 
   // 정렬 옵션 열림/닫힘 상태를 토글하는 함수
@@ -120,15 +120,9 @@ const MailListHeader = () => {
   };
 
   // 이메일 검색
-  const handleSearch = async () => {
+  const handleSearch = () => {
     if (!searchInput.trim()) return;
-    try {
-      const res = await searchMailsByUserEmail(searchInput.trim());
-      console.log("검색어:", searchInput.trim());
-      console.log("검색 결과:", res.emails);
-    } catch {
-      alert("검색 실패");
-    }
+    navigate(`/search?query=${encodeURIComponent(searchInput.trim())}`);
   };
 
   // 2. mailTools 재계산

@@ -15,6 +15,7 @@ import LoginTest from "@screens/loginTest.jsx";
 import SettingScreen from "@screens/settingScreen";
 import ProfileScreen from "@screens/profileScreen";
 import NotificationScreen from "@screens/notificationScreen";
+import SearchMailScreen from "@screens/mailBox/SearchMailScreen";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,7 @@ const router = createBrowserRouter([
           { path: "selfsent", element: <SelfSentMailScreen /> },
           { path: "sent", element: <SentMailScreen /> },
           { path: "spam", element: <SpamMailScreen /> },
+          { path: "search", element: <SearchMailScreen /> },
         ],
       },
       {
