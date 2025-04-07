@@ -4,6 +4,8 @@ import ExpandArrow from "@assets/icons/expandArrow.svg?react";
 import { formatReceiveDate } from "../../utils/emailUtils";
 import { useEffect, useState } from "react";
 import { parseGmailContent } from "../../utils/parseGmailContent";
+import FileItem from "./fileItem";
+import { useMailApi } from "../../hooks/useMailApi";
 
 /**
  * MailPreviewItem - 메일 미리보기 항목을 표시하는 컴포넌트
@@ -17,18 +19,15 @@ const MailPreviewItem = ({ mail }) => {
   const setSelectedMail = useMailStore((state) => state.setSelectedMail); // 현재 선택된 메일을 설정하는 함수
 
   const [decodedBody, setDecodedBody] = useState("");
-  const [extractedAttachments, setExtractedAttachments] = useState([]);
+
+  const { getFile } = useMailApi();
 
   // content 파싱 및 이미지 포함 본문, 첨부파일 렌더링
   useEffect(() => {
     const load = async () => {
       if (mail?.content) {
-        const { html, attachments } = await parseGmailContent(
-          mail.content,
-          mail.id
-        );
+        const { html } = await parseGmailContent(mail.content, mail.id);
         setDecodedBody(html);
-        setExtractedAttachments(attachments);
       }
     };
     load();
@@ -83,6 +82,24 @@ const MailPreviewItem = ({ mail }) => {
             onClick={toggleExpanded}
           />
         </div>
+
+        {/* 첨부파일 */}
+        {mail.fileNameList.map((file) => (
+          <FileItem
+            key={file.attachmentId}
+            fileName={file.fileName}
+            emailId={mail.id}
+            attachmentId={file.attachmentId}
+            isPreview={true}
+            onClick={() =>
+              getFile({
+                emailId: mail.id,
+                attachmentId: file.attachmentId,
+                fileName: file.fileName,
+              })
+            }
+          />
+        ))}
 
         {/* 메일 내용 (미리보기) */}
         <div

@@ -77,6 +77,7 @@ const MailDetail = () => {
                   fileName={file.fileName}
                   emailId={selectedMail.id}
                   attachmentId={file.attachmentId}
+                  isPreview={false}
                   onClick={() =>
                     getFile({
                       emailId: selectedMail.id,
