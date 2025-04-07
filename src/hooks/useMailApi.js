@@ -233,6 +233,28 @@ export const useMailApi = () => {
     return res.data;
   };
 
+  // 임시 메일 수정
+  const updateDraftMail = async ({ draftId, toEmail, subject, body }) => {
+    await getToken();
+    const res = await api.patch("/mails/draft", {
+      draftId,
+      toEmail,
+      subject,
+      body,
+    });
+    return res.data;
+  };
+  // 임시 메일 삭제
+  const deleteDraftMail = async (draftId) => {
+    await getToken();
+    const res = await api.delete("/mails/draft", {
+      data: {
+        draftId,
+      },
+    });
+    return res.data;
+  };
+
   return {
     getToken,
     refresh,
@@ -250,6 +272,8 @@ export const useMailApi = () => {
     deleteTemporaryMails,
     deletePermanentMails,
     searchMailsByUserEmail,
+    updateDraftMail,
+    deleteDraftMail,
   };
 };
 

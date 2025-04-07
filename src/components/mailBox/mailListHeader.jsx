@@ -44,6 +44,7 @@ const MailListHeader = () => {
     unmarkAsSpam,
     deleteTemporaryMails,
     deletePermanentMails,
+    deleteDraftMail,
   } = useMailApi();
 
   // 정렬 옵션 열림/닫힘 상태를 토글하는 함수
@@ -95,7 +96,7 @@ const MailListHeader = () => {
     }
   };
 
-  // 임시 삭제
+  // 메일 삭제 (임시)
   const handleDeleteTemporary = async () => {
     const ids = getCheckedIds(boxType);
     try {
@@ -107,7 +108,7 @@ const MailListHeader = () => {
     }
   };
 
-  // 영구 삭제
+  // 메일 삭제 (영구)
   const handleDeletePermanent = async () => {
     const ids = getCheckedIds(boxType);
     try {
@@ -117,6 +118,25 @@ const MailListHeader = () => {
     } catch {
       alert("삭제 실패");
     }
+  };
+
+  // 임시 메일 삭제
+  const handleDeleteDraft = async () => {
+    const ids = getCheckedIds(boxType);
+    try {
+      await deleteDraftMail(ids);
+      uncheckAll(boxType);
+      alert("영구 삭제 완료!");
+    } catch {
+      alert("삭제 실패");
+    }
+  };
+
+  // 헤더 삭제 버튼 클릭 시 - 임시 메일함일 경우 임시 메일 삭제
+  const handleDelete = () => {
+    if (boxType === "draft") {
+      handleDeleteDraft();
+    } else handleDeleteTemporary();
   };
 
   // 이메일 검색
@@ -188,7 +208,7 @@ const MailListHeader = () => {
             className={`mailActions-items ${
               selectedCount > 0 ? "selected" : ""
             }`}
-            onClick={handleDeleteTemporary}
+            onClick={handleDelete}
           >
             삭제
           </button>
