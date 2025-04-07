@@ -9,6 +9,7 @@ export const useLoadMailbox = (type) => {
   const setSelfSentMails = useMailStore((state) => state.setSelfSentMails);
   const setImportantMails = useMailStore((state) => state.setImportantMails);
   const setSpamMails = useMailStore((state) => state.setSpamMails);
+  const setDeletedMails = useMailStore((state) => state.setDeletedMails);
   const setStatus = useMailStore((state) => state.setStatus);
   const setError = useMailStore((state) => state.setError);
 
@@ -19,6 +20,7 @@ export const useLoadMailbox = (type) => {
     fetchImportantMails,
     fetchSelfSentMails,
     fetchSpamMails,
+    fetchDeletedMails,
   } = useMailApi();
 
   useEffect(() => {
@@ -52,10 +54,13 @@ export const useLoadMailbox = (type) => {
             data = await fetchSpamMails();
             setSpamMails(data.emails);
             break;
+          case "deleted":
+            data = await fetchDeletedMails();
+            setDeletedMails(data.emails);
+            break;
           default:
             throw new Error("메일 타입을 찾을 수 없습니다.");
         }
-
         setStatus("succeeded");
       } catch (err) {
         setError(err.message || "메일 불러오기 실패");

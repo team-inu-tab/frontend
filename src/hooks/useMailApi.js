@@ -91,6 +91,13 @@ export const useMailApi = () => {
     return res.data;
   };
 
+  // 휴지통 메일함 조회
+  const fetchDeletedMails = async () => {
+    await getToken();
+    const res = await api.get("/mails/trash");
+    return res.data;
+  };
+
   // 파일 상세 보기 - 첨부파일 다운로드
   const getFile = async ({ emailId, attachmentId, fileName }) => {
     await getToken();
@@ -196,6 +203,7 @@ export const useMailApi = () => {
     fetchImportantMails,
     fetchSelfSentMails,
     fetchSpamMails,
+    fetchDeletedMails,
     markAsSpam,
     unmarkAsSpam,
     getFile,
