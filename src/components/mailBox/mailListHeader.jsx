@@ -183,7 +183,7 @@ const MailListHeader = () => {
     if (checkboxRef.current) {
       checkboxRef.current.indeterminate = isIndeterminate(boxType, mailIds);
     }
-  }, [boxType, mailIds, isIndeterminate(boxType, mailIds)]);
+  }, [boxType, mailIds, isIndeterminate]);
 
   return (
     <div className="mailListHeader-wrapper">
