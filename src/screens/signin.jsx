@@ -40,6 +40,7 @@ function Signin() {
     } 
     catch (error) {
       console.error("정보 전송 실패:", error);
+      alert("정보 전송에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
