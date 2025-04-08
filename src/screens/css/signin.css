@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'SUIT-Regular';
+    font-family: 'SUIT';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
@@ -23,98 +23,197 @@
 
 .symbolLogo{
     position: absolute;
-    width: 12%;
-    height: 12%;
-    left: 16%;
+    width: 3.0625rem;
+    height: 2.3125rem;
+    left: 20%;
     top: 15%;
 }
 
-.jobPlaceHolder {
+.namePlaceHolder {
     position: absolute;
-    top: 34.5%;
-    left: 16%;
-    font-family: 'SUIT-Regular';
-    font-size: 0.9rem;
+    top: 28%;
+    left: 20%;
+    color: #3E3D3D;
+    font-family: 'SUIT';
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.nameInput {
+    position: absolute;
+    top: 27.6%;
+    left: 32%;
+    width: 44%;
+    height: auto;
+    border: none;
+    outline: none;
+
+    color: #3E3D3D;
+    font-family: 'SUIT';
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
 }
 
 .inputLine1 {
     position: absolute;
-    top: 39%;
-    width: 69%;
+    top: 32%;
+    width: 19.49019rem;
     z-index: 1;
 }
-.jobText{
+
+.schoolPlaceHolder {
     position: absolute;
-    top: 42%;
-    left: 16%;
-    font-family: 'SUIT-Regular';
-    font-size: 0.9rem;
+    top: 33.6%;
+    left: 20%;
+    color: #3E3D3D;
+    font-family: 'SUIT';
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
     z-index: 1;
 }
-.nameInput {
-    position: absolute;
-    top: 34%;
-    left: 36%;
-    border: none;
-    outline: none;
-    font-size: 0.9rem;
-    font-family: 'SUIT-Regular';
-}
+
 .affiliationInput {
     position: absolute;
-    top: 42%;
-    left: 36%;
+    top: 33.4%;
+    left: 32%;
+    width: 44%;
+    height: auto;
     border: none;
     outline: none;
+    color: #3E3D3D;
+    font-family: 'SUIT';
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
 }
 
 .affiliationInput::placeholder{
-    color: #000000;
-    font-size: 0.9rem;
-    font-family: 'SUIT-Regular';
+    color: #3E3D3D;
+    font-family: 'SUIT';
+    font-size: 0.8125rem;
 }
 
 .departmentPlaceHolder {
     position: absolute;
-    top: 54%;
-    left: 16%;
-    font-family: 'SUIT-Regular';
-    font-size: 0.9rem;
+    top: 41.2%;
+    left: 20%;
+    font-family: 'SUIT';
+    font-size: 0.8125rem;
 }
 
 .inputLine2 {
     position: absolute;
-    top: 58.5%;
-    width: 69%;
+    top: 44.8%;
+    width: 19.49019rem;
     z-index: 1;
 }
 
 .departmentInput {
     position: absolute;
-    top: 53.5%;
+    top: 40.8%;
+    width: 44%;
+    left: 32%;
+    height: auto;
     border: none;
     outline: none;
-    font-family: 'SUIT-Regular';
-    font-size: 0.9rem;
+    color: #3E3D3D;
+    font-family: 'SUIT';
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
 
 }
 
-.positionPlaceHolder {
+.studentNumPlaceHolder {
     position: absolute;
-    top: 61.5%;
-    left: 16%;
-    font-family: 'SUIT-Regular';
-    font-size: 0.9rem;
+    top: 46.4%;
+    left: 20%;
+    color: #3E3D3D;
+    font-family: 'SUIT';
+    font-size: 0.8125rem;
 }
 
-.positionInput {
+.studentNumInput {
     position: absolute;
-    top: 61.4%;
+    top: 46%;
+    left: 32%;
+    width: 44%;
+    height: auto;
     border: none;
     outline: none;
-    font-family: 'SUIT-Regular';
-    font-size: 0.9rem;
+    color: #3E3D3D;
+    font-family: 'SUIT';
+    font-size: 0.8125rem;
 }
+
+.gradePlaceHolder {
+    position: absolute;
+    top: 54.8%;
+    left: 20%;
+    color: #3E3D3D;
+    font-family: 'SUIT';
+    font-size: 0.8125rem;
+}
+
+.gradeInput {
+    position: absolute;
+    top: 54.6%;
+    left: 32%;
+    width: 44%;
+    height: auto;
+    border: none;
+    outline: none;
+    color: #3E3D3D;
+    font-family: 'SUIT';
+    font-size: 0.8125rem;
+}
+.inputLine3 {
+    position: absolute;
+    top: 58.4%;
+    width: 19.49019rem;
+    z-index: 1;
+}
+
+.phoneNumPlaceHolder {
+    position: absolute;
+    top: 60.2%;
+    left: 20%;
+    color: #3E3D3D;
+    font-family: 'SUIT';
+    font-size: 0.8125rem;
+}
+
+.phoneNumInput {
+    position: absolute;
+    top: 60%;
+    left: 32%;
+    width: 44%;
+    height: auto;
+    border: none;
+    outline: none;
+    color: #3E3D3D;
+    font-family: 'SUIT';
+    font-size: 0.8125rem;
+}
+
+.studentNumError {
+    position: absolute;
+    top: 49%;
+    right: 20%;
+    color: #ED8081;
+    font-family: 'SUIT';
+    font-size: 0.6125rem;
+    font-weight: bold;
+}
+
 .addInfoCompleteButton {
     position: absolute;
     justify-content: center;
@@ -122,6 +221,6 @@
     background-color: #B5C9F1;
     color: #FFFFFF;
     border: none;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     cursor: pointer;
 }

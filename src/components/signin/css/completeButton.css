@@ -1,6 +1,8 @@
 .completeButton {
-    width: 68%;
-    height: 7.5%;
-    font-weight: bold; 
-    font-size: 0.9em;
+    width: 19.5rem;
+    height: 2.125rem;
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
