@@ -9,32 +9,43 @@ export const useInitMailbox = () => {
   const setSentMails = useMailStore((s) => s.setSentMails);
   const setGroupedMails = useMailStore((s) => s.setGroupedMails);
   const setStatus = useMailStore((s) => s.setStatus);
-  const setError = useMailStore((s) => s.setError);
+  const status = useMailStore((s) => s.status);
 
   useEffect(() => {
     const init = async () => {
       setStatus("loading");
+
+      let receiveMails = [];
+      let sentMails = [];
+
       try {
-        const [received, sent] = await Promise.all([
-          fetchReceiveMails(),
-          fetchSentMails(),
-        ]);
-
-        const receiveMails = received.emails;
-        const sentMails = sent.emails;
-        const allMails = [...receiveMails, ...sentMails];
-
-        setReceivedMails(receiveMails); // 받은 메일 저장
-        setSentMails(sentMails); // 보낸 메일 저장
-        setGroupedMails(allMails); // 받은 메일 + 보낸 메일 저장
-
-        setStatus("succeeded");
+        const res = await fetchReceiveMails();
+        receiveMails = res.emails;
+        setReceivedMails(receiveMails);
       } catch (err) {
-        setError(err.message ?? "메일 초기 로딩 실패");
+        console.error("📨 받은 메일 로딩 실패:", err);
+      }
+
+      try {
+        const res = await fetchSentMails();
+        sentMails = res.emails;
+        setSentMails(sentMails);
+      } catch (err) {
+        console.error("📤 보낸 메일 로딩 실패:", err);
+      }
+
+      const allMails = [...receiveMails, ...sentMails];
+      setGroupedMails(allMails);
+
+      if (receiveMails.length || sentMails.length) {
+        setStatus("succeeded");
+      } else {
         setStatus("failed");
       }
     };
 
-    init();
-  }, []);
+    if (status === "idle") {
+      init();
+    }
+  }, [status]);
 };
