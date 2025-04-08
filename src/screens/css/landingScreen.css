@@ -7,15 +7,17 @@
   }
     
   .landingBackground {
-    position: absolute;
-    margin-top: -1%;
+    position: relative;
+    margin: 0;
+    padding: 0;
     background-image: url('@assets/images/LandingBackground.svg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     min-height: 420vh;
-    min-width: 99.4vw;
-    z-index: -1;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
   
   .landingSymbolLogo {
@@ -82,12 +84,24 @@
     top: calc(18.2% + 5.1875rem + 1rem);
     left: 50%;
     transform: translateX(-50%);
+    background-color: #fbfbfb;
     width: 12.5625rem;
     height: 3.75rem;
     box-sizing: border-box;
     cursor: pointer;
+    border: none;
   }
   
+  .buttonImg {
+    position: absolute;
+    display: inline-block;
+    top: calc(18.2% + 0.1875rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12.5625rem;
+    height: 3.75rem;
+    z-index: 1;
+  }
   .catchphraseShadow {
     position: absolute;
     display: flex;
