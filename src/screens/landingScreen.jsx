@@ -22,7 +22,9 @@ function Landing() {
       <img src={landingAI} className="landingAILogo"></img>
       <p className="introText">생성형 AI를 이용한 메일 자동 교정 서비스</p>
 
-      <img src={serviceStartButton} className="serviceStartButton" onClick={handleLogin()}/>
+      <button className="serviceStartButton" onClick={handleLogin}>
+        <img src={serviceStartButton} className='buttonImg'alt="서비스 시작하기" />
+      </button>
   
 
       <p className="catchphraseShadow">Type less, let Tab do the rest.</p>
