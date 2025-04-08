@@ -47,9 +47,9 @@ const router = createBrowserRouter([
       { path: "sent", element: <SentMailScreen /> },
       { path: "spam", element: <SpamMailScreen /> },
       { path: "search", element: <SearchMailScreen /> },
-      { path: "/notification", element: <NotificationScreen /> },
-      { path: "/setting", element: <SettingScreen /> },
-      { path: "/profile", element: <ProfileScreen /> },
+      { path: "notification", element: <NotificationScreen /> },
+      { path: "setting", element: <SettingScreen /> },
+      { path: "profile", element: <ProfileScreen /> },
     ],
   },
 ]);
