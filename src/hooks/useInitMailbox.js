@@ -9,6 +9,7 @@ export const useInitMailbox = () => {
   const setSentMails = useMailStore((s) => s.setSentMails);
   const setGroupedMails = useMailStore((s) => s.setGroupedMails);
   const setStatus = useMailStore((s) => s.setStatus);
+  const status = useMailStore((s) => s.status);
   const setError = useMailStore((s) => s.setError);
   const receiveMails = useMailStore((s) => s.receiveMails);
   const sentMails = useMailStore((s) => s.sentMails);
