@@ -1,7 +1,5 @@
 .mailListItem-wrapper {
   display: flex;
-  padding: 0.5rem;
-  gap: 0.5rem;
   align-items: center;
   border-bottom: 1px solid #e0e0e0;
   cursor: pointer;
@@ -15,6 +13,7 @@
 .mailListItem-custom-checkBox {
   display: flex;
   align-items: center;
+  padding: 0.5rem;
   cursor: pointer;
   position: relative;
 }
@@ -61,6 +60,7 @@
 .mailListItem-star-container {
   display: flex;
   align-items: center;
+  padding: 0.5rem;
 }
 .mailListItem-star {
   width: 16px;
@@ -76,6 +76,7 @@
 .mailListItem-mailInfo {
   display: flex;
   align-items: center;
+  padding: 0.5rem 0.5rem 0.5rem 0;
   gap: 0.5rem;
 }
 .mailListItem-mailInfo-m {
