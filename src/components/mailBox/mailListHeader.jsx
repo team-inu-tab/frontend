@@ -56,6 +56,14 @@ const MailListHeader = () => {
     toggleOption();
   };
 
+  // 페이지 이동할 때 검색창 초기화
+  useEffect(() => {
+    const isSearchPage = location.pathname.includes("/mail/search");
+    if (!isSearchPage) {
+      setSearchInput("");
+    }
+  }, [location.pathname]);
+
   // 1. boxType, mails, isSortOption 먼저 가져오기
   const { boxType, mails, isSortOption } = getMailBoxConfig({
     pathname: location.pathname,
@@ -175,7 +183,7 @@ const MailListHeader = () => {
     if (checkboxRef.current) {
       checkboxRef.current.indeterminate = isIndeterminate(boxType, mailIds);
     }
-  }, [boxType, mailIds, isIndeterminate(boxType, mailIds)]);
+  }, [boxType, mailIds, isIndeterminate]);
 
   return (
     <div className="mailListHeader-wrapper">
