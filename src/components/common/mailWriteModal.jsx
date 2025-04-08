@@ -5,20 +5,20 @@ import ToggleSwitch from '@components/common/toggleSwitch.jsx';
 import Link from '@assets/icons/link.svg';
 import aiOnLogo from '@assets/icons/ai.svg';
 import WriteContainer from '@components/common/mailWritingContainer.jsx';
-import CompImg from '@assets/images/SendComplete.svg';
-import checkCompImg from '@assets/images/sendCompCheck.svg';
+import SendComplete from '@screens/sendCompleteScreen.jsx';
 import Tagify from '@yaireo/tagify';
 import '@yaireo/tagify/dist/tagify.css';
 import { useMailApi } from "@hooks/useMailApi.js";
 import { api } from "@hooks/useMailApi";
 
-function MailWriteModal() {
+function MailWriteModal({ onClose }) {
   const [isAiOn, setIsAiOn] = useState(false);
   const [isSendClick, setIsSendClick] = useState(false);
   const [mailTitle, setMailTitle] = useState('');
   const [recieverTitle, setRecieverTitle] = useState('');
   const [mailBody, setMailBody] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
+  const [showComplete, setShowComplete] = useState(false);
 
   const tagifyInputRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -87,7 +87,7 @@ function MailWriteModal() {
 
       if (res.status === 200) {
         console.log("메일 전송 성공");
-        setIsSendClick(true);
+        setShowComplete(true);
       }
     } 
     catch (error) {
@@ -102,7 +102,7 @@ function MailWriteModal() {
           });
           if (retryRes.status === 200) {
             console.log("메일 전송 성공");
-            setIsSendClick(true);
+            setShowComplete(true);
           }
         } catch (retryError) {
           console.error("메일 전송 재시도 실패:", retryError);
@@ -113,6 +113,17 @@ function MailWriteModal() {
       }
     }
   };
+
+  const handleComplete = () => {
+    setShowComplete(false);
+    if (onClose) {
+      onClose();
+    }
+  };
+
+  if (showComplete) {
+    return <SendComplete onComplete={handleComplete} />;
+  }
 
   return (
     <MailContainer>
