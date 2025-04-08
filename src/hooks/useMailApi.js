@@ -98,18 +98,107 @@ export const useMailApi = () => {
     return res.data;
   };
 
+  const getMimeType = (fileName) => {
+    const extension = fileName.split(".").pop().toLowerCase();
+    const mimeTypes = {
+      // 이미지
+      jpg: "image/jpeg",
+      jpeg: "image/jpeg",
+      png: "image/png",
+      gif: "image/gif",
+      webp: "image/webp",
+      svg: "image/svg+xml",
+
+      // 문서
+      pdf: "application/pdf",
+      doc: "application/msword",
+      docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      xls: "application/vnd.ms-excel",
+      xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      ppt: "application/vnd.ms-powerpoint",
+      pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+
+      // 압축
+      zip: "application/zip",
+      rar: "application/x-rar-compressed",
+      "7z": "application/x-7z-compressed",
+
+      // 텍스트
+      txt: "text/plain",
+      csv: "text/csv",
+      html: "text/html",
+
+      // 기타
+      json: "application/json",
+      xml: "application/xml",
+    };
+
+    return mimeTypes[extension] || "application/octet-stream";
+  };
+
+  const handleFileError = (error, operation) => {
+    const errorMessages = {
+      401: "인증이 필요합니다",
+      403: "파일에 접근할 권한이 없습니다",
+      404: "파일을 찾을 수 없습니다",
+      413: "파일이 너무 큽니다",
+      415: "지원하지 않는 파일 형식입니다",
+      default: `파일 ${operation} 실패`,
+    };
+
+    const status = error.response?.status;
+    const message = errorMessages[status] || errorMessages.default;
+
+    console.error(`📄 파일 ${operation} 오류:`, error);
+    throw new Error(message);
+  };
+
   const isValidBase64 = (str) => {
     if (typeof str !== "string") return false;
+    if (!str) return false;
+
+    // base64 문자열 패턴 검사
+    const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/;
+    const sanitized = str.replace(/[\r\n\s]+/g, "");
+    
+    if (!base64Regex.test(sanitized)) return false;
 
     try {
-      // 공백 및 개행 제거 (Base64 인코딩에서 유효하지 않음)
-      const sanitized = str.replace(/[\r\n\s]+/g, "");
-
-      // atob로 디코딩 → 다시 btoa로 인코딩 → 원래와 같아야 함
       return btoa(atob(sanitized)) === sanitized;
     } catch {
-      // atob()에서 예외 발생하면 유효하지 않음
       return false;
+    }
+  };
+
+  const base64ToBlob = (base64String, mimeType) => {
+    try {
+      // 개행 제거
+      const sanitized = base64String.replace(/[\r\n\s]+/g, "");
+      
+      // base64 디코딩
+      const byteCharacters = atob(sanitized);
+      const byteArrays = [];
+
+      // 청크 단위로 처리하여 메모리 효율성 개선
+      const sliceSize = 1024 * 1024; // 1MB 청크
+      const len = byteCharacters.length;
+      
+      for (let offset = 0; offset < len; offset += sliceSize) {
+        const slice = byteCharacters.slice(offset, offset + sliceSize);
+        const byteNumbers = new Array(slice.length);
+        
+        for (let i = 0; i < slice.length; i++) {
+          byteNumbers[i] = slice.charCodeAt(i);
+        }
+        
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+      }
+
+      return new Blob(byteArrays, { type: mimeType });
+    } catch (error) {
+      console.error("Base64 변환 실패:", error);
+      throw new Error("파일 변환에 실패했습니다");
     }
   };
 
@@ -118,50 +207,35 @@ export const useMailApi = () => {
     await getToken();
     try {
       const res = await api.get(`/mails/${emailId}/file/${attachmentId}`, {
-        responseType: "text",
+        responseType: "text"
       });
 
-      let base64 = res.data?.trim();
-      base64 = base64.replace(/[\r\n]+/g, ""); // 개행 제거
-
-      if (!isValidBase64(base64)) {
-        throw new Error("잘못된 Base64 인코딩입니다.");
+      const base64Data = res.data?.trim();
+      
+      if (!isValidBase64(base64Data)) {
+        throw new Error("잘못된 파일 데이터입니다");
       }
 
-      const extension = fileName.split(".").pop().toLowerCase();
-      const mimeTypes = {
-        pdf: "application/pdf",
-        ppt: "application/vnd.ms-powerpoint",
-        pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-        docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        zip: "application/zip",
-        jpg: "image/jpeg",
-        png: "image/png",
-      };
-      const mimeType = mimeTypes[extension] || "application/octet-stream";
-
-      const byteCharacters = atob(base64);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-
-      const byteArray = new Uint8Array(byteNumbers);
-      const blob = new Blob([byteArray], { type: mimeType });
-
+      const mimeType = getMimeType(fileName);
+      const blob = base64ToBlob(base64Data, mimeType);
+      
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
       a.download = fileName;
+      
+      // 다운로드 요소를 DOM에 추가하고 즉시 클릭
       document.body.appendChild(a);
       a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
+      
+      // 클린업
+      setTimeout(() => {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 100);
+      
     } catch (error) {
-      alert("파일 다운로드 실패");
-      console.error("📄 파일 다운로드 오류:", error);
-      throw error;
+      handleFileError(error, "다운로드");
     }
   };
 
@@ -170,36 +244,43 @@ export const useMailApi = () => {
     await getToken();
     try {
       const res = await api.get(`/mails/${emailId}/file/${attachmentId}`, {
-        responseType: "text",
+        responseType: "text"
       });
 
-      let base64 = res.data?.trim();
-      base64 = base64.replace(/[\r\n]+/g, "");
-
-      if (!isValidBase64(base64)) {
-        throw new Error("Base64 인코딩 오류");
+      const base64Data = res.data?.trim();
+      
+      if (!isValidBase64(base64Data)) {
+        throw new Error("잘못된 파일 데이터입니다");
       }
 
-      const byteCharacters = atob(base64);
-      const byteNumbers = Array.from(byteCharacters).map((c) =>
-        c.charCodeAt(0)
-      );
-      const byteArray = new Uint8Array(byteNumbers);
+      const mimeType = getMimeType(fileName);
+      
+      // 미리보기 지원 형식 체크
+      const supportedPreviewTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+        "application/pdf",
+        "text/plain",
+        "text/html"
+      ];
+      
+      if (!supportedPreviewTypes.includes(mimeType)) {
+        throw new Error("미리보기를 지원하지 않는 파일 형식입니다");
+      }
 
-      const extension = fileName.split(".").pop().toLowerCase();
-      const mimeTypes = {
-        pdf: "application/pdf",
-        jpg: "image/jpeg",
-        png: "image/png",
-      };
-      const mimeType = mimeTypes[extension] || "application/octet-stream";
-
-      const blob = new Blob([byteArray], { type: mimeType });
+      const blob = base64ToBlob(base64Data, mimeType);
       const objectUrl = URL.createObjectURL(blob);
+
+      // 메모리 누수 방지를 위한 URL 해제 타이머 설정
+      setTimeout(() => {
+        URL.revokeObjectURL(objectUrl);
+      }, 5 * 60 * 1000); // 5분 후 해제
 
       return objectUrl;
     } catch (error) {
-      console.error("파일 미리보기 생성 실패:", error);
+      handleFileError(error, "미리보기");
       return null;
     }
   };

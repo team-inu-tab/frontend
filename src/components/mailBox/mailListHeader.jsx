@@ -185,6 +185,15 @@ const MailListHeader = () => {
     }
   }, [boxType, mailIds, isIndeterminate]);
 
+  // 전체 선택/해제 핸들러
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      checkAll(boxType, mailIds);
+    } else {
+      uncheckAll(boxType);
+    }
+  };
+
   return (
     <div className="mailListHeader-wrapper">
       <div className="mailListHeader-left">
@@ -196,11 +205,7 @@ const MailListHeader = () => {
               type="checkbox"
               checked={isAllChecked(boxType, mailIds)}
               ref={checkboxRef}
-              onChange={(e) => {
-                e.target.checked
-                  ? checkAll(boxType, mailIds)
-                  : uncheckAll(boxType);
-              }}
+              onChange={handleSelectAll}
             />
             <span className="checkmark"></span>
           </label>
