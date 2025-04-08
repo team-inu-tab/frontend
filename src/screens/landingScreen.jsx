@@ -8,8 +8,19 @@ import function3 from "@assets/icons/function3.svg";
 import functionState1 from "@assets/images/functionState1.svg";
 import functionState2 from "@assets/images/functionState2.svg";
 import functionState3 from "@assets/images/functionState3.svg";
+import { useEffect } from "react";
 
 function Landing() {
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 overflow를 auto로 변경
+    document.body.style.overflow = "auto";
+
+    // 컴포넌트가 언마운트될 때 overflow를 hidden으로 복원
+    return () => {
+      document.body.style.overflow = "hidden";
+    };
+  }, []);
+
   const handleLogin = () => {
     window.location.href =
       "http://maeilmail.co.kr/api/oauth2/authorization/google";
