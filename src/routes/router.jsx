@@ -14,7 +14,7 @@ import LoginTest from "@screens/loginTest.jsx";
 import SettingScreen from "@screens/settingScreen";
 import ProfileScreen from "@screens/profileScreen";
 import NotificationScreen from "@screens/notificationScreen";
-import SearchMailScreen from "@screens/mailBox/SearchMailScreen";
+import SearchMailScreen from "@screens/mailBox/searchMailScreen";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +38,8 @@ const router = createBrowserRouter([
     path: "/mail",
     element: <MailBoxLayout />, // 메뉴바 + 메일함 헤더
     children: [
+      { path: "compose", element: null }, // 새 메일 작성
+      { path: "compose/:draftId", element: null }, // 임시 메일 수정
       { path: "receive", element: <ReceiveMailScreen /> },
       { path: "deleted", element: <DeletedMailScreen /> },
       { path: "draft", element: <DraftMailScreen /> },

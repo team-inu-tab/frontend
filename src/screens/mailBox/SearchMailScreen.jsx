@@ -26,7 +26,7 @@ const SearchMailScreen = () => {
     const fetchData = async () => {
       try {
         const res = await searchMailsByUserEmail(query);
-        setSearchResults(res);
+        setSearchResults(res.emails);
       } catch (e) {
         console.error("검색 실패", e);
       }

@@ -9,14 +9,9 @@ export const useInitMailbox = () => {
   const setSentMails = useMailStore((s) => s.setSentMails);
   const setGroupedMails = useMailStore((s) => s.setGroupedMails);
   const setStatus = useMailStore((s) => s.setStatus);
-  const status = useMailStore((s) => s.status);
   const setError = useMailStore((s) => s.setError);
-  const receiveMails = useMailStore((s) => s.receiveMails);
-  const sentMails = useMailStore((s) => s.sentMails);
 
   useEffect(() => {
-    if (status !== "idle") return;
-
     const init = async () => {
       setStatus("loading");
       try {
@@ -27,7 +22,6 @@ export const useInitMailbox = () => {
 
         const receiveMails = received.emails;
         const sentMails = sent.emails;
-
         const allMails = [...receiveMails, ...sentMails];
 
         setReceivedMails(receiveMails); // 받은 메일 저장
@@ -42,5 +36,5 @@ export const useInitMailbox = () => {
     };
 
     init();
-  }, [receiveMails, sentMails]);
+  }, []);
 };
