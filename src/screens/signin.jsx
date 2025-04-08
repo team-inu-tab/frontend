@@ -21,7 +21,7 @@ function Signin() {
   const [studentNumError, setStudentNumError] = useState("");
 
   const navigation = useNavigate();
-  const { getToken } = useMailApi();
+  const { getToken, refresh } = useMailApi();
 
   const handleSubmit = async () => {
     try {
@@ -40,7 +40,21 @@ function Signin() {
     } 
     catch (error) {
       console.error("정보 전송 실패:", error);
-      alert("정보 전송에 실패했습니다. 다시 시도해주세요.");
+      if (error.response?.status === 401) {
+        try {
+          await refresh();
+          const retryRes = await api.post("/users/info/student", payload);
+          if (retryRes.status === 200) {
+            console.log("학교 정보 저장 완료:", retryRes.data);
+            navigation("/mail/receive");
+          }
+        } catch (retryError) {
+          console.error("정보 전송 재시도 실패:", retryError);
+          alert("정보 전송에 실패했습니다. 다시 시도해주세요.");
+        }
+      } else {
+        alert("정보 전송에 실패했습니다. 다시 시도해주세요.");
+      }
     }
   };
 
