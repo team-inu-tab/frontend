@@ -18,8 +18,10 @@ function MailWriteModal() {
   const [mailTitle, setMailTitle] = useState('');
   const [recieverTitle, setRecieverTitle] = useState('');
   const [mailBody, setMailBody] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const tagifyInputRef = useRef(null);
+  const fileInputRef = useRef(null);
   let tagifyInstance = null;
 
   // 메일 주소 작성 후 엔터 클릭 시 태깅
@@ -52,20 +54,36 @@ function MailWriteModal() {
     };
   }, []);
 
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
   // 메일 발신
   const { getToken } = useMailApi();
   const { refresh } = useMailApi();
 
   const sendMail = async () => {
-    const payload = {
-      toEmail: recieverTitle,
+    const formData = new FormData();
+    
+    const mailData = {
+      toEmail: JSON.parse(recieverTitle),
       subject: mailTitle,
-      body: mailBody,
+      body: mailBody
     };
+
+    formData.append("data", new Blob([JSON.stringify(mailData)], { type: "application/json" }), "data.json");
+
+    if (selectedFile) {
+      formData.append("file", selectedFile);
+    }
 
     try {
       await getToken();
-      const res = await api.post("mails/send", payload);
+      const res = await api.post("mails/send", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
 
       if (res.status === 200) {
         console.log("메일 전송 성공");
@@ -77,7 +95,11 @@ function MailWriteModal() {
       if (error.response?.status === 401) {
         try {
           await refresh();
-          const retryRes = await api.post("mails/send", payload);
+          const retryRes = await api.post("mails/send", formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
           if (retryRes.status === 200) {
             console.log("메일 전송 성공");
             setIsSendClick(true);
@@ -117,8 +139,22 @@ function MailWriteModal() {
       </div>
 
       <div className="attachedContainer">
-        <img src={Link} className="attatchedIcon" alt="link icon" />
-        <p className="attachedLabel">DROP HERE!</p>
+        <input
+          type="file"
+          id="file"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          style={{ display: 'none' }}
+        />
+        <img 
+          src={Link} 
+          className="attatchedIcon" 
+          alt="link icon" 
+          onClick={() => fileInputRef.current.click()}
+        />
+        <p className="attachedLabel">
+          {selectedFile ? selectedFile.name : "DROP HERE!"}
+        </p>
       </div>
 
       <div className="switchContainer">
