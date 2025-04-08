@@ -2,7 +2,7 @@ import "@components/mailBox/css/mailBoxLayout.css";
 import MailListHeader from "./mailListHeader";
 import MenuBar from "../menu/menuBar";
 import { useMailStore, useMenuStore } from "../../store";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { useWriteStore } from "../../store/useWriteStore";
 import MailWriteModal from "../common/mailWriteModal";
@@ -12,43 +12,42 @@ const MailBoxLayout = () => {
   const setSelectedGroup = useMailStore((state) => state.setSelectedGroup);
   const isMenuBarOpen = useMenuStore((state) => state.isMenuBarOpen);
   const isWriteModalOpen = useWriteStore((state) => state.isWriteModalOpen);
-  const toggleWriteModal = useWriteStore((state) => state.toggleWriteModal);
-  const location = useLocation();
+  const setWriteModalOpen = useWriteStore((state) => state.setWriteModalOpen);
 
+  const location = useLocation();
   const modalRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setSelectedMail(null);
     setSelectedGroup([]);
+
+    const isComposeRoute = location.pathname.startsWith("/mail/compose");
+    setWriteModalOpen(isComposeRoute);
   }, [location.pathname]);
 
   // 모달 열릴 때 스크롤 방지
   useEffect(() => {
-    if (isWriteModalOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = isWriteModalOpen ? "hidden" : "";
   }, [isWriteModalOpen]);
 
-  // 모달 외부 클릭 시 닫기
+  // 모달 외부 클릭 시 url 이동으로 닫기
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
-        toggleWriteModal(); // 외부 클릭 시 모달 닫기
+        // compose일 때만 닫기 → 안전하게 처리
+        if (location.pathname.startsWith("/mail/compose")) {
+          navigate(-1);
+        }
       }
     };
-
     if (isWriteModalOpen) {
       document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
     }
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isWriteModalOpen, toggleWriteModal]);
+  }, [isWriteModalOpen, location.pathname, navigate]);
 
   return (
     <div className="mailBoxLayout-wrapper">

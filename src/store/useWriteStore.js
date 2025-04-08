@@ -8,4 +8,9 @@ export const useWriteStore = create((set) => ({
     set((state) => ({
       isWriteModalOpen: !state.isWriteModalOpen,
     })),
+
+  setWriteModalOpen: (value) =>
+    set(() => ({
+      isWriteModalOpen: value,
+    })),
 }));

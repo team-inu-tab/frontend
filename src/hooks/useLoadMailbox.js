@@ -12,11 +12,6 @@ export const useLoadMailbox = (type) => {
   const setDeletedMails = useMailStore((state) => state.setDeletedMails);
   const setStatus = useMailStore((state) => state.setStatus);
   const setError = useMailStore((state) => state.setError);
-  const draftMails = useMailStore((s) => s.draftMails);
-  const selfSentMails = useMailStore((s) => s.selfSentMails);
-  const importantMails = useMailStore((s) => s.importantMails);
-  const spamMails = useMailStore((s) => s.spamMails);
-  const deletedMails = useMailStore((s) => s.deletedMails);
 
   const {
     fetchDraftMails,
@@ -27,24 +22,6 @@ export const useLoadMailbox = (type) => {
   } = useMailApi();
 
   useEffect(() => {
-    const shouldFetch = () => {
-      switch (type) {
-        case "draft":
-          return draftMails.length === 0;
-        case "important":
-          return importantMails.length === 0;
-        case "self":
-          return selfSentMails.length === 0;
-        case "spam":
-          return spamMails.length === 0;
-        case "deleted":
-          return deletedMails.length === 0;
-        default:
-          return false;
-      }
-    };
-    if (!shouldFetch()) return;
-
     const load = async () => {
       setStatus("loading");
       try {
@@ -82,12 +59,5 @@ export const useLoadMailbox = (type) => {
     };
 
     load();
-  }, [
-    type,
-    draftMails,
-    selfSentMails,
-    importantMails,
-    spamMails,
-    deletedMails,
-  ]);
+  }, [type]);
 };

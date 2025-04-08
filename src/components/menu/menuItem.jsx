@@ -1,11 +1,10 @@
 import "@components/menu/css/menuItem.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 import Write from "@assets/icons/write.svg?react";
 import Notification from "@assets/icons/notification.svg?react";
 import Profile from "@assets/icons/profile.svg?react";
 import Settings from "@assets/icons/settings.svg?react";
-import { useWriteStore } from "../../store/useWriteStore";
 
 /**
  * MenuItem - 개별 메뉴 아이템 컴포넌트
@@ -15,7 +14,7 @@ import { useWriteStore } from "../../store/useWriteStore";
  */
 const MenuItem = ({ title, isMenuBarOpen }) => {
   const location = useLocation();
-  const toggleWriteModal = useWriteStore((state) => state.toggleWriteModal);
+  const navigate = useNavigate();
 
   /**
    * title 값에 따라 아이콘 이미지 경로 및 한글 메뉴명을 설정
@@ -56,6 +55,11 @@ const MenuItem = ({ title, isMenuBarOpen }) => {
   }, [title]);
 
   const isActive = location.pathname === `${link}`;
+
+  // 메일 작성 버튼 클릭 시 모달 열기
+  const handleWriteClick = () => {
+    navigate("/mail/compose"); // URL 변경
+  };
 
   // 공통된 내부 렌더링 블럭
   const content = (
@@ -98,7 +102,7 @@ const MenuItem = ({ title, isMenuBarOpen }) => {
         role="button"
         tabIndex={0}
         className={`menuItem-wrapper ${isMenuBarOpen ? "" : "menuItem-close"}`}
-        onClick={toggleWriteModal}
+        onClick={handleWriteClick}
       >
         {content}
       </div>

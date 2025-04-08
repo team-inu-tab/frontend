@@ -142,7 +142,7 @@ const MailListHeader = () => {
   // 이메일 검색
   const handleSearch = () => {
     if (!searchInput.trim()) return;
-    navigate(`/search?query=${encodeURIComponent(searchInput.trim())}`);
+    navigate(`/mail/search?query=${encodeURIComponent(searchInput.trim())}`);
   };
 
   // 2. mailTools 재계산

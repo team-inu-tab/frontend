@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import RootLayout from "@screens/RootLayout";
 import MailBoxLayout from "@components/mailBox/mailBoxLayout.jsx";
 import Landing from "@screens/landingScreen.jsx";
 import Signin from "@screens/signin.jsx";
@@ -36,35 +35,21 @@ const router = createBrowserRouter([
   },
 
   {
-    element: <RootLayout />, // MenuBar 포함된 레이아웃
+    path: "/mail",
+    element: <MailBoxLayout />, // 메뉴바 + 메일함 헤더
     children: [
-      {
-        path: "/mail",
-        element: <MailBoxLayout />,
-        children: [
-          { path: "receive", element: <ReceiveMailScreen /> },
-          { path: "deleted", element: <DeletedMailScreen /> },
-          { path: "draft", element: <DraftMailScreen /> },
-          { path: "important", element: <ImportantMailScreen /> },
-          { path: "scheduled", element: <ScheduledMailScreen /> },
-          { path: "selfsent", element: <SelfSentMailScreen /> },
-          { path: "sent", element: <SentMailScreen /> },
-          { path: "spam", element: <SpamMailScreen /> },
-          { path: "search", element: <SearchMailScreen /> },
-        ],
-      },
-      {
-        path: "/notification",
-        element: <NotificationScreen />,
-      },
-      {
-        path: "/setting",
-        element: <SettingScreen />,
-      },
-      {
-        path: "/profile",
-        element: <ProfileScreen />,
-      },
+      { path: "receive", element: <ReceiveMailScreen /> },
+      { path: "deleted", element: <DeletedMailScreen /> },
+      { path: "draft", element: <DraftMailScreen /> },
+      { path: "important", element: <ImportantMailScreen /> },
+      { path: "scheduled", element: <ScheduledMailScreen /> },
+      { path: "selfsent", element: <SelfSentMailScreen /> },
+      { path: "sent", element: <SentMailScreen /> },
+      { path: "spam", element: <SpamMailScreen /> },
+      { path: "search", element: <SearchMailScreen /> },
+      { path: "/notification", element: <NotificationScreen /> },
+      { path: "/setting", element: <SettingScreen /> },
+      { path: "/profile", element: <ProfileScreen /> },
     ],
   },
 ]);
