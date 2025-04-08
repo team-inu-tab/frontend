@@ -62,17 +62,30 @@ function MailWriteModal() {
       subject: mailTitle,
       body: mailBody,
     };
+
     try {
-      await refresh();
       await getToken();
-      
       const res = await api.post("mails/send", payload);
-      if (!res.ok) {
-        throw new Error("메일 전송 실패");
+
+      if (res.status === 200) {
+        console.log("메일 전송 성공");
+        setIsSendClick(true);
       }
-      console.log("메일 전송 성공");
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("메일 전송 중 오류 발생:", error);
+      if (error.response?.status === 401) {
+        try {
+          await refresh();
+          const retryRes = await api.post("mails/send", payload);
+          if (retryRes.status === 200) {
+            console.log("메일 전송 성공");
+            setIsSendClick(true);
+          }
+        } catch (retryError) {
+          console.error("메일 전송 재시도 실패:", retryError);
+        }
+      }
     }
   };
 
@@ -127,7 +140,6 @@ function MailWriteModal() {
           className="sendButton"
           onClick={() => {
             sendMail();
-            setIsSendClick(true);
           }}
         >
           전송하기
