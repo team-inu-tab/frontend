@@ -68,6 +68,13 @@ const MailListItem = ({ mail }) => {
     }
   };
 
+  // 체크박스 상태 변경 핸들러
+  const handleCheckboxChange = (e) => {
+    e.stopPropagation(); // 이벤트 버블링 방지
+    console.log('체크박스 변경:', boxType, mail.id);
+    toggleCheck(boxType, mail.id);
+  };
+
   return (
     <div className="mailListItem-wrapper">
       {/* 메일 선택 체크박스 */}
@@ -75,7 +82,8 @@ const MailListItem = ({ mail }) => {
         <input
           type="checkbox"
           checked={isChecked(boxType, mail.id)}
-          onChange={() => toggleCheck(boxType, mail.id)}
+          onChange={handleCheckboxChange}
+          onClick={(e) => e.stopPropagation()} // 클릭 이벤트 버블링 방지
         />
         <span className="checkmark"></span>
       </label>
