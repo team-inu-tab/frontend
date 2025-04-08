@@ -8,7 +8,6 @@ const ScheduledMailScreen = () => {
   const selectedMail = useMailStore((state) => state.selectedMail);
   const isExpanded = useMailStore((state) => state.isExpanded);
   const scheduledMails = useMailStore((state) => state.scheduledMails);
-  const status = useMailStore((state) => state.status);
 
   return (
     <div className="MailScreen-container">
@@ -18,11 +17,7 @@ const ScheduledMailScreen = () => {
         <>
           {/* 왼쪽: 메일 목록 */}
           <div className="MailScreen-list">
-            {status === "loading" ? (
-              <p>📩 메일을 불러오는 중...</p>
-            ) : (
-              <TimeSortedList mails={scheduledMails} />
-            )}
+            <TimeSortedList mails={scheduledMails} />
           </div>
 
           {/* 오른쪽: 메일 상세 내용 */}

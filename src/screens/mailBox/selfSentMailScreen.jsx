@@ -11,7 +11,6 @@ const SelfSentMailScreen = () => {
   const selectedMail = useMailStore((state) => state.selectedMail);
   const isExpanded = useMailStore((state) => state.isExpanded);
   const selfSentMails = useMailStore((state) => state.selfSentMails);
-  const status = useMailStore((state) => state.status);
 
   return (
     <div className="MailScreen-container">
@@ -21,11 +20,7 @@ const SelfSentMailScreen = () => {
         <>
           {/* 왼쪽: 메일 목록 */}
           <div className="MailScreen-list">
-            {status === "loading" ? (
-              <p>📩 메일을 불러오는 중...</p>
-            ) : (
-              <TimeSortedList mails={selfSentMails} />
-            )}
+            <TimeSortedList mails={selfSentMails} />
           </div>
 
           {/* 오른쪽: 메일 상세 내용 */}

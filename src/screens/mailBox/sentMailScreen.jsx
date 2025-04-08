@@ -16,7 +16,6 @@ const SentMailScreen = () => {
   const isExpanded = useMailStore((state) => state.isExpanded);
   const sentMails = useMailStore((state) => state.sentMails);
   const groupedMails = useMailStore((state) => state.groupedMails);
-  const status = useMailStore((state) => state.status);
 
   return (
     <div className="MailScreen-container">
@@ -26,9 +25,7 @@ const SentMailScreen = () => {
         <>
           {/* 왼쪽: 메일 목록 */}
           <div className="MailScreen-list">
-            {status === "loading" ? (
-              <p>📩 메일을 불러오는 중...</p>
-            ) : sortOption === SORT_OPTIONS.TIME ? (
+            {sortOption === SORT_OPTIONS.TIME ? (
               <TimeSortedList mails={sentMails} />
             ) : (
               <SenderGroupedList mails={groupedMails} />
