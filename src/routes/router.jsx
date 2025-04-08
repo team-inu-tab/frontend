@@ -14,7 +14,7 @@ import LoginTest from "@screens/loginTest.jsx";
 import SettingScreen from "@screens/settingScreen";
 import ProfileScreen from "@screens/profileScreen";
 import NotificationScreen from "@screens/notificationScreen";
-import SearchMailScreen from "@screens/mailBox/searchMailScreen";
+import SearchMailScreen from "@screens/mailBox/SearchMailScreen";
 
 const router = createBrowserRouter([
   {
