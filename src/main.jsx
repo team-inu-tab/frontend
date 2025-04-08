@@ -6,6 +6,7 @@ import router from "@routes/router.jsx";
 import MailWriteModal from "@components/common/mailWriteModal.jsx";
 import Signin from "@screens/signin.jsx";
 import Landing from "@screens/landingScreen.jsx";
+import SendComplete from "@screens/sendCompleteScreen.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -16,5 +17,6 @@ createRoot(document.getElementById("root")).render(
     {/* <AddInfoComp></AddInfoComp> */}
     {/* <MailWriteModal/> */}
     {/* <Landing/> */}
+    {/* <SendComplete/> */}
   </StrictMode>
 );
