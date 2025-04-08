@@ -17,6 +17,7 @@ const SearchMailScreen = () => {
   const setStatus = useMailStore((state) => state.setStatus);
   const status = useMailStore((state) => state.status);
   const setSelectedGroup = useMailStore((state) => state.setSelectedGroup);
+  const setGroupedMails = useMailStore((state) => state.setGroupedMails);
 
   const { searchMailsByUserEmail } = useMailApi();
 
@@ -27,6 +28,7 @@ const SearchMailScreen = () => {
       try {
         const res = await searchMailsByUserEmail(query);
         setSearchResults(res.emails);
+        setGroupedMails(res.emails);
         setSelectedGroup(res.emails);
         setStatus("succeeded");
       } catch (e) {
@@ -49,9 +51,8 @@ const SearchMailScreen = () => {
           <div className="MailScreen-list">
             {status === "loading" ? (
               <p>🔍 검색 중입니다...</p>
-            ) : status === "failed" ? (
-              <p>❌ 검색 실패</p>
-            ) : status === "succeeded" && searchResults.length === 0 ? (
+            ) : status === "failed" ||
+              (status === "succeeded" && searchResults.length === 0) ? (
               <p>📭 검색 결과가 없습니다.</p>
             ) : (
               <SenderGroupedList mails={searchResults} />
