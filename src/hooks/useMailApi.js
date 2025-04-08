@@ -33,20 +33,30 @@ export const useMailApi = () => {
 
   // 엑세스 토큰 발급
   const refresh = async () => {
-    const res = await fetch(`${BASE_URL}/oauth2/reissue`, {
-      method: "POST",
-      credentials: "include",
-    });
+    try {
+      const res = await fetch(`${BASE_URL}/oauth2/reissue`, {
+        method: "POST",
+        credentials: "include",
+      });
 
-    if (res.status === 200) {
-      const accessToken = res.headers.get("Authorization");
-      if (accessToken) {
-        useAuthStore.getState().setAccessToken(accessToken);
-        return accessToken;
+      if (!res.ok) {
+        throw new Error(`토큰 갱신 실패: ${res.status}`);
       }
-    }
 
-    throw new Error("토큰 저장 실패");
+      const data = await res.json();
+      const accessToken = data.accessToken || res.headers.get("Authorization");
+
+      if (!accessToken) {
+        throw new Error("토큰이 응답에 없습니다.");
+      }
+
+      useAuthStore.getState().setAccessToken(accessToken);
+      return accessToken;
+    } catch (error) {
+      console.error("토큰 갱신 중 오류 발생:", error);
+      window.location.href = "/login";
+      throw error;
+    }
   };
 
   // 받은 메일함 조회

@@ -74,6 +74,7 @@ function MailWriteModal() {
     } 
     catch (error) {
       console.error("메일 전송 중 오류 발생:", error);
+      
       if (error.response?.status === 401) {
         try {
           await refresh();
@@ -84,7 +85,11 @@ function MailWriteModal() {
           }
         } catch (retryError) {
           console.error("메일 전송 재시도 실패:", retryError);
+          alert("메일 전송에 실패했습니다. 다시 로그인해주세요.");
+          window.location.href = "/login";
         }
+      } else {
+        alert("메일 전송에 실패했습니다. 다시 시도해주세요.");
       }
     }
   };
