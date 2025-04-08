@@ -33,39 +33,20 @@ export const useMailApi = () => {
 
   // 엑세스 토큰 발급
   const refresh = async () => {
-    try {
-      const res = await fetch(`${BASE_URL}/oauth2/reissue`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
+    const res = await fetch(`${BASE_URL}/oauth2/reissue`, {
+      method: "POST",
+      credentials: "include",
+    });
 
-      if (!res.ok) {
-        throw new Error(`토큰 갱신 실패: ${res.status}`);
+    if (res.status === 200) {
+      const accessToken = res.headers.get("Authorization");
+      if (accessToken) {
+        useAuthStore.getState().setAccessToken(accessToken);
+        return accessToken;
       }
-
-      const data = await res.json();
-      
-      // 백엔드 응답 형식에 맞게 토큰 추출
-      const accessToken = data.accessToken || data.token || res.headers.get("Authorization");
-
-      if (!accessToken) {
-        throw new Error("토큰이 응답에 없습니다.");
-      }
-
-      // 토큰 저장
-      useAuthStore.getState().setAccessToken(accessToken);
-      
-      // axios 인스턴스의 기본 헤더 업데이트
-      api.defaults.headers.common['Authorization'] = accessToken;
-      
-      return accessToken;
-    } catch (error) {
-      console.error("토큰 갱신 중 오류 발생:", error);
-      throw error;
     }
+
+    throw new Error("토큰 저장 실패");
   };
 
   // 받은 메일함 조회
@@ -117,6 +98,21 @@ export const useMailApi = () => {
     return res.data;
   };
 
+  const isValidBase64 = (str) => {
+    if (typeof str !== "string") return false;
+
+    try {
+      // 공백 및 개행 제거 (Base64 인코딩에서 유효하지 않음)
+      const sanitized = str.replace(/[\r\n\s]+/g, "");
+
+      // atob로 디코딩 → 다시 btoa로 인코딩 → 원래와 같아야 함
+      return btoa(atob(sanitized)) === sanitized;
+    } catch {
+      // atob()에서 예외 발생하면 유효하지 않음
+      return false;
+    }
+  };
+
   // 파일 상세 보기 - 첨부파일 다운로드
   const getFile = async ({ emailId, attachmentId, fileName }) => {
     await getToken();
@@ -125,9 +121,14 @@ export const useMailApi = () => {
         responseType: "text",
       });
 
-      const base64 = res.data;
-      const extension = fileName.split(".").pop().toLowerCase();
+      let base64 = res.data?.trim();
+      base64 = base64.replace(/[\r\n]+/g, ""); // 개행 제거
 
+      if (!isValidBase64(base64)) {
+        throw new Error("잘못된 Base64 인코딩입니다.");
+      }
+
+      const extension = fileName.split(".").pop().toLowerCase();
       const mimeTypes = {
         pdf: "application/pdf",
         ppt: "application/vnd.ms-powerpoint",
@@ -138,10 +139,9 @@ export const useMailApi = () => {
         jpg: "image/jpeg",
         png: "image/png",
       };
-
       const mimeType = mimeTypes[extension] || "application/octet-stream";
 
-      const byteCharacters = atob(base64.trim());
+      const byteCharacters = atob(base64);
       const byteNumbers = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
         byteNumbers[i] = byteCharacters.charCodeAt(i);
@@ -160,7 +160,7 @@ export const useMailApi = () => {
       window.URL.revokeObjectURL(url);
     } catch (error) {
       alert("파일 다운로드 실패");
-      console.error(error);
+      console.error("📄 파일 다운로드 오류:", error);
       throw error;
     }
   };
@@ -168,38 +168,38 @@ export const useMailApi = () => {
   // 파일 상세 보기 - 미리보기용 URL 생성
   const getFilePreviewUrl = async ({ emailId, attachmentId, fileName }) => {
     await getToken();
-
     try {
       const res = await api.get(`/mails/${emailId}/file/${attachmentId}`, {
         responseType: "text",
       });
 
-      const base64 = res.data.trim();
+      let base64 = res.data?.trim();
+      base64 = base64.replace(/[\r\n]+/g, "");
 
-      // base64 디코딩 → Uint8Array 생성
+      if (!isValidBase64(base64)) {
+        throw new Error("Base64 인코딩 오류");
+      }
+
       const byteCharacters = atob(base64);
       const byteNumbers = Array.from(byteCharacters).map((c) =>
         c.charCodeAt(0)
       );
       const byteArray = new Uint8Array(byteNumbers);
 
-      // MIME 타입 설정
       const extension = fileName.split(".").pop().toLowerCase();
       const mimeTypes = {
         pdf: "application/pdf",
         jpg: "image/jpeg",
         png: "image/png",
-        // 기타 확장자는 뷰어 연동 필요
       };
       const mimeType = mimeTypes[extension] || "application/octet-stream";
 
-      // Blob → URL 생성
       const blob = new Blob([byteArray], { type: mimeType });
       const objectUrl = URL.createObjectURL(blob);
 
-      return objectUrl; // iframe/img의 src로 사용
+      return objectUrl;
     } catch (error) {
-      console.error("파일 미리보기 생성 실패", error);
+      console.error("파일 미리보기 생성 실패:", error);
       return null;
     }
   };
