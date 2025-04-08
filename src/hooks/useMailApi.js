@@ -37,6 +37,9 @@ export const useMailApi = () => {
       const res = await fetch(`${BASE_URL}/oauth2/reissue`, {
         method: "POST",
         credentials: "include",
+        headers: {
+          'Content-Type': 'application/json',
+        }
       });
 
       if (!res.ok) {
@@ -44,17 +47,23 @@ export const useMailApi = () => {
       }
 
       const data = await res.json();
-      const accessToken = data.accessToken || res.headers.get("Authorization");
+      
+      // 백엔드 응답 형식에 맞게 토큰 추출
+      const accessToken = data.accessToken || data.token || res.headers.get("Authorization");
 
       if (!accessToken) {
         throw new Error("토큰이 응답에 없습니다.");
       }
 
+      // 토큰 저장
       useAuthStore.getState().setAccessToken(accessToken);
+      
+      // axios 인스턴스의 기본 헤더 업데이트
+      api.defaults.headers.common['Authorization'] = accessToken;
+      
       return accessToken;
     } catch (error) {
       console.error("토큰 갱신 중 오류 발생:", error);
-      window.location.href = "/login";
       throw error;
     }
   };
