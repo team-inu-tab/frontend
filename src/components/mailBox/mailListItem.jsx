@@ -3,6 +3,7 @@ import { useCheckboxStore, useMailStore } from "../../store";
 import Star from "@assets/icons/star.svg?react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { extractSenderName, formatReceiveDate } from "../../utils/emailUtils";
+import { useEffect, useState } from "react";
 
 /**
  * MailListItem - 개별 메일 항목을 렌더링하는 컴포넌트
@@ -11,10 +12,11 @@ import { extractSenderName, formatReceiveDate } from "../../utils/emailUtils";
 const MailListItem = ({ mail }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [localChecked, setLocalChecked] = useState(false);
 
   const toggleCheck = useCheckboxStore((state) => state.toggleCheck);
   const isChecked = useCheckboxStore((state) => state.isChecked);
-  const setSelectedMail = useMailStore((state) => state.setSelectedMail); // 현재 선택된 메일을 설정하는 함수
+  const setSelectedMail = useMailStore((state) => state.setSelectedMail);
 
   const isImportant = mail.isImportant; // 중요 메일 여부
 
@@ -27,37 +29,34 @@ const MailListItem = ({ mail }) => {
     case location.pathname.includes("/receive"):
       boxType = "receive";
       break;
-
     case location.pathname.includes("/important"):
       boxType = "important";
       break;
-
     case location.pathname.includes("/deleted"):
       boxType = "deleted";
       break;
-
     case location.pathname.includes("/draft"):
       boxType = "draft";
       break;
-
     case location.pathname.includes("/scheduled"):
       boxType = "scheduled";
       break;
-
     case location.pathname.includes("/selfsent"):
       boxType = "selfsent";
       break;
-
     case location.pathname.includes("/sent"):
       boxType = "sent";
       break;
-
     case location.pathname.includes("/spam"):
       boxType = "spam";
       break;
-
     default:
   }
+
+  // 체크박스 상태 동기화
+  useEffect(() => {
+    setLocalChecked(isChecked(boxType, mail.id));
+  }, [isChecked(boxType, mail.id), boxType, mail.id]);
 
   // 메일 클릭 함수
   const handleMailClick = () => {
@@ -70,8 +69,9 @@ const MailListItem = ({ mail }) => {
 
   // 체크박스 상태 변경 핸들러
   const handleCheckboxChange = (e) => {
-    e.stopPropagation(); // 이벤트 버블링 방지
-    console.log('체크박스 변경:', boxType, mail.id);
+    e.stopPropagation();
+    const newChecked = !localChecked;
+    setLocalChecked(newChecked);
     toggleCheck(boxType, mail.id);
   };
 
@@ -81,9 +81,9 @@ const MailListItem = ({ mail }) => {
       <label className="mailListItem-custom-checkBox">
         <input
           type="checkbox"
-          checked={isChecked(boxType, mail.id)}
+          checked={localChecked}
           onChange={handleCheckboxChange}
-          onClick={(e) => e.stopPropagation()} // 클릭 이벤트 버블링 방지
+          onClick={(e) => e.stopPropagation()}
         />
         <span className="checkmark"></span>
       </label>

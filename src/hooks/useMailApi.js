@@ -18,6 +18,59 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// 응답 인터셉터 - 401 에러 처리
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    // 401 에러이고, 이미 재시도한 요청이 아닌 경우
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        // 토큰 갱신
+        const newToken = async () => {
+          try {
+            const res = await fetch(`${BASE_URL}/oauth2/reissue`, {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+            if (res.status === 200) {
+              const accessToken = res.headers.get("Authorization");
+              if (accessToken) {
+                useAuthStore.getState().setAccessToken(accessToken);
+                return accessToken;
+              }
+            }
+
+            throw new Error("토큰 갱신 실패");
+          } catch (error) {
+            console.error("토큰 갱신 중 오류 발생:", error);
+            throw error;
+          }
+        };
+
+        // 원래 요청의 헤더 업데이트
+        originalRequest.headers["Authorization"] = newToken;
+
+        // 원래 요청 재시도
+        return api(originalRequest);
+      } catch (refreshError) {
+        console.error("토큰 갱신 실패:", refreshError);
+        // 토큰 갱신 실패 시 로그아웃 처리 등 추가 가능
+        return Promise.reject(refreshError);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 export const useMailApi = () => {
   // 엑세스 토큰 가져오기/호출
   const getToken = async () => {
@@ -33,20 +86,28 @@ export const useMailApi = () => {
 
   // 엑세스 토큰 발급
   const refresh = async () => {
-    const res = await fetch(`${BASE_URL}/oauth2/reissue`, {
-      method: "POST",
-      credentials: "include",
-    });
+    try {
+      const res = await fetch(`${BASE_URL}/oauth2/reissue`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    if (res.status === 200) {
-      const accessToken = res.headers.get("Authorization");
-      if (accessToken) {
-        useAuthStore.getState().setAccessToken(accessToken);
-        return accessToken;
+      if (res.status === 200) {
+        const accessToken = res.headers.get("Authorization");
+        if (accessToken) {
+          useAuthStore.getState().setAccessToken(accessToken);
+          return accessToken;
+        }
       }
-    }
 
-    throw new Error("토큰 저장 실패");
+      throw new Error("토큰 갱신 실패");
+    } catch (error) {
+      console.error("토큰 갱신 중 오류 발생:", error);
+      throw error;
+    }
   };
 
   // 받은 메일함 조회
@@ -101,80 +162,40 @@ export const useMailApi = () => {
   const getMimeType = (fileName) => {
     const extension = fileName.split(".").pop().toLowerCase();
     const mimeTypes = {
-      // 이미지
-      jpg: "image/jpeg",
-      jpeg: "image/jpeg",
-      png: "image/png",
-      gif: "image/gif",
-      webp: "image/webp",
-      svg: "image/svg+xml",
-
-      // 문서
       pdf: "application/pdf",
+      ppt: "application/vnd.ms-powerpoint",
+      pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
       doc: "application/msword",
       docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       xls: "application/vnd.ms-excel",
       xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      ppt: "application/vnd.ms-powerpoint",
-      pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-
-      // 압축
       zip: "application/zip",
-      rar: "application/x-rar-compressed",
-      "7z": "application/x-7z-compressed",
-
-      // 텍스트
+      jpg: "image/jpeg",
+      jpeg: "image/jpeg",
+      png: "image/png",
+      gif: "image/gif",
       txt: "text/plain",
-      csv: "text/csv",
       html: "text/html",
-
-      // 기타
-      json: "application/json",
-      xml: "application/xml",
+      htm: "text/html",
     };
-
     return mimeTypes[extension] || "application/octet-stream";
   };
 
-  const handleFileError = (error, operation) => {
-    const errorMessages = {
-      401: "인증이 필요합니다",
-      403: "파일에 접근할 권한이 없습니다",
-      404: "파일을 찾을 수 없습니다",
-      413: "파일이 너무 큽니다",
-      415: "지원하지 않는 파일 형식입니다",
-      default: `파일 ${operation} 실패`,
-    };
-
-    const status = error.response?.status;
-    const message = errorMessages[status] || errorMessages.default;
-
-    console.error(`📄 파일 ${operation} 오류:`, error);
-    throw new Error(message);
-  };
-
   const isValidBase64 = (str) => {
-    if (typeof str !== "string") return false;
-    if (!str) return false;
+    if (typeof str !== "string" || !str) return false;
 
     // base64 문자열 패턴 검사
-    const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/;
+    const base64Regex = /^[A-Za-z0-9+/=]+$/;
     const sanitized = str.replace(/[\r\n\s]+/g, "");
-    
-    if (!base64Regex.test(sanitized)) return false;
 
-    try {
-      return btoa(atob(sanitized)) === sanitized;
-    } catch {
-      return false;
-    }
+    return base64Regex.test(sanitized);
   };
 
   const base64ToBlob = (base64String, mimeType) => {
     try {
       // 개행 제거
       const sanitized = base64String.replace(/[\r\n\s]+/g, "");
-      
+
       // base64 디코딩
       const byteCharacters = atob(sanitized);
       const byteArrays = [];
@@ -182,15 +203,15 @@ export const useMailApi = () => {
       // 청크 단위로 처리하여 메모리 효율성 개선
       const sliceSize = 1024 * 1024; // 1MB 청크
       const len = byteCharacters.length;
-      
+
       for (let offset = 0; offset < len; offset += sliceSize) {
         const slice = byteCharacters.slice(offset, offset + sliceSize);
         const byteNumbers = new Array(slice.length);
-        
+
         for (let i = 0; i < slice.length; i++) {
           byteNumbers[i] = slice.charCodeAt(i);
         }
-        
+
         const byteArray = new Uint8Array(byteNumbers);
         byteArrays.push(byteArray);
       }
@@ -202,38 +223,44 @@ export const useMailApi = () => {
     }
   };
 
+  const handleFileError = (error, operation) => {
+    console.error(`파일 ${operation} 오류:`, error);
+    alert(`파일 ${operation}에 실패했습니다. 다시 시도해주세요.`);
+    throw error;
+  };
+
   // 파일 상세 보기 - 첨부파일 다운로드
   const getFile = async ({ emailId, attachmentId, fileName }) => {
     await getToken();
     try {
       const res = await api.get(`/mails/${emailId}/file/${attachmentId}`, {
-        responseType: "text"
+        responseType: "text",
       });
 
       const base64Data = res.data?.trim();
-      
+
       if (!isValidBase64(base64Data)) {
+        console.error("잘못된 base64 데이터:", base64Data);
         throw new Error("잘못된 파일 데이터입니다");
       }
 
       const mimeType = getMimeType(fileName);
       const blob = base64ToBlob(base64Data, mimeType);
-      
+
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
       a.download = fileName;
-      
+
       // 다운로드 요소를 DOM에 추가하고 즉시 클릭
       document.body.appendChild(a);
       a.click();
-      
+
       // 클린업
       setTimeout(() => {
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
       }, 100);
-      
     } catch (error) {
       handleFileError(error, "다운로드");
     }
@@ -244,17 +271,18 @@ export const useMailApi = () => {
     await getToken();
     try {
       const res = await api.get(`/mails/${emailId}/file/${attachmentId}`, {
-        responseType: "text"
+        responseType: "text",
       });
 
       const base64Data = res.data?.trim();
-      
+
       if (!isValidBase64(base64Data)) {
+        console.error("잘못된 base64 데이터:", base64Data);
         throw new Error("잘못된 파일 데이터입니다");
       }
 
       const mimeType = getMimeType(fileName);
-      
+
       // 미리보기 지원 형식 체크
       const supportedPreviewTypes = [
         "image/jpeg",
@@ -263,9 +291,9 @@ export const useMailApi = () => {
         "image/webp",
         "application/pdf",
         "text/plain",
-        "text/html"
+        "text/html",
       ];
-      
+
       if (!supportedPreviewTypes.includes(mimeType)) {
         throw new Error("미리보기를 지원하지 않는 파일 형식입니다");
       }
@@ -344,6 +372,7 @@ export const useMailApi = () => {
     });
     return res.data;
   };
+
   // 임시 메일 삭제
   const deleteDraftMail = async (draftId) => {
     await getToken();
