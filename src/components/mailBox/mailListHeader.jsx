@@ -1,5 +1,5 @@
 import "@components/mailBox/css/mailListHeader.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   useCheckboxStore,
   useSortStore,
@@ -83,11 +83,16 @@ const MailListHeader = () => {
     actions: {},
   });
 
+  const mailIds = useMemo(() => mails?.map((mail) => mail.id) || [], [mails]);
+
   // 메일함 새로고침 함수
   const refreshMailbox = async () => {
     setIsLoading(true);
     try {
-      await loadMailbox();
+      // 메일 목록 다시 가져오기
+      await loadMailbox(boxType);
+      // 체크박스 상태 초기화
+      uncheckAll(boxType);
     } catch (error) {
       console.error("메일함 새로고침 실패:", error);
     } finally {
@@ -100,7 +105,6 @@ const MailListHeader = () => {
     const ids = getCheckedIds(boxType);
     try {
       await Promise.all(ids.map((id) => markAsSpam(id)));
-      uncheckAll(boxType);
       await refreshMailbox();
       alert("스팸 등록 완료!");
     } catch (error) {
@@ -114,7 +118,6 @@ const MailListHeader = () => {
     const ids = getCheckedIds(boxType);
     try {
       await Promise.all(ids.map((id) => unmarkAsSpam(id)));
-      uncheckAll(boxType);
       await refreshMailbox();
       alert("스팸 해제 완료!");
     } catch (error) {
@@ -128,7 +131,6 @@ const MailListHeader = () => {
     const ids = getCheckedIds(boxType);
     try {
       await deleteTemporaryMails(ids);
-      uncheckAll(boxType);
       await refreshMailbox();
       alert("휴지통으로 이동했습니다.");
     } catch (error) {
@@ -142,7 +144,6 @@ const MailListHeader = () => {
     const ids = getCheckedIds(boxType);
     try {
       await deletePermanentMails(ids);
-      uncheckAll(boxType);
       await refreshMailbox();
       alert("영구 삭제 완료!");
     } catch (error) {
@@ -156,7 +157,6 @@ const MailListHeader = () => {
     const ids = getCheckedIds(boxType);
     try {
       await deleteDraftMail(ids);
-      uncheckAll(boxType);
       await refreshMailbox();
       alert("영구 삭제 완료!");
     } catch (error) {
@@ -198,17 +198,17 @@ const MailListHeader = () => {
     },
   });
 
-  const mailIds = mails.map((mail) => mail.id);
-
   const selectedCount = useCheckboxStore(
     (state) => state.checkedByBox[boxType]?.size || 0
   );
 
+  // 체크박스 상태 동기화
   useEffect(() => {
     if (checkboxRef.current) {
       checkboxRef.current.indeterminate = isIndeterminate(boxType, mailIds);
+      checkboxRef.current.checked = isAllChecked(boxType, mailIds);
     }
-  }, [boxType, mailIds, isIndeterminate]);
+  }, [boxType, mailIds, isIndeterminate, isAllChecked]);
 
   // 전체 선택/해제 핸들러
   const handleSelectAll = (e) => {

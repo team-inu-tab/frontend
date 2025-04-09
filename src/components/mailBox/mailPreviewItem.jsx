@@ -84,22 +84,23 @@ const MailPreviewItem = ({ mail }) => {
         </div>
 
         {/* 첨부파일 */}
-        {mail.fileNameList.map((file) => (
-          <FileItem
-            key={file.attachmentId}
-            fileName={file.fileName}
-            emailId={mail.id}
-            attachmentId={file.attachmentId}
-            isPreview={true}
-            onClick={() =>
-              getFile({
-                emailId: mail.id,
-                attachmentId: file.attachmentId,
-                fileName: file.fileName,
-              })
-            }
-          />
-        ))}
+        {mail?.fileNameList?.length > 0 &&
+          mail.fileNameList.map((file) => (
+            <FileItem
+              key={file.attachmentId}
+              fileName={file.fileName}
+              emailId={mail.id}
+              attachmentId={file.attachmentId}
+              isPreview={true}
+              onClick={() =>
+                getFile({
+                  emailId: mail.id,
+                  attachmentId: file.attachmentId,
+                  fileName: file.fileName,
+                })
+              }
+            />
+          ))}
 
         {/* 메일 내용 (미리보기) */}
         <div
