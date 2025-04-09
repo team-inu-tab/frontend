@@ -1,5 +1,5 @@
 import "@components/mailBox/css/mailListHeader.css";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   useCheckboxStore,
   useSortStore,
@@ -19,19 +19,15 @@ import { useLoadMailbox } from "../../hooks/useLoadMailbox";
  */
 const MailListHeader = () => {
   const location = useLocation();
-  const checkboxRef = useRef(null);
   const navigate = useNavigate();
   const loadMailbox = useLoadMailbox();
 
   const [isSortOptionOpen, setIsSortOptionOpen] = useState(false); // 정렬 옵션 상태
   const [searchInput, setSearchInput] = useState(""); // 검색어
-  const [isLoading, setIsLoading] = useState(false);
 
   const changeSortOption = useSortStore((state) => state.changeSortOption);
   const checkAll = useCheckboxStore((state) => state.checkAll);
   const uncheckAll = useCheckboxStore((state) => state.uncheckAll);
-  const isAllChecked = useCheckboxStore((state) => state.isAllChecked);
-  const isIndeterminate = useCheckboxStore((state) => state.isIndeterminate);
   const getCheckedIds = useCheckboxStore((state) => state.getCheckedIds);
   const receiveMails = useMailStore((state) => state.receiveMails);
   const sentMails = useMailStore((state) => state.sentMails);
@@ -87,7 +83,6 @@ const MailListHeader = () => {
 
   // 메일함 새로고침 함수
   const refreshMailbox = async () => {
-    setIsLoading(true);
     try {
       // 메일 목록 다시 가져오기
       await loadMailbox(boxType);
@@ -95,8 +90,6 @@ const MailListHeader = () => {
       uncheckAll(boxType);
     } catch (error) {
       console.error("메일함 새로고침 실패:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -165,20 +158,20 @@ const MailListHeader = () => {
     }
   };
 
-  // 헤더 삭제 버튼 클릭 시 - 임시 메일함일 경우 임시 메일 삭제
+  // 삭제 버튼 클릭 이벤트
   const handleDelete = () => {
     if (boxType === "draft") {
       handleDeleteDraft();
     } else handleDeleteTemporary();
   };
 
-  // 이메일 검색
+  // 검색 처리 핸들러
   const handleSearch = () => {
     if (!searchInput.trim()) return;
     navigate(`/mail/search?query=${encodeURIComponent(searchInput.trim())}`);
   };
 
-  // 2. mailTools 재계산
+  // 메일 타입에 따라 기능 버튼들을 동적으로 생성
   const { mailTools } = getMailBoxConfig({
     pathname: location.pathname,
     stores: {
@@ -198,17 +191,8 @@ const MailListHeader = () => {
     },
   });
 
-  const selectedCount = useCheckboxStore(
-    (state) => state.checkedByBox[boxType]?.size || 0
-  );
-
-  // 체크박스 상태 동기화
-  useEffect(() => {
-    if (checkboxRef.current) {
-      checkboxRef.current.indeterminate = isIndeterminate(boxType, mailIds);
-      checkboxRef.current.checked = isAllChecked(boxType, mailIds);
-    }
-  }, [boxType, mailIds, isIndeterminate, isAllChecked]);
+  // 모든 메일이 선택됐는지 여부
+  const allChecked = useCheckboxStore((s) => s.isAllChecked(boxType, mailIds));
 
   // 전체 선택/해제 핸들러
   const handleSelectAll = (e) => {
@@ -228,29 +212,14 @@ const MailListHeader = () => {
           <label className="mailListHeader-custom-checkBox">
             <input
               type="checkbox"
-              checked={isAllChecked(boxType, mailIds)}
-              ref={checkboxRef}
+              checked={allChecked}
               onChange={handleSelectAll}
-              disabled={isLoading}
             />
             <span className="checkmark"></span>
           </label>
 
-          <button
-            className={`mailActions-items ${
-              selectedCount > 0 ? "selected" : ""
-            }`}
-            disabled={isLoading}
-          >
-            읽음
-          </button>
-          <button
-            className={`mailActions-items ${
-              selectedCount > 0 ? "selected" : ""
-            }`}
-            onClick={handleDelete}
-            disabled={isLoading}
-          >
+          <button className="mailActions-items">읽음</button>
+          <button className="mailActions-items" onClick={handleDelete}>
             삭제
           </button>
         </div>
@@ -261,7 +230,6 @@ const MailListHeader = () => {
             <button
               className="mailListHeader-sortOptions-items"
               onClick={toggleOption}
-              disabled={isLoading}
             >
               정렬
               <Arrow
@@ -299,7 +267,6 @@ const MailListHeader = () => {
           onKeyDown={(e) => {
             if (e.key === "Enter") handleSearch();
           }}
-          disabled={isLoading}
         />
         <Search className="search-icon" onClick={handleSearch} />
       </div>

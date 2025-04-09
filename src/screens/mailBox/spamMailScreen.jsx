@@ -4,9 +4,13 @@ import MailDetailMax from "../../components/mailBox/mailDetailMax";
 import TimeSortedList from "../../components/mailBox/timeSortedList";
 import { useLoadMailbox } from "../../hooks/useLoadMailbox";
 import { useMailStore } from "../../store";
+import { useEffect } from "react";
 
 const SpamMailScreen = () => {
-  useLoadMailbox("spam");
+  const loadMailbox = useLoadMailbox();
+  useEffect(() => {
+    loadMailbox("spam");
+  }, []);
 
   const selectedMail = useMailStore((state) => state.selectedMail);
   const isExpanded = useMailStore((state) => state.isExpanded);

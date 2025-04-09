@@ -4,9 +4,13 @@ import MailDetailMax from "../../components/mailBox/mailDetailMax";
 import TimeSortedList from "../../components/mailBox/timeSortedList";
 import { useLoadMailbox } from "../../hooks/useLoadMailbox";
 import { useMailStore } from "../../store";
+import { useEffect } from "react";
 
 const SelfSentMailScreen = () => {
-  useLoadMailbox("self");
+  const loadMailbox = useLoadMailbox();
+  useEffect(() => {
+    loadMailbox("self");
+  }, []);
 
   const selectedMail = useMailStore((state) => state.selectedMail);
   const isExpanded = useMailStore((state) => state.isExpanded);

@@ -4,9 +4,13 @@ import MailDetailMax from "../../components/mailBox/mailDetailMax";
 import TimeSortedList from "../../components/mailBox/timeSortedList";
 import { useMailStore } from "../../store";
 import { useLoadMailbox } from "../../hooks/useLoadMailbox";
+import { useEffect } from "react";
 
 const DeletedMailScreen = () => {
-  useLoadMailbox("deleted");
+  const loadMailbox = useLoadMailbox();
+  useEffect(() => {
+    loadMailbox("deleted");
+  }, []);
 
   const selectedMail = useMailStore((state) => state.selectedMail);
   const isExpanded = useMailStore((state) => state.isExpanded);

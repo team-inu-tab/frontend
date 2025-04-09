@@ -80,8 +80,9 @@
   stroke-width: 1.4px;
 }
 
-.mailListItem-star.impotant {
-  fill: yellow;
+.mailListItem-star.important {
+  color: #FFD700;
+  stroke: #ddbf76;
 }
 
 .mailListItem-mailInfo {
