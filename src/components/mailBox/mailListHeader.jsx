@@ -11,6 +11,7 @@ import Arrow from "@assets/icons/arrow.svg?react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMailApi } from "../../hooks/useMailApi";
 import { getMailBoxConfig } from "../../utils/getMailBoxConfig";
+import { useLoadMailbox } from "../../hooks/useLoadMailbox";
 
 /**
  * MailListHeader - 메일함 목록 상단의 헤더 컴포넌트
@@ -20,9 +21,11 @@ const MailListHeader = () => {
   const location = useLocation();
   const checkboxRef = useRef(null);
   const navigate = useNavigate();
+  const loadMailbox = useLoadMailbox();
 
   const [isSortOptionOpen, setIsSortOptionOpen] = useState(false); // 정렬 옵션 상태
   const [searchInput, setSearchInput] = useState(""); // 검색어
+  const [isLoading, setIsLoading] = useState(false);
 
   const changeSortOption = useSortStore((state) => state.changeSortOption);
   const checkAll = useCheckboxStore((state) => state.checkAll);
@@ -80,14 +83,28 @@ const MailListHeader = () => {
     actions: {},
   });
 
+  // 메일함 새로고침 함수
+  const refreshMailbox = async () => {
+    setIsLoading(true);
+    try {
+      await loadMailbox();
+    } catch (error) {
+      console.error("메일함 새로고침 실패:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // 스팸 차단
   const handleMarkSpam = async () => {
     const ids = getCheckedIds(boxType);
     try {
       await Promise.all(ids.map((id) => markAsSpam(id)));
       uncheckAll(boxType);
+      await refreshMailbox();
       alert("스팸 등록 완료!");
-    } catch {
+    } catch (error) {
+      console.error("스팸 등록 실패:", error);
       alert("스팸 등록 실패");
     }
   };
@@ -98,8 +115,10 @@ const MailListHeader = () => {
     try {
       await Promise.all(ids.map((id) => unmarkAsSpam(id)));
       uncheckAll(boxType);
+      await refreshMailbox();
       alert("스팸 해제 완료!");
-    } catch {
+    } catch (error) {
+      console.error("스팸 해제 실패:", error);
       alert("스팸 해제 실패");
     }
   };
@@ -110,8 +129,10 @@ const MailListHeader = () => {
     try {
       await deleteTemporaryMails(ids);
       uncheckAll(boxType);
+      await refreshMailbox();
       alert("휴지통으로 이동했습니다.");
-    } catch {
+    } catch (error) {
+      console.error("삭제 실패:", error);
       alert("삭제 실패");
     }
   };
@@ -122,8 +143,10 @@ const MailListHeader = () => {
     try {
       await deletePermanentMails(ids);
       uncheckAll(boxType);
+      await refreshMailbox();
       alert("영구 삭제 완료!");
-    } catch {
+    } catch (error) {
+      console.error("삭제 실패:", error);
       alert("삭제 실패");
     }
   };
@@ -134,8 +157,10 @@ const MailListHeader = () => {
     try {
       await deleteDraftMail(ids);
       uncheckAll(boxType);
+      await refreshMailbox();
       alert("영구 삭제 완료!");
-    } catch {
+    } catch (error) {
+      console.error("삭제 실패:", error);
       alert("삭제 실패");
     }
   };
@@ -206,6 +231,7 @@ const MailListHeader = () => {
               checked={isAllChecked(boxType, mailIds)}
               ref={checkboxRef}
               onChange={handleSelectAll}
+              disabled={isLoading}
             />
             <span className="checkmark"></span>
           </label>
@@ -214,6 +240,7 @@ const MailListHeader = () => {
             className={`mailActions-items ${
               selectedCount > 0 ? "selected" : ""
             }`}
+            disabled={isLoading}
           >
             읽음
           </button>
@@ -222,6 +249,7 @@ const MailListHeader = () => {
               selectedCount > 0 ? "selected" : ""
             }`}
             onClick={handleDelete}
+            disabled={isLoading}
           >
             삭제
           </button>
@@ -233,6 +261,7 @@ const MailListHeader = () => {
             <button
               className="mailListHeader-sortOptions-items"
               onClick={toggleOption}
+              disabled={isLoading}
             >
               정렬
               <Arrow
@@ -270,6 +299,7 @@ const MailListHeader = () => {
           onKeyDown={(e) => {
             if (e.key === "Enter") handleSearch();
           }}
+          disabled={isLoading}
         />
         <Search className="search-icon" onClick={handleSearch} />
       </div>
