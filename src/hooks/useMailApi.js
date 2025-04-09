@@ -101,73 +101,33 @@ export const useMailApi = () => {
   const getMimeType = (fileName) => {
     const extension = fileName.split(".").pop().toLowerCase();
     const mimeTypes = {
-      // 이미지
-      jpg: "image/jpeg",
-      jpeg: "image/jpeg",
-      png: "image/png",
-      gif: "image/gif",
-      webp: "image/webp",
-      svg: "image/svg+xml",
-
-      // 문서
       pdf: "application/pdf",
+      ppt: "application/vnd.ms-powerpoint",
+      pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
       doc: "application/msword",
       docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       xls: "application/vnd.ms-excel",
       xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      ppt: "application/vnd.ms-powerpoint",
-      pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-
-      // 압축
       zip: "application/zip",
-      rar: "application/x-rar-compressed",
-      "7z": "application/x-7z-compressed",
-
-      // 텍스트
+      jpg: "image/jpeg",
+      jpeg: "image/jpeg",
+      png: "image/png",
+      gif: "image/gif",
       txt: "text/plain",
-      csv: "text/csv",
       html: "text/html",
-
-      // 기타
-      json: "application/json",
-      xml: "application/xml",
+      htm: "text/html",
     };
-
     return mimeTypes[extension] || "application/octet-stream";
   };
 
-  const handleFileError = (error, operation) => {
-    const errorMessages = {
-      401: "인증이 필요합니다",
-      403: "파일에 접근할 권한이 없습니다",
-      404: "파일을 찾을 수 없습니다",
-      413: "파일이 너무 큽니다",
-      415: "지원하지 않는 파일 형식입니다",
-      default: `파일 ${operation} 실패`,
-    };
-
-    const status = error.response?.status;
-    const message = errorMessages[status] || errorMessages.default;
-
-    console.error(`📄 파일 ${operation} 오류:`, error);
-    throw new Error(message);
-  };
-
   const isValidBase64 = (str) => {
-    if (typeof str !== "string") return false;
-    if (!str) return false;
-
+    if (typeof str !== "string" || !str) return false;
+    
     // base64 문자열 패턴 검사
-    const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/;
+    const base64Regex = /^[A-Za-z0-9+/=]+$/;
     const sanitized = str.replace(/[\r\n\s]+/g, "");
     
-    if (!base64Regex.test(sanitized)) return false;
-
-    try {
-      return btoa(atob(sanitized)) === sanitized;
-    } catch {
-      return false;
-    }
+    return base64Regex.test(sanitized);
   };
 
   const base64ToBlob = (base64String, mimeType) => {
@@ -202,6 +162,12 @@ export const useMailApi = () => {
     }
   };
 
+  const handleFileError = (error, operation) => {
+    console.error(`파일 ${operation} 오류:`, error);
+    alert(`파일 ${operation}에 실패했습니다. 다시 시도해주세요.`);
+    throw error;
+  };
+
   // 파일 상세 보기 - 첨부파일 다운로드
   const getFile = async ({ emailId, attachmentId, fileName }) => {
     await getToken();
@@ -213,6 +179,7 @@ export const useMailApi = () => {
       const base64Data = res.data?.trim();
       
       if (!isValidBase64(base64Data)) {
+        console.error("잘못된 base64 데이터:", base64Data);
         throw new Error("잘못된 파일 데이터입니다");
       }
 
@@ -250,6 +217,7 @@ export const useMailApi = () => {
       const base64Data = res.data?.trim();
       
       if (!isValidBase64(base64Data)) {
+        console.error("잘못된 base64 데이터:", base64Data);
         throw new Error("잘못된 파일 데이터입니다");
       }
 
@@ -344,6 +312,7 @@ export const useMailApi = () => {
     });
     return res.data;
   };
+
   // 임시 메일 삭제
   const deleteDraftMail = async (draftId) => {
     await getToken();
