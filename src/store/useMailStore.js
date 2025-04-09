@@ -77,6 +77,35 @@ export const useMailStore = create((set) => ({
 
       return { groupedMails: groupedArray };
     }),
+  setGroupedMailsFromSearch: (emails, senderEmail) =>
+    set(() => {
+      const sanitizedMails = emails.map((mail) => {
+        // mailType이 received면 receiver를 null로 설정
+        if (mail.mailType === "received") {
+          return { ...mail, receiver: null };
+        }
+        return mail;
+      });
+
+      const sortedMails = sanitizedMails.sort((a, b) => {
+        const dateA = new Date(
+          a.receiveAt ?? a.sendAt ?? a.createdAt ?? "1970-01-01"
+        ).getTime();
+        const dateB = new Date(
+          b.receiveAt ?? b.sendAt ?? b.createdAt ?? "1970-01-01"
+        ).getTime();
+        return dateB - dateA; // 최신순 정렬
+      });
+
+      return {
+        groupedMails: [
+          {
+            sender: senderEmail, // 검색어 이메일
+            mailItems: sortedMails,
+          },
+        ],
+      };
+    }),
 
   // 상태 처리
   setStatus: (status) => set({ status }),
