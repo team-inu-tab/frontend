@@ -107,17 +107,16 @@ const MailPreviewItem = ({ mail }) => {
           className="mailPreviewItem-content"
           dangerouslySetInnerHTML={{ __html: decodedBody }}
         />
-
-        {/* 메일 수신 시간 */}
-        <div className="mailPreviewItem-footer">
-          <span
-            className={`mailPreviewItem-receiveAt ${
-              isSentByMe === true ? "" : "received"
-            }`}
-          >
-            {formatReceiveDate(mail.receiveAt ?? mail.sendAt)}
-          </span>
-        </div>
+      </div>
+      {/* 메일 수신 시간 */}
+      <div className="mailPreviewItem-footer">
+        <span
+          className={`mailPreviewItem-receiveAt ${
+            isSentByMe === true ? "" : "received"
+          }`}
+        >
+          {formatReceiveDate(mail.receiveAt ?? mail.sendAt)}
+        </span>
       </div>
     </div>
   );

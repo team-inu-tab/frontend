@@ -117,7 +117,8 @@ export const useMailStore = create((set) => ({
 
   setSelectedGroup: (mails) =>
     set(() => {
-      const updatedMails = mails.map((mail) => ({ ...mail }));
+      const updatedMails = mails.map((mail) => ({ ...mail })).reverse();
+
       return {
         selectedGroup: updatedMails,
       };

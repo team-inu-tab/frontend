@@ -11,21 +11,21 @@ html, body {
   overflow: hidden;
 }
 
-.react-hot-toast {
+.toast {
   font-family: 'SUIT', sans-serif;
   font-size: 12px;
   padding: 14px 16px;
   border-radius: 12px;
 }
 
-.react-hot-toast-success {
+.toast[data-type="success"] {
   background-color: #E6ECFA;
 }
 
-.react-hot-toast-error {
+.toast[data-type="error"] {
   background-color: #FFB7B8;
 }
 
-.react-hot-toast .icon {
+.toast .icon {
   margin-right: 8px;
 }
