@@ -320,17 +320,6 @@ export const useMailApi = () => {
     return res.data;
   };
 
-  // 임시 메일 삭제
-  const deleteDraftMail = async (draftId) => {
-    await getToken();
-    const res = await api.delete("/mails/draft", {
-      data: {
-        draftId,
-      },
-    });
-    return res.data;
-  };
-
   // 지정된 메일 조회
   const getMailById = async (mailId) => {
     await getToken();
@@ -356,7 +345,6 @@ export const useMailApi = () => {
     deletePermanentMails,
     searchMailsByUserEmail,
     updateDraftMail,
-    deleteDraftMail,
     getMailById,
   };
 };

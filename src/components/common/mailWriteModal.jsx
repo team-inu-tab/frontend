@@ -42,31 +42,30 @@ function MailWriteModal() {
     const fetchMailDetail = async () => {
       try {
         const res = await getMailById(mailId);
-        const mail = res.mail;
 
         // content 파싱 및 이미지 포함 본문, 첨부파일 렌더링
-        if (mail?.content) {
-          const { html } = await parseGmailContent(mail.content, mail.id);
+        if (res?.content) {
+          const { html } = await parseGmailContent(res.content, res.id);
           setDecodedBody(html);
         }
 
         // 답장
         if (mode === "reply") {
-          setMailTitle(`RE: ${mail.title}`);
-          const senderEmail = extractEmailAddress(mail.sender);
+          setMailTitle(`RE: ${res.title}`);
+          const senderEmail = extractEmailAddress(res.sender);
           setRecieverTitle(JSON.stringify([{ value: senderEmail }]));
         }
 
         // 전달
         if (mode === "forward") {
-          setMailTitle(`FW: ${mail.title}`);
+          setMailTitle(`FW: ${res.title}`);
           setRecieverTitle("");
         }
 
         // 임시 메일 수정
         if (mode === "draft") {
-          setMailTitle(mail.title);
-          const senderEmail = extractEmailAddress(mail.sender);
+          setMailTitle(res.title);
+          const senderEmail = extractEmailAddress(res.sender);
           setRecieverTitle(JSON.stringify([{ value: senderEmail }]));
         }
       } catch (err) {

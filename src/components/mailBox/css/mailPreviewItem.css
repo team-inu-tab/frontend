@@ -16,7 +16,6 @@
   width: 60%;
   max-width: 600px;
   flex-direction: column;
-  position: relative;
   gap: 0.5rem;
   border-radius: 0.625rem 0.625rem 3.5625rem 0.625rem;
   background: rgba(255, 255, 255, 0.82);
@@ -96,8 +95,8 @@
 }
 
 .mailPreviewItem-footer {
-  position: absolute;
-  bottom: -1.5rem;
+  display: flex;
+  margin-top: 0.25rem;
   color: rgba(114, 114, 114, 0.60);
   font-size: 0.5rem;
   font-style: normal;

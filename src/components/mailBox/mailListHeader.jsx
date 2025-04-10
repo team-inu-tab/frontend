@@ -32,6 +32,8 @@ const MailListHeader = () => {
   const checkAll = useCheckboxStore((state) => state.checkAll);
   const uncheckAll = useCheckboxStore((state) => state.uncheckAll);
   const getCheckedIds = useCheckboxStore((state) => state.getCheckedIds);
+  const setSelectedMail = useMailStore((state) => state.setSelectedMail);
+  const setSelectedGroup = useMailStore((state) => state.setSelectedGroup);
   const selectedMail = useMailStore((state) => state.selectedMail);
   const receiveMails = useMailStore((state) => state.receiveMails);
   const sentMails = useMailStore((state) => state.sentMails);
@@ -47,7 +49,6 @@ const MailListHeader = () => {
     unmarkAsSpam,
     deleteTemporaryMails,
     deletePermanentMails,
-    deleteDraftMail,
   } = useMailApi();
 
   // 정렬 옵션 열림/닫힘 상태를 토글하는 함수
@@ -93,6 +94,8 @@ const MailListHeader = () => {
       } else {
         await loadMailbox(boxType);
       }
+      setSelectedMail(null);
+      setSelectedGroup([]);
       uncheckAll(boxType);
     } catch (err) {
       console.error("메일 새로고침 실패:", err);
@@ -145,25 +148,6 @@ const MailListHeader = () => {
     } catch {
       toast.error("영구 삭제 실패");
     }
-  };
-
-  // 임시 메일 삭제
-  const handleDeleteDraft = async () => {
-    const ids = getCheckedIds(boxType);
-    try {
-      await deleteDraftMail(ids);
-      toast.success("임시 저장된 메일이 삭제되었습니다.");
-      await refreshMailbox();
-    } catch {
-      toast.error("임시 메일 삭제 실패");
-    }
-  };
-
-  // 삭제 버튼 클릭 이벤트
-  const handleDelete = () => {
-    if (boxType === "draft") {
-      handleDeleteDraft();
-    } else handleDeleteTemporary();
   };
 
   // 검색 처리 핸들러
@@ -233,7 +217,7 @@ const MailListHeader = () => {
           </label>
 
           <button className="mailActions-items">읽음</button>
-          <button className="mailActions-items" onClick={handleDelete}>
+          <button className="mailActions-items" onClick={handleDeleteTemporary}>
             삭제
           </button>
         </div>
