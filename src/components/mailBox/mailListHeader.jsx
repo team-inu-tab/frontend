@@ -104,8 +104,8 @@ const MailListHeader = () => {
     const ids = getCheckedIds(boxType);
     try {
       await Promise.all(ids.map((id) => markAsSpam(id)));
-      await refreshMailbox();
       toast.success("선택한 메일이 스팸으로 분류되었습니다.");
+      await refreshMailbox();
     } catch {
       toast.error("스팸 등록 실패.");
     }
@@ -116,8 +116,8 @@ const MailListHeader = () => {
     const ids = getCheckedIds(boxType);
     try {
       await Promise.all(ids.map((id) => unmarkAsSpam(id)));
-      await refreshMailbox();
       toast.success("선택한 메일의 스팸 분류가 해제되었습니다.");
+      await refreshMailbox();
     } catch {
       toast.error("스팸 해제 실패");
     }
@@ -128,8 +128,8 @@ const MailListHeader = () => {
     const ids = getCheckedIds(boxType);
     try {
       await deleteTemporaryMails(ids);
-      await refreshMailbox();
       toast.success("선택한 메일이 휴지통으로 이동되었습니다.");
+      await refreshMailbox();
     } catch {
       toast.error("휴지통으로 이동 실패");
     }
@@ -140,8 +140,8 @@ const MailListHeader = () => {
     const ids = getCheckedIds(boxType);
     try {
       await deletePermanentMails(ids);
-      await refreshMailbox();
       toast.success("선택한 메일이 완전히 삭제되었습니다.");
+      await refreshMailbox();
     } catch {
       toast.error("영구 삭제 실패");
     }
@@ -152,8 +152,8 @@ const MailListHeader = () => {
     const ids = getCheckedIds(boxType);
     try {
       await deleteDraftMail(ids);
-      await refreshMailbox();
       toast.success("임시 저장된 메일이 삭제되었습니다.");
+      await refreshMailbox();
     } catch {
       toast.error("임시 메일 삭제 실패");
     }
