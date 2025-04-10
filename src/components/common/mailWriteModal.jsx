@@ -14,9 +14,8 @@ import { useLocation, useParams } from "react-router-dom";
 import { parseGmailContent } from "../../utils/parseGmailContent";
 import { extractEmailAddress } from "../../utils/emailUtils";
 
-function MailWriteModal({ onClose }) {
+function MailWriteModal() {
   const [isAiOn, setIsAiOn] = useState(false);
-  const [isSendClick, setIsSendClick] = useState(false);
   const [mailTitle, setMailTitle] = useState("");
   const [recieverTitle, setRecieverTitle] = useState("");
   const [mailBody, setMailBody] = useState("");
@@ -183,15 +182,8 @@ function MailWriteModal({ onClose }) {
     }
   };
 
-  const handleComplete = () => {
-    setShowComplete(false);
-    if (onClose) {
-      onClose();
-    }
-  };
-
   if (showComplete) {
-    return <SendComplete onComplete={handleComplete} />;
+    return <SendComplete />;
   }
 
   return (

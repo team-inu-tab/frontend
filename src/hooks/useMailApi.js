@@ -18,59 +18,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// 응답 인터셉터 - 401 에러 처리
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-
-    // 401 에러이고, 이미 재시도한 요청이 아닌 경우
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      try {
-        // 토큰 갱신
-        const newToken = async () => {
-          try {
-            const res = await fetch(`${BASE_URL}/oauth2/reissue`, {
-              method: "POST",
-              credentials: "include",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-
-            if (res.status === 200) {
-              const accessToken = res.headers.get("Authorization");
-              if (accessToken) {
-                useAuthStore.getState().setAccessToken(accessToken);
-                return accessToken;
-              }
-            }
-
-            throw new Error("토큰 갱신 실패");
-          } catch (error) {
-            console.error("토큰 갱신 중 오류 발생:", error);
-            throw error;
-          }
-        };
-
-        // 원래 요청의 헤더 업데이트
-        originalRequest.headers["Authorization"] = newToken;
-
-        // 원래 요청 재시도
-        return api(originalRequest);
-      } catch (refreshError) {
-        console.error("토큰 갱신 실패:", refreshError);
-        // 토큰 갱신 실패 시 로그아웃 처리 등 추가 가능
-        return Promise.reject(refreshError);
-      }
-    }
-
-    return Promise.reject(error);
-  }
-);
-
 export const useMailApi = () => {
   // 엑세스 토큰 가져오기/호출
   const getToken = async () => {

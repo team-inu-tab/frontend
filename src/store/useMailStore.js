@@ -80,9 +80,10 @@ export const useMailStore = create((set) => ({
   setGroupedMailsFromSearch: (emails, senderEmail) =>
     set(() => {
       const sanitizedMails = emails.map((mail) => {
-        // mailType이 received면 receiver를 null로 설정
         if (mail.mailType === "received") {
           return { ...mail, receiver: null };
+        } else if (mail.mailType === "sent") {
+          return { ...mail, sender: null };
         }
         return mail;
       });
