@@ -6,9 +6,13 @@ import MailPreviewContainer from "../../components/mailBox/mailPreviewContainer"
 import MailDetail from "../../components/mailBox/mailDetail";
 import MailDetailMax from "../../components/mailBox/mailDetailMax";
 import { useInitMailbox } from "../../hooks/useInitMailbox";
+import { useEffect } from "react";
 
 const ReceiveMailScreen = () => {
-  useInitMailbox();
+  const initMailbox = useInitMailbox();
+  useEffect(() => {
+    initMailbox();
+  }, []);
 
   const sortOption = useSortStore((state) => state.sortOption);
   const selectedGroup = useMailStore((state) => state.selectedGroup);

@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { useMailStore } from "../store";
-import { useMailApi } from "./useMailApi";
+// hooks/useInitMailbox.ts
+import { useMailApi } from "@/hooks/useMailApi";
+import { useMailStore } from "@/store";
 
 export const useInitMailbox = () => {
   const { fetchReceiveMails, fetchSentMails } = useMailApi();
@@ -9,43 +9,30 @@ export const useInitMailbox = () => {
   const setSentMails = useMailStore((s) => s.setSentMails);
   const setGroupedMails = useMailStore((s) => s.setGroupedMails);
   const setStatus = useMailStore((s) => s.setStatus);
-  const status = useMailStore((s) => s.status);
+  const setError = useMailStore((s) => s.setError);
 
-  useEffect(() => {
-    const init = async () => {
-      setStatus("loading");
+  const initMailbox = async () => {
+    setStatus("loading");
+    try {
+      const [receiveRes, sentRes] = await Promise.all([
+        fetchReceiveMails(),
+        fetchSentMails(),
+      ]);
 
-      let receiveMails = [];
-      let sentMails = [];
+      const receiveMails = receiveRes.emails;
+      const sentMails = sentRes.emails;
 
-      try {
-        const res = await fetchReceiveMails();
-        receiveMails = res.emails;
-        setReceivedMails(receiveMails);
-      } catch (err) {
-        console.error("📨 받은 메일 로딩 실패:", err);
-      }
+      setReceivedMails(receiveMails);
+      setSentMails(sentMails);
+      setGroupedMails([...receiveMails, ...sentMails]);
 
-      try {
-        const res = await fetchSentMails();
-        sentMails = res.emails;
-        setSentMails(sentMails);
-      } catch (err) {
-        console.error("📤 보낸 메일 로딩 실패:", err);
-      }
-
-      const allMails = [...receiveMails, ...sentMails];
-      setGroupedMails(allMails);
-
-      if (receiveMails.length || sentMails.length) {
-        setStatus("succeeded");
-      } else {
-        setStatus("failed");
-      }
-    };
-
-    if (status === "idle") {
-      init();
+      setStatus("succeeded");
+    } catch (error) {
+      console.error("메일 초기화 실패:", error);
+      setError("메일함 초기화 실패");
+      setStatus("failed");
     }
-  }, [status]);
+  };
+
+  return initMailbox;
 };

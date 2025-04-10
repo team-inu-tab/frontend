@@ -6,9 +6,13 @@ import SenderGroupedList from "../../components/mailBox/senderGroupedList";
 import TimeSortedList from "../../components/mailBox/timeSortedList";
 import { SORT_OPTIONS, useMailStore, useSortStore } from "../../store";
 import { useInitMailbox } from "../../hooks/useInitMailbox";
+import { useEffect } from "react";
 
 const SentMailScreen = () => {
-  useInitMailbox();
+  const initMailbox = useInitMailbox();
+  useEffect(() => {
+    initMailbox();
+  }, []);
 
   const sortOption = useSortStore((state) => state.sortOption);
   const selectedGroup = useMailStore((state) => state.selectedGroup);
