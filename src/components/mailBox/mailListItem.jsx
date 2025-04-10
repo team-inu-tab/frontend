@@ -3,7 +3,6 @@ import { useCheckboxStore, useMailStore } from "../../store";
 import Star from "@assets/icons/star.svg?react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { extractSenderName, formatReceiveDate } from "../../utils/emailUtils";
-import { useEffect, useState } from "react";
 
 /**
  * MailListItem - 개별 메일 항목을 렌더링하는 컴포넌트
@@ -12,19 +11,13 @@ import { useEffect, useState } from "react";
 const MailListItem = ({ mail }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [localChecked, setLocalChecked] = useState(false);
 
-  const toggleCheck = useCheckboxStore((state) => state.toggleCheck);
-  const isChecked = useCheckboxStore((state) => state.isChecked);
+  const check = useCheckboxStore((state) => state.check);
+  const uncheck = useCheckboxStore((state) => state.uncheck);
   const setSelectedMail = useMailStore((state) => state.setSelectedMail);
 
-  const isImportant = mail.isImportant; // 중요 메일 여부
-
+  // 현재 페이지의 메일함 타입을 추출
   let boxType = "";
-
-  /**
-   * 현재 위치에 따라 헤더 내용 동적으로 변경
-   */
   switch (true) {
     case location.pathname.includes("/receive"):
       boxType = "receive";
@@ -53,26 +46,28 @@ const MailListItem = ({ mail }) => {
     default:
   }
 
-  // 체크박스 상태 동기화
-  useEffect(() => {
-    setLocalChecked(isChecked(boxType, mail.id));
-  }, [isChecked(boxType, mail.id), boxType, mail.id]);
-
-  // 메일 클릭 함수
+  // 메일 클릭 핸들러
   const handleMailClick = () => {
     if (mail.draftId) {
-      navigate(`/mail/compose/${mail.draftId}`);
+      navigate(`/mail/compose/${mail.id}?mode=draft`); // 임시 메일 클릭 시 작성 페이지로 이동
     } else {
       setSelectedMail(mail);
     }
   };
 
+  // 체크박스 상태 반영
+  const checked = useCheckboxStore(
+    (state) => state.checkedByBox[boxType]?.has(mail.id) || false
+  );
+
   // 체크박스 상태 변경 핸들러
   const handleCheckboxChange = (e) => {
-    e.stopPropagation();
-    const newChecked = !localChecked;
-    setLocalChecked(newChecked);
-    toggleCheck(boxType, mail.id);
+    const isCheckedNow = e.target.checked;
+    if (isCheckedNow) {
+      check(boxType, mail.id);
+    } else {
+      uncheck(boxType, mail.id);
+    }
   };
 
   return (
@@ -81,9 +76,9 @@ const MailListItem = ({ mail }) => {
       <label className="mailListItem-custom-checkBox">
         <input
           type="checkbox"
-          checked={localChecked}
+          checked={checked}
           onChange={handleCheckboxChange}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()} // 부모 클릭 방지
         />
         <span className="checkmark"></span>
       </label>
@@ -91,7 +86,7 @@ const MailListItem = ({ mail }) => {
       {/* 중요 메일 표시 */}
       <div className="mailListItem-star-container">
         <Star
-          className={`mailListItem-star ${isImportant ? "important" : ""}`}
+          className={`mailListItem-star ${mail.isImportant ? "important" : ""}`}
         />
       </div>
 
@@ -101,8 +96,9 @@ const MailListItem = ({ mail }) => {
         <span className="mailListItem-sender">
           {extractSenderName(mail.sender) ?? extractSenderName(mail.receiver)}
         </span>
+
         <div className="mailListItem-title-container">
-          {/* 첨부 파일 존재 시 아이콘 표시 */}
+          {/* 첨부 파일 아이콘 */}
           {mail.fileNameList && mail.fileNameList.length > 0 && (
             <img
               src="/src/assets/icons/attachment.svg"
@@ -113,7 +109,7 @@ const MailListItem = ({ mail }) => {
           <span className="mailListItem-title">{mail.title}</span>
         </div>
 
-        {/* 메일 수신 시간 */}
+        {/* 수신 시간 */}
         <span className="mailListItem-receiveAt">
           {formatReceiveDate(mail.receiveAt ?? mail.sendAt ?? mail.createdAt)}
         </span>

@@ -14,8 +14,9 @@ const SearchMailScreen = () => {
   const isExpanded = useMailStore((state) => state.isExpanded);
   const setStatus = useMailStore((state) => state.setStatus);
   const status = useMailStore((state) => state.status);
-  const setSelectedGroup = useMailStore((state) => state.setSelectedGroup);
-  const setGroupedMails = useMailStore((state) => state.setGroupedMails);
+  const setGroupedMailsFromSearch = useMailStore(
+    (state) => state.setGroupedMailsFromSearch
+  );
   const groupedMails = useMailStore((state) => state.groupedMails);
 
   const { searchMailsByUserEmail } = useMailApi();
@@ -26,8 +27,8 @@ const SearchMailScreen = () => {
       setStatus("loading");
       try {
         const res = await searchMailsByUserEmail(query);
-        setGroupedMails(res.emails);
-        setSelectedGroup(res.emails);
+
+        setGroupedMailsFromSearch(res.emails, query);
         setStatus("succeeded");
       } catch (e) {
         console.error("검색 실패", e);
