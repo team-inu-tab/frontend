@@ -384,6 +384,13 @@ export const useMailApi = () => {
     return res.data;
   };
 
+  // 지정된 메일 조회
+  const getMailById = async (mailId) => {
+    await getToken();
+    const res = await api.get(`/mails/send/${mailId}`);
+    return res.data;
+  };
+
   return {
     getToken,
     refresh,
@@ -403,6 +410,7 @@ export const useMailApi = () => {
     searchMailsByUserEmail,
     updateDraftMail,
     deleteDraftMail,
+    getMailById,
   };
 };
 

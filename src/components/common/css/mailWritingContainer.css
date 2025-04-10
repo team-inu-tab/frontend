@@ -139,6 +139,22 @@
   border: none;
 }
 
+.original-separator {
+  margin-top: 1rem;
+  padding: 0.5rem 0;
+  color: #999;
+  font-style: italic;
+  border-top: 1px dashed #ccc;
+}
+
+.writeField.original-html {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #ccc;
+  color: #444;
+  font-size: 0.95rem;
+}
+
 .writeField::placeholder {
     font-weight: bold;
 }

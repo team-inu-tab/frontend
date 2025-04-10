@@ -29,6 +29,7 @@ const MailListHeader = () => {
   const checkAll = useCheckboxStore((state) => state.checkAll);
   const uncheckAll = useCheckboxStore((state) => state.uncheckAll);
   const getCheckedIds = useCheckboxStore((state) => state.getCheckedIds);
+  const selectedMail = useMailStore((state) => state.selectedMail);
   const receiveMails = useMailStore((state) => state.receiveMails);
   const sentMails = useMailStore((state) => state.sentMails);
   const draftMails = useMailStore((state) => state.draftMails);
@@ -63,7 +64,7 @@ const MailListHeader = () => {
     }
   }, [location.pathname]);
 
-  // 1. boxType, mails, isSortOption 먼저 가져오기
+  // boxType, mails, isSortOption 먼저 가져오기
   const { boxType, mails, isSortOption } = getMailBoxConfig({
     pathname: location.pathname,
     stores: {
@@ -151,7 +152,7 @@ const MailListHeader = () => {
     try {
       await deleteDraftMail(ids);
       await refreshMailbox();
-      alert("영구 삭제 완료!");
+      alert("임시 메일 삭제 완료!");
     } catch (error) {
       console.error("삭제 실패:", error);
       alert("삭제 실패");
@@ -171,6 +172,16 @@ const MailListHeader = () => {
     navigate(`/mail/search?query=${encodeURIComponent(searchInput.trim())}`);
   };
 
+  // 답장 버튼 클릭 핸들러
+  const handleReply = () => {
+    navigate(`/mail/compose/${selectedMail.id}?mode=reply`);
+  };
+
+  // 전달 버튼 클릭 핸들러
+  const handleForward = () => {
+    navigate(`/mail/compose/${selectedMail.id}?mode=forward`);
+  };
+
   // 메일 타입에 따라 기능 버튼들을 동적으로 생성
   const { mailTools } = getMailBoxConfig({
     pathname: location.pathname,
@@ -188,7 +199,10 @@ const MailListHeader = () => {
       handleMarkSpam,
       handleUnmarkSpam,
       handleDeletePermanent,
+      handleReply,
+      handleForward,
     },
+    selectedMail,
   });
 
   // 모든 메일이 선택됐는지 여부

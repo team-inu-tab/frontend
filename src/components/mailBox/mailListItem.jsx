@@ -49,7 +49,7 @@ const MailListItem = ({ mail }) => {
   // 메일 클릭 핸들러
   const handleMailClick = () => {
     if (mail.draftId) {
-      navigate(`/mail/compose/${mail.draftId}`); // 임시 메일 클릭 시 작성 페이지로 이동
+      navigate(`/mail/compose/${mail.id}?mode=draft`); // 임시 메일 클릭 시 작성 페이지로 이동
     } else {
       setSelectedMail(mail);
     }
