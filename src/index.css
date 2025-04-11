@@ -10,48 +10,34 @@ body {
   font-family: 'SUIT', sans-serif;
   height: 100vh;
   overflow: hidden;
+  background: white;
 }
 
-/* react-hot-toast 스타일 오버라이드 */
-.toast {
-  font-family: 'SUIT', sans-serif !important;
-  font-size: 12px !important;
-  padding: 14px 16px !important;
-  border-radius: 12px !important;
-  background-color: #E6ECFA !important;
-  color: #333 !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+/* 전체 토스트 래퍼 */
+.react-hot-toast {
+  font-family: 'SUIT', sans-serif;
 }
 
-.toast[data-type="success"] {
-  background-color: #E6ECFA !important;
+/* 개별 토스트 */
+.react-hot-toast .toast {
+  font-size: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: #333;
 }
 
-.toast[data-type="error"] {
-  background-color: #FFB7B8 !important;
+/* 성공 토스트 */
+.react-hot-toast .toast-success {
+  background-color: #E6ECFA;
 }
 
-.toast .icon {
-  margin-right: 8px !important;
+/* 실패 토스트 */
+.react-hot-toast .toast-error {
+  background-color: #FFB7B8;
 }
 
-/* 토스트 컨테이너 스타일 */
-.Toastify__toast-container {
-  font-family: 'SUIT', sans-serif !important;
-}
-
-.Toastify__toast {
-  font-family: 'SUIT', sans-serif !important;
-  border-radius: 12px !important;
-  padding: 14px 16px !important;
-}
-
-.Toastify__toast--success {
-  background-color: #E6ECFA !important;
-  color: #333 !important;
-}
-
-.Toastify__toast--error {
-  background-color: #FFB7B8 !important;
-  color: #333 !important;
+/* 아이콘 마진 */
+.react-hot-toast .toast > .icon {
+  margin-right: 8px;
 }
