@@ -234,9 +234,14 @@ const MailListHeader = () => {
           </label>
 
           <button className="mailActions-items">읽음</button>
-          <button className="mailActions-items" onClick={handleDeleteTemporary}>
-            삭제
-          </button>
+          {boxType != "deleted" && boxType != "spam" && (
+            <button
+              className="mailActions-items"
+              onClick={handleDeleteTemporary}
+            >
+              삭제
+            </button>
+          )}
         </div>
 
         {/* 정렬 옵션 */}
