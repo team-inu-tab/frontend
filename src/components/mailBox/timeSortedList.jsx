@@ -27,7 +27,7 @@ const TimeSortedList = ({ mails }) => {
 
       {/* 메일 목록 컨테이너 */}
       <div className="timeSortedList-container">
-        {status === "loading" ? (
+        {status === "loading" || mails == null ? (
           <p>📩 메일을 불러오는 중...</p>
         ) : mails?.length > 0 ? (
           mails.map((mail) => <MailListItem key={mail.id} mail={mail} />)

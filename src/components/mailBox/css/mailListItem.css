@@ -111,6 +111,9 @@
   text-overflow: ellipsis;
   width: 5rem;
 }
+.mailListItem-sender.self {
+  display: none;
+}
 
 .mailListItem-title-container {
   display: flex;

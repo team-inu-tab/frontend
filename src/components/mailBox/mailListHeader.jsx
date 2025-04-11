@@ -90,13 +90,22 @@ const MailListHeader = () => {
   const refreshMailbox = async () => {
     try {
       if (boxType === "receive" || boxType === "sent") {
-        await initMailbox();
+        // 필요한 메일함만 초기화
+        await Promise.all([
+          initMailbox(boxType),
+          setSelectedMail(null),
+          setSelectedGroup([]),
+          uncheckAll(boxType),
+        ]);
       } else {
-        await loadMailbox(boxType);
+        // 특정 메일함만 로드
+        await Promise.all([
+          loadMailbox(boxType),
+          setSelectedMail(null),
+          setSelectedGroup([]),
+          uncheckAll(boxType),
+        ]);
       }
-      setSelectedMail(null);
-      setSelectedGroup([]);
-      uncheckAll(boxType);
     } catch (err) {
       console.error("메일 새로고침 실패:", err);
     }
@@ -105,48 +114,56 @@ const MailListHeader = () => {
   // 스팸 차단
   const handleMarkSpam = async () => {
     const ids = getCheckedIds(boxType);
+    if (ids.length === 0) return;
+
     try {
       await Promise.all(ids.map((id) => markAsSpam(id)));
-      toast.success("선택한 메일이 스팸으로 분류되었습니다.");
       await refreshMailbox();
+      toast.success(`${ids.length}개의 메일이 스팸으로 분류되었습니다.`);
     } catch {
-      toast.error("스팸 등록 실패.");
+      toast.error("스팸 등록에 실패했습니다.");
     }
   };
 
   // 스팸 해제
   const handleUnmarkSpam = async () => {
     const ids = getCheckedIds(boxType);
+    if (ids.length === 0) return;
+
     try {
       await Promise.all(ids.map((id) => unmarkAsSpam(id)));
-      toast.success("선택한 메일의 스팸 분류가 해제되었습니다.");
       await refreshMailbox();
+      toast.success(`${ids.length}개의 메일이 스팸에서 해제되었습니다.`);
     } catch {
-      toast.error("스팸 해제 실패");
+      toast.error("스팸 해제에 실패했습니다.");
     }
   };
 
   // 메일 삭제 (임시)
   const handleDeleteTemporary = async () => {
     const ids = getCheckedIds(boxType);
+    if (ids.length === 0) return;
+
     try {
       await deleteTemporaryMails(ids);
-      toast.success("선택한 메일이 휴지통으로 이동되었습니다.");
       await refreshMailbox();
+      toast.success(`${ids.length}개의 메일이 휴지통으로 이동되었습니다.`);
     } catch {
-      toast.error("휴지통으로 이동 실패");
+      toast.error("휴지통으로 이동에 실패했습니다.");
     }
   };
 
   // 메일 삭제 (영구)
   const handleDeletePermanent = async () => {
     const ids = getCheckedIds(boxType);
+    if (ids.length === 0) return;
+
     try {
       await deletePermanentMails(ids);
-      toast.success("선택한 메일이 완전히 삭제되었습니다.");
       await refreshMailbox();
+      toast.success(`${ids.length}개의 메일이 영구 삭제되었습니다.`);
     } catch {
-      toast.error("영구 삭제 실패");
+      toast.error("영구 삭제에 실패했습니다.");
     }
   };
 

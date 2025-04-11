@@ -93,7 +93,11 @@ const MailListItem = ({ mail }) => {
       {/* 메일 정보 (클릭 시 상세 보기) */}
       <div className="mailListItem-mailInfo" onClick={handleMailClick}>
         {/* 발신자 이름 */}
-        <span className="mailListItem-sender">
+        <span
+          className={`mailListItem-sender ${
+            boxType === "selfsent" ? "self" : ""
+          }`}
+        >
           {extractSenderName(mail.sender) ?? extractSenderName(mail.receiver)}
         </span>
 
