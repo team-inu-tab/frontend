@@ -4,6 +4,7 @@
   height: 95vh;
   gap: 1rem;
   position: relative;
+  background: white;
 }
 
 /* 모달이 열릴 때 배경을 어둡게 덮는 오버레이 */

@@ -5,7 +5,7 @@ export const MAIL_TOOLBAR_CONFIG = {
   important: ["reply", "forward", "markSpam"],
   deleted: ["restore", "deletePermanent", "markSpam"],
   scheduled: ["forward", "cancelSend", "reschedule"],
-  selfsent: ["forward", "edit"],
+  self: ["forward", "edit"],
   spam: ["deletePermanent", "unmarkSpam"],
 };
 
@@ -71,7 +71,7 @@ export const getMailBoxConfig = ({
     important: importantMails,
     deleted: deletedMails,
     scheduled: scheduledMails,
-    selfsent: selfSentMails,
+    self: selfSentMails,
     spam: spamMails,
   };
 
@@ -104,7 +104,7 @@ export const getMailBoxConfig = ({
   return {
     boxType: boxType || "",
     mails,
-    isSortOption: ["receive", "sent"].includes(boxType),
+    isSortOption: boxType === "receive" || boxType === "sent",
     mailTools,
   };
 };

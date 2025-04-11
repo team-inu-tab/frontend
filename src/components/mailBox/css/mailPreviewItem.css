@@ -1,6 +1,5 @@
 .mailPreviewItem-wrapper {
   display: flex;
-  flex-direction: column;
   justify-content: flex-end;
   gap: 0.25rem;
   max-width: 100%;
@@ -89,13 +88,12 @@
   font-weight: 500;
   line-height: 1.0625rem;
   overflow-y: auto;
-  max-height: 300px;
+  max-height: 500px;
   word-break: break-word;
-  padding-right: 0.5rem;
+  padding: 0.5rem;
 }
 
 .mailPreviewItem-footer {
-  display: flex;
   color: rgba(114, 114, 114, 0.60);
   font-size: 0.5rem;
   font-style: normal;

@@ -23,7 +23,7 @@ const SubMenu = ({ isMenuBarOpen }) => {
     "sentMail",
     "selfSentMail",
     "importantMail",
-    "scheduledMail",
+    // "scheduledMail",
     "draftMail",
     "spamMail",
     "deletedMail",
