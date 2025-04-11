@@ -16,7 +16,6 @@ function WriteContainer({ className, value, onChange, htmlContent }) {
         {/* 원문 HTML 렌더링 영역 */}
         {htmlContent.length > 0 && (
           <>
-            <div className="original-separator">----- 원문 메일 -----</div>
             <div
               className="writeField original-html"
               dangerouslySetInnerHTML={{ __html: htmlContent }}

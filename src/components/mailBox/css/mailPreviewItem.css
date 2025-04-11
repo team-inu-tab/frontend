@@ -1,8 +1,8 @@
 .mailPreviewItem-wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: flex-end;
   gap: 0.25rem;
-  margin-bottom: 1rem;
   max-width: 100%;
 }
 
@@ -96,7 +96,6 @@
 
 .mailPreviewItem-footer {
   display: flex;
-  margin-top: 0.25rem;
   color: rgba(114, 114, 114, 0.60);
   font-size: 0.5rem;
   font-style: normal;

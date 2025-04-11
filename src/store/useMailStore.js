@@ -3,14 +3,14 @@ import { extractEmailAddress } from "../utils/emailUtils";
 
 export const useMailStore = create((set) => ({
   // 메일 리스트 (시간순)
-  receiveMails: [],
-  sentMails: [],
-  deletedMails: [],
-  draftMails: [],
-  importantMails: [],
-  scheduledMails: [],
-  selfSentMails: [],
-  spamMails: [],
+  receiveMails: null,
+  sentMails: null,
+  deletedMails: null,
+  draftMails: null,
+  importantMails: null,
+  scheduledMails: null,
+  selfSentMails: null,
+  spamMails: null,
 
   // 메일 그룹 리스트 (받은/보낸 메일)
   groupedMails: [],

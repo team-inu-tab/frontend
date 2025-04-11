@@ -22,15 +22,18 @@ export const useInitMailbox = () => {
       const receiveMails = receiveRes.emails;
       const sentMails = sentRes.emails;
 
-      setReceivedMails(receiveMails);
-      setSentMails(sentMails);
-      setGroupedMails([...receiveMails, ...sentMails]);
-
-      setStatus("succeeded");
+      Promise.all([
+        setReceivedMails(receiveMails),
+        setSentMails(sentMails),
+        setGroupedMails([...receiveMails, ...sentMails]),
+      ]).then(() => {
+        setStatus("succeeded");
+      });
     } catch (error) {
       console.error("메일 초기화 실패:", error);
       setError("메일함 초기화 실패");
       setStatus("failed");
+      throw error;
     }
   };
 
