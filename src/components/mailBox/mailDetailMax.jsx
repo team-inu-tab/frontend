@@ -1,7 +1,6 @@
 import "@components/mailBox/css/mailDetailMax.css";
 import { useMailStore } from "../../store";
 import ExpandArrow from "@assets/icons/expandArrow.svg?react";
-import { useMailApi } from "@/hooks/useMailApi";
 import FileItem from "./fileItem";
 import { formatReceiveDate } from "../../utils/emailUtils";
 import { useEffect, useState } from "react";
@@ -12,8 +11,6 @@ const MailDetailMax = () => {
   const toggleExpanded = useMailStore((state) => state.toggleExpanded);
 
   const [decodedBody, setDecodedBody] = useState("");
-
-  const { getFile } = useMailApi();
 
   // content 파싱 및 이미지 포함 본문, 첨부파일 렌더링
   useEffect(() => {
@@ -74,13 +71,6 @@ const MailDetailMax = () => {
                   emailId={selectedMail.id}
                   attachmentId={file.attachmentId}
                   isPreview={false}
-                  onClick={() =>
-                    getFile({
-                      emailId: selectedMail.id,
-                      attachmentId: file.attachmentId,
-                      fileName: file.fileName,
-                    })
-                  }
                 />
               ))}
             </div>
