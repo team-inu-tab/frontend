@@ -15,6 +15,7 @@ import SettingScreen from "@screens/settingScreen";
 import ProfileScreen from "@screens/profileScreen";
 import NotificationScreen from "@screens/notificationScreen";
 import SearchMailScreen from "@screens/mailBox/SearchMailScreen";
+import PrivateRoute from "./privateRoute";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +37,11 @@ const router = createBrowserRouter([
 
   {
     path: "/mail",
-    element: <MailBoxLayout />, // 메뉴바 + 메일함 헤더
+    element: (
+      <PrivateRoute>
+        <MailBoxLayout />
+      </PrivateRoute>
+    ),
     children: [
       { path: "compose", element: null }, // 새 메일 작성
       { path: "compose/:mailId", element: null }, // 임시 메일 수정
