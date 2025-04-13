@@ -208,6 +208,26 @@ export const useMailApi = () => {
     return res.data;
   };
 
+  // chatGPT AI
+  const getChatGpt = async (message) => {
+    await getToken();
+    const res = await api.post("/api/gpt", {
+      message,
+    });
+    return res.data;
+  };
+
+  // 임시 저장
+  const updateTemporary = async ({ toEmail, subject, body }) => {
+    await getToken();
+    const res = await api.post("/mails/draft", {
+      toEmail,
+      subject,
+      body,
+    });
+    return res.data;
+  };
+
   return {
     getToken,
     refresh,
@@ -226,6 +246,8 @@ export const useMailApi = () => {
     searchMailsByUserEmail,
     updateDraftMail,
     getMailById,
+    getChatGpt,
+    updateTemporary,
   };
 };
 

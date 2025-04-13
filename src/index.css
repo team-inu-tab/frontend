@@ -1,43 +1,14 @@
 @font-face {
-  font-family: 'SUIT';
-  src: url('/font/SUIT-Variable.ttf') format('truetype');
+  font-family: "SUIT";
+  src: url("/font/SUIT-Variable.ttf") format("truetype");
   font-weight: 100 900;
   font-display: swap;
 }
 
 html,
 body {
-  font-family: 'SUIT', sans-serif;
+  font-family: "SUIT", sans-serif;
   height: 100vh;
   overflow: hidden;
   background: white;
-}
-
-/* 전체 토스트 래퍼 */
-.react-hot-toast {
-  font-family: 'SUIT', sans-serif;
-}
-
-/* 개별 토스트 */
-.react-hot-toast .toast {
-  font-size: 12px;
-  padding: 14px 16px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  color: #333;
-}
-
-/* 성공 토스트 */
-.react-hot-toast .toast-success {
-  background-color: #E6ECFA;
-}
-
-/* 실패 토스트 */
-.react-hot-toast .toast-error {
-  background-color: #FFB7B8;
-}
-
-/* 아이콘 마진 */
-.react-hot-toast .toast > .icon {
-  margin-right: 8px;
 }
