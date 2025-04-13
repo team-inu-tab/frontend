@@ -1,7 +1,7 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useEffect, useState } from "react";
 import { useMailApi } from "../hooks/useMailApi";
+import useAuthStore from "../store/useAuthStore";
 
 const PrivateRoute = ({ children }) => {
   const accessToken = useAuthStore((s) => s.accessToken);
