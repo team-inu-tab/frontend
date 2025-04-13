@@ -1,6 +1,14 @@
 import "@components/common/css/mailWritingContainer.css";
 
-function WriteContainer({ className, value, onChange, htmlContent }) {
+function WriteContainer({
+  className,
+  value,
+  onChange,
+  isAiOn,
+  gptSuggestion,
+  onKeyDown,
+  htmlContent,
+}) {
   return (
     <div className={`write-container-wrapper ${className}`}>
       <div className={`write-container-shadow ${className}`}></div>
@@ -11,7 +19,17 @@ function WriteContainer({ className, value, onChange, htmlContent }) {
           placeholder="내용을 입력하세요."
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          onKeyDown={onKeyDown}
         />
+
+        {/* AI 제안 영역 */}
+        {isAiOn && gptSuggestion && (
+          <div className="gptSuggestionBox">
+            <p style={{ color: "#ccc", fontStyle: "italic" }}>
+              {gptSuggestion}
+            </p>
+          </div>
+        )}
 
         {/* 원문 HTML 렌더링 영역 */}
         {htmlContent.length > 0 && (

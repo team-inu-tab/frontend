@@ -19,9 +19,11 @@ function MailWriteModal() {
   const [mailTitle, setMailTitle] = useState("");
   const [recieverTitle, setRecieverTitle] = useState("");
   const [mailBody, setMailBody] = useState("");
+  const [gptSuggestion, setGptSuggestion] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [showComplete, setShowComplete] = useState(false);
 
+  const gptTimer = useRef(null);
   const tagifyInputRef = useRef(null);
   const fileInputRef = useRef(null);
   let tagifyInstance = null;
@@ -29,7 +31,8 @@ function MailWriteModal() {
   const location = useLocation();
   const mode = new URLSearchParams(location.search).get("mode");
 
-  const { getToken, refresh, getMailById } = useMailApi();
+  const { getToken, refresh, getMailById, updateTemporary, getChatGpt } =
+    useMailApi();
 
   /**
    * 답장/전달 모드인 경우 메일 정보 로딩
@@ -104,6 +107,75 @@ function MailWriteModal() {
       document.removeEventListener("keydown", handleEscKey);
     };
   }, []);
+
+  // 1분마다 메일 자동으로 임시저장
+  useEffect(() => {
+    const interval = setInterval(() => {
+      try {
+        const saveDraft = async () => {
+          const parsedToEmail = JSON.parse(recieverTitle || "[]");
+          const toEmail = parsedToEmail.map((item) => item.value).join(",");
+
+          if (!toEmail) return;
+
+          await updateTemporary({
+            toEmail,
+            subject: mailTitle,
+            body: mailBody,
+          });
+
+          console.log("test: 1분 간격 임시 저장 완료");
+        };
+
+        saveDraft();
+      } catch (err) {
+        console.error("test: 임시 저장 실패:", err);
+      }
+    }, 60000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [mailTitle, mailBody, recieverTitle]);
+
+  // AI 기능 활성화 시 GPT API 호출
+  useEffect(() => {
+    if (!isAiOn) return;
+
+    if (gptTimer.current) {
+      clearTimeout(gptTimer.current);
+    }
+
+    if (mailBody.trim() === "") {
+      setGptSuggestion("");
+      return;
+    }
+
+    gptTimer.current = setTimeout(async () => {
+      try {
+        const result = await getChatGpt(mailBody);
+        console.log(result);
+        if (result?.response) {
+          setGptSuggestion(result.response);
+        }
+      } catch (err) {
+        console.error("GPT 호출 실패:", err);
+      }
+    }, 3000); // 3초
+
+    return () => {
+      clearTimeout(gptTimer.current);
+    };
+  }, [mailBody, isAiOn]);
+
+  // tab 키 감지 핸들러
+  const handleKeyDown = (e) => {
+    if (e.key === "Tab" && isAiOn && gptSuggestion) {
+      e.preventDefault();
+      setMailBody(gptSuggestion);
+      setGptSuggestion("");
+    }
+  };
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -240,6 +312,9 @@ function MailWriteModal() {
         value={mailBody}
         onChange={setMailBody}
         htmlContent={decodedBody}
+        onKeyDown={handleKeyDown}
+        isAiOn={isAiOn}
+        gptSuggestion={gptSuggestion}
       />
 
       <div className="buttonContainer">
