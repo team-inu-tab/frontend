@@ -13,6 +13,7 @@ import { api } from "@hooks/useMailApi";
 import { useLocation, useParams } from "react-router-dom";
 import { parseGmailContent } from "../../utils/parseGmailContent";
 import { extractEmailAddress } from "../../utils/emailUtils";
+import toast from "react-hot-toast";
 
 function MailWriteModal() {
   const [isAiOn, setIsAiOn] = useState(false);
@@ -22,11 +23,13 @@ function MailWriteModal() {
   const [gptSuggestion, setGptSuggestion] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [showComplete, setShowComplete] = useState(false);
+  const [decodedBody, setDecodedBody] = useState("");
 
   const gptTimer = useRef(null);
   const tagifyInputRef = useRef(null);
   const fileInputRef = useRef(null);
   let tagifyInstance = null;
+
   const { mailId } = useParams();
   const location = useLocation();
   const mode = new URLSearchParams(location.search).get("mode");
@@ -34,11 +37,7 @@ function MailWriteModal() {
   const { getToken, refresh, getMailById, updateTemporary, getChatGpt } =
     useMailApi();
 
-  /**
-   * 답장/전달 모드인 경우 메일 정보 로딩
-   */
-  const [decodedBody, setDecodedBody] = useState("");
-
+  // 답장/전달 모드인 경우 기존 메일 정보 가져오기
   useEffect(() => {
     if (!mailId) return;
 
@@ -79,7 +78,7 @@ function MailWriteModal() {
     fetchMailDetail();
   }, [mailId, mode]);
 
-  // 메일 주소 작성 후 엔터 클릭 시 태깅
+  // 받는 사람 입력 처리 (Tagify)
   useEffect(() => {
     if (tagifyInputRef.current) {
       tagifyInstance = new Tagify(tagifyInputRef.current, {});
@@ -95,7 +94,7 @@ function MailWriteModal() {
     };
   }, []);
 
-  // esc 눌렀을 때 AI 기능 off
+  // ESC 키로 AI 기능 끄기
   useEffect(() => {
     const handleEscKey = (event) => {
       if (event.key === "Escape") {
@@ -108,7 +107,7 @@ function MailWriteModal() {
     };
   }, []);
 
-  // 1분마다 메일 자동으로 임시저장
+  // 자동 임시 저장 (1분 주기)
   useEffect(() => {
     const interval = setInterval(() => {
       try {
@@ -138,7 +137,7 @@ function MailWriteModal() {
     };
   }, [mailTitle, mailBody, recieverTitle]);
 
-  // AI 기능 활성화 시 GPT API 호출
+  // GPT 자동 제안 호출
   useEffect(() => {
     if (!isAiOn) return;
 
@@ -155,20 +154,18 @@ function MailWriteModal() {
       try {
         const result = await getChatGpt(mailBody);
         console.log(result);
-        if (result?.response) {
-          setGptSuggestion(result.response);
-        }
+        setGptSuggestion(result);
       } catch (err) {
         console.error("GPT 호출 실패:", err);
       }
-    }, 3000); // 3초
-
+    }, 3000);
+    //
     return () => {
       clearTimeout(gptTimer.current);
     };
   }, [mailBody, isAiOn]);
 
-  // tab 키 감지 핸들러
+  // Tab 키로 GPT 제안 적용
   const handleKeyDown = (e) => {
     if (e.key === "Tab" && isAiOn && gptSuggestion) {
       e.preventDefault();
@@ -177,11 +174,12 @@ function MailWriteModal() {
     }
   };
 
+  // 파일 선택
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
-  // 메일 발신
+  // 메일 전송
   const sendMail = async () => {
     const formData = new FormData();
 
@@ -226,7 +224,7 @@ function MailWriteModal() {
       });
 
       if (res.status === 200) {
-        console.log("메일 전송 성공");
+        toast.success("메일 전송 성공");
         setShowComplete(true);
       }
     } catch (error) {
@@ -240,15 +238,15 @@ function MailWriteModal() {
             },
           });
           if (retryRes.status === 200) {
-            console.log("메일 전송 성공");
+            toast.success("메일 전송 성공");
             setShowComplete(true);
           }
         } catch (retryError) {
           console.error("메일 전송 재시도 실패:", retryError);
-          alert("메일 전송에 실패했습니다. 다시 시도해주세요.");
+          toast.error("메일 전송에 실패했습니다. 다시 시도해주세요.");
         }
       } else {
-        alert("메일 전송에 실패했습니다. 다시 시도해주세요.");
+        toast.error("메일 전송에 실패했습니다. 다시 시도해주세요.");
       }
     }
   };
@@ -259,6 +257,7 @@ function MailWriteModal() {
 
   return (
     <MailContainer>
+      {/* 제목 입력 */}
       <input
         className="mailTitle"
         placeholder="제목을 입력하세요."
@@ -266,6 +265,7 @@ function MailWriteModal() {
         onChange={(e) => setMailTitle(e.target.value)}
       />
 
+      {/* 받는 사람 */}
       <div className="recieverTitleContainer">
         <p className="recieverLabel">받는사람</p>
         <input ref={tagifyInputRef} className="recieverTitle" />
@@ -273,11 +273,13 @@ function MailWriteModal() {
         <input type="checkbox" className="isToMe" />
       </div>
 
+      {/* 참조 */}
       <div className="refTitleContainer">
         <p className="refLabel">참조</p>
         <input className="refTitle" />
       </div>
 
+      {/* 첨부파일 */}
       <div className="attachedContainer">
         <input
           type="file"
@@ -297,6 +299,7 @@ function MailWriteModal() {
         </p>
       </div>
 
+      {/* AI 토글 */}
       <div className="switchContainer">
         {isAiOn && <img src={aiOnLogo} className="aiOnLogo" alt="ai on logo" />}
         <p className={`aiText ${isAiOn ? "on" : ""}`}>TabAI</p>
@@ -307,6 +310,7 @@ function MailWriteModal() {
         />
       </div>
 
+      {/* 메일 본문 */}
       <WriteContainer
         className={isAiOn ? "writeContainer on" : "writeContainer"}
         value={mailBody}
@@ -317,6 +321,7 @@ function MailWriteModal() {
         gptSuggestion={gptSuggestion}
       />
 
+      {/* 버튼 */}
       <div className="buttonContainer">
         <button className="reservationButton">예약하기</button>
         <button

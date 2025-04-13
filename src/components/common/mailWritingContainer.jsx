@@ -25,9 +25,7 @@ function WriteContainer({
         {/* AI 제안 영역 */}
         {isAiOn && gptSuggestion && (
           <div className="gptSuggestionBox">
-            <p style={{ color: "#ccc", fontStyle: "italic" }}>
-              {gptSuggestion}
-            </p>
+            <p className="gptSuggestionText">{gptSuggestion}</p>
           </div>
         )}
 
