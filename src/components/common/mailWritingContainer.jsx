@@ -22,10 +22,13 @@ function WriteContainer({
           onKeyDown={onKeyDown}
         />
 
-        {/* AI 제안 영역 */}
+        {/* AI 제안 영역 gptSuggestion &&*/}
         {isAiOn && gptSuggestion && (
           <div className="gptSuggestionBox">
-            <p className="gptSuggestionText">{gptSuggestion}</p>
+            Test
+            <p className="gptSuggestionText">
+              {gptSuggestion}
+            </p>
           </div>
         )}
 

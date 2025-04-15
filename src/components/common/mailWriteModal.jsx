@@ -273,11 +273,6 @@ function MailWriteModal() {
         <input type="checkbox" className="isToMe" />
       </div>
 
-      {/* 참조 */}
-      <div className="refTitleContainer">
-        <p className="refLabel">참조</p>
-        <input className="refTitle" />
-      </div>
 
       {/* 첨부파일 */}
       <div className="attachedContainer">
