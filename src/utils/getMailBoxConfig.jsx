@@ -76,7 +76,7 @@ export const getMailBoxConfig = ({
   };
 
   const boxType = Object.keys(pathToTypeMap).find((key) =>
-    pathname.includes(key)
+    pathname.match(new RegExp(`/mail/${key}(/|$)`))
   );
 
   const mails = pathToTypeMap[boxType] || [];

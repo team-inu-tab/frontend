@@ -140,56 +140,55 @@ export const useMailApi = () => {
     return res.data;
   };
 
-  // Blob 다운로드 유틸
-  const downloadBase64File = (
-    base64Data,
-    fileName,
-    mimeType = "application/octet-stream"
-  ) => {
-    try {
-      // 1. data:URL 형식이면 prefix 제거
-      if (base64Data.startsWith("data:")) {
-        base64Data = base64Data.split(",")[1];
-      }
-
-      // 2. base64 → 바이너리 디코딩
-      const byteCharacters = atob(base64Data);
-      const byteNumbers = Array.from(byteCharacters, (char) =>
-        char.charCodeAt(0)
-      );
-      const byteArray = new Uint8Array(byteNumbers);
-
-      // 3. Blob 생성 (파일 유형 지정)
-      const blob = new Blob([byteArray], { type: mimeType });
-
-      // 4. 다운로드 트리거
-      const blobUrl = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = blobUrl;
-      link.download = fileName;
-      document.body.appendChild(link);
-      link.click();
-
-      // 5. 정리
-      document.body.removeChild(link);
-      URL.revokeObjectURL(blobUrl);
-    } catch (error) {
-      console.error("파일 다운로드 실패:", error);
-      alert("파일을 다운로드할 수 없습니다.");
+  const getMimeType = (fileName) => {
+    const ext = fileName.split(".").pop()?.toLowerCase();
+    switch (ext) {
+      case "pdf":
+        return "application/pdf";
+      case "xlsx":
+        return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+      case "xls":
+        return "application/vnd.ms-excel";
+      case "pptx":
+        return "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+      case "ppt":
+        return "application/vnd.ms-powerpoint";
+      case "docx":
+        return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+      case "doc":
+        return "application/msword";
+      case "png":
+        return "image/png";
+      case "jpg":
+      case "jpeg":
+        return "image/jpeg";
+      case "txt":
+        return "text/plain";
+      default:
+        return "application/octet-stream"; // fallback
     }
   };
 
   // 파일 상세 보기 - 첨부파일 다운로드
   const getFile = async ({ emailId, attachmentId, fileName }) => {
     await getToken();
-    const res = await api.get(`/mails/${emailId}/file/${attachmentId}`);
 
-    // 필요 시 MIME 타입을 확장자 기반으로 지정 가능
-    const mimeType = fileName.endsWith(".pdf")
-      ? "application/pdf"
-      : "application/octet-stream";
+    const res = await api.get(`/mails/${emailId}/file/${attachmentId}`, {
+      responseType: "arraybuffer",
+    });
 
-    downloadBase64File(res.data, fileName, mimeType);
+    const mimeType = getMimeType(fileName);
+
+    const blob = new Blob([res.data], { type: mimeType });
+    const blobUrl = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(blobUrl);
   };
 
   // 스팸 차단
