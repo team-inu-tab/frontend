@@ -428,7 +428,7 @@
     }
     .recieverTitle {
         width: calc(100% - 250px);
-        font-size: 1rem;
+        font-size: 0.75rem;
     }
     .attachedContainer {
         width: 59.25rem;
@@ -438,8 +438,8 @@
         width: 30vw;
     }
     .reservationButton, .sendButton {
-        width: 150px;
-        height: 45px;
-        font-size: 1rem;
+        width: 7.75rem;
+        height: 2.3125rem;
+        font-size: 0.875rem;
     }
 }

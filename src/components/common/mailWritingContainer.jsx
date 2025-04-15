@@ -24,22 +24,22 @@ function WriteContainer({
         />
 
         {/* AI 제안 영역 gptSuggestion &&*/}
-        {isAiOn || gptSuggestion && (
-          <div className="gptSuggestionBox">
-            {gptSuggestion ? (
-              <p className="gptSuggestionText">
-                {gptSuggestion}
-              </p>
-            ) : (
-              <div className="generateLoadingContainer">
-                <img src={generateImg} className="generateImg"/>
-                <p className="loadingText">
-                  생성 중 ...
-                </p>
-              </div>
-            )}
-          </div>
-        )}
+        {isAiOn && (
+    <div className="gptSuggestionBox">
+      {gptSuggestion ? (
+        <p className="gptSuggestionText">
+          {gptSuggestion}
+        </p>
+      ) : (
+        <div className="generateLoadingContainer">
+          <img src={generateImg} className="generateImg" alt="로딩 이미지" />
+          <p className="loadingText">
+            생성 중 ...
+          </p>
+        </div>
+      )}
+    </div>
+)}
 
         {/* 원문 HTML 렌더링 영역 */}
         {htmlContent.length > 0 && (
