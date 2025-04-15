@@ -307,7 +307,7 @@ function MailWriteModal() {
 
       {/* 메일 본문 */}
       <WriteContainer
-        className={isAiOn ? "writeContainer on" : "writeContainer"}
+        className={isAiOn ? 'writeContainer on' : 'writeContainer'}
         value={mailBody}
         onChange={setMailBody}
         htmlContent={decodedBody}

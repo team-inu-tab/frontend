@@ -1,4 +1,5 @@
 import "@components/common/css/mailWritingContainer.css";
+import generateImg from "@assets/icons/ai.svg";
 
 function WriteContainer({
   className,
@@ -25,10 +26,18 @@ function WriteContainer({
         {/* AI 제안 영역 gptSuggestion &&*/}
         {isAiOn && gptSuggestion && (
           <div className="gptSuggestionBox">
-            Test
-            <p className="gptSuggestionText">
-              {gptSuggestion}
-            </p>
+            {gptSuggestion ? (
+              <p className="gptSuggestionText">
+                {gptSuggestion}
+              </p>
+            ) : (
+              <div className="generateLoadingContainer">
+                <img src={generateImg} className="generateImg"/>
+                <p className="loadingText">
+                  생성 중 ...
+                </p>
+              </div>
+            )}
           </div>
         )}
 

@@ -155,6 +155,38 @@
   border: none;
 }
 
+.generateLoadingContainer {
+  position: relative;
+  width: 5.6875rem;
+  height: 1rem;
+
+}
+
+.generateImg {
+  position: absolute;
+  width: 0.63475rem;
+  height: 0.6875rem;
+}
+
+.loadingText {
+  position: absolute;
+  top: -2rem;
+  width: 3.3125rem;
+  height: 0.71225rem;
+  flex-shrink: 0;
+
+  font-family: 'SUIT';
+  font-size: 0.82rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  background: linear-gradient(90deg, #D692F8 0%, #6C57F3 3.78%, #5F6FFC 10.03%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .writeField.original-html {
   margin-top: 2rem;
   padding-top: 1rem;
