@@ -1,29 +1,21 @@
 .write-container-wrapper {
   position: fixed;
-  top: 78%;
+  top: 65.6%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 89%;
-  height: 36.5%;
-  max-width: 90vw;
-  max-height: 70vh;
-  min-width: 150px;
-  min-height: 80px;
+  width: 59.25rem;
+  height: 27.12544rem;
   margin: 0;
   z-index: 0;
 }
 
 .write-container-wrapper.on {
   position: fixed;
-  top: 78%;
+  top: 65.6%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 89%;
-  height: 36.5%;
-  max-width: 90vw;
-  max-height: 70vh;
-  min-width: 150px;
-  min-height: 80px;
+  width: 59.25rem;
+  height: 27.12544rem;
   margin: 0;
   z-index: 0;
 }
@@ -33,9 +25,8 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  width: 97.5%;
-  height: 90%;
-
+  width: 57.9375rem;
+  height: 26.144rem;
   flex-shrink: 0;
   border-radius: 19px;
   background: #fff;
@@ -52,8 +43,8 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  width: 97.5%;
-  height: 90%;
+  width: 57.9375rem;
+  height: 26.144rem;
   flex-shrink: 0;
   border-radius: 19px;
   background: #fff;
@@ -108,6 +99,10 @@
 }
 
 .gptSuggestionBox {
+  position: absolute;
+  width: 21.1875rem;
+  height: 23.8125rem;
+  right: 2.8%;
   margin-top: 8px;
   padding: 4px 6px;
   color: #ccc;
@@ -115,6 +110,7 @@
   font-size: 0.95rem;
   pointer-events: none;
   white-space: pre-wrap;
+  z-index: 10;
 }
 
 @keyframes gradientShift {
@@ -135,8 +131,8 @@
 .writeField {
   position: absolute;
   display: flex;
-  width: 95%;
-  height: 65%;
+  width: 56.375rem;
+  height: 24rem;
   top: 1.6rem;
   overflow-y: auto;
   resize: none;
@@ -148,9 +144,10 @@
 .writeField.on {
   display: flex;
   position: absolute;
-  width: 95%;
-  height: 65%;
+  width: 34.5rem;
+  height: 24rem;
   top: 1.6rem;
+  left: 2.24%;
   overflow-y: auto;
   resize: none;
   font-size: 1.2em;
