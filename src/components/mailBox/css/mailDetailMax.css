@@ -16,7 +16,7 @@
   flex-direction: column;
   border-radius: 0.625rem 0.625rem 3.5625rem 0.625rem;
   background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0px 0px 10.3px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 10.3px 0px rgba(0, 0, 0, 0.15);
 }
 
 .mailDetailMax-header {
@@ -32,7 +32,7 @@
 }
 
 .mailDetailMax-title {
-  color: rgba(62, 61, 61, 0.90);
+  color: rgba(62, 61, 61, 0.9);
 
   font-size: 0.875rem;
   font-style: normal;
@@ -41,7 +41,7 @@
 }
 
 .mailDetailMax-sender {
-  color: rgba(62, 61, 61, 0.26);
+  color: rgba(62, 61, 61, 0.5);
 
   font-size: 0.625rem;
   font-style: normal;
@@ -50,19 +50,23 @@
 }
 
 .mailDetailMax-files {
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
+  flex-shrink: 0;
 }
 
 .mailDetailMax-files-title {
-  color: rgba(62, 61, 61, 0.60);
-  font-size: 0.5rem;
+  color: rgba(62, 61, 61, 0.7);
+  font-size: 0.6rem;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
 
 .mailDetailMax-files-list {
+  width: 100%;
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
@@ -72,7 +76,7 @@
   height: 20.875rem;
   flex-shrink: 0;
   align-self: stretch;
-  color: #3E3D3D;
+  color: #3e3d3d;
   font-size: 0.625rem;
   font-style: normal;
   font-weight: 500;
@@ -87,7 +91,7 @@
 
 .mailDetailMax-sendAt,
 .mailDetailMax-receiveAt {
-  color: rgba(114, 114, 114, 0.60);
+  color: rgba(114, 114, 114, 0.6);
   text-align: right;
   font-size: 0.6875rem;
   font-style: normal;

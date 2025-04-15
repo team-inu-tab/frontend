@@ -141,30 +141,42 @@ export const useMailApi = () => {
   };
 
   // Blob 다운로드 유틸
-  const downloadBase64File = (base64Data, fileName) => {
-    // 1. base64 디코딩 → 바이너리 데이터
-    const byteCharacters = atob(base64Data);
-    const byteNumbers = Array.from(byteCharacters, (char) =>
-      char.charCodeAt(0)
-    );
-    const byteArray = new Uint8Array(byteNumbers);
+  const downloadBase64File = (
+    base64Data,
+    fileName,
+    mimeType = "application/octet-stream"
+  ) => {
+    try {
+      // 1. data:URL 형식이면 prefix 제거
+      if (base64Data.startsWith("data:")) {
+        base64Data = base64Data.split(",")[1];
+      }
 
-    // 2. Blob 객체로 변환 (타입은 자동 추론 또는 지정 가능)
-    const blob = new Blob([byteArray]);
+      // 2. base64 → 바이너리 디코딩
+      const byteCharacters = atob(base64Data);
+      const byteNumbers = Array.from(byteCharacters, (char) =>
+        char.charCodeAt(0)
+      );
+      const byteArray = new Uint8Array(byteNumbers);
 
-    // 3. blob URL 생성
-    const blobUrl = URL.createObjectURL(blob);
+      // 3. Blob 생성 (파일 유형 지정)
+      const blob = new Blob([byteArray], { type: mimeType });
 
-    // 4. 임시 링크 생성 후 클릭 → 다운로드 트리거
-    const link = document.createElement("a");
-    link.href = blobUrl;
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
+      // 4. 다운로드 트리거
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
 
-    // 5. 정리
-    document.body.removeChild(link);
-    URL.revokeObjectURL(blobUrl);
+      // 5. 정리
+      document.body.removeChild(link);
+      URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("파일 다운로드 실패:", error);
+      alert("파일을 다운로드할 수 없습니다.");
+    }
   };
 
   // 파일 상세 보기 - 첨부파일 다운로드
@@ -172,7 +184,12 @@ export const useMailApi = () => {
     await getToken();
     const res = await api.get(`/mails/${emailId}/file/${attachmentId}`);
 
-    downloadBase64File(res.data, fileName);
+    // 필요 시 MIME 타입을 확장자 기반으로 지정 가능
+    const mimeType = fileName.endsWith(".pdf")
+      ? "application/pdf"
+      : "application/octet-stream";
+
+    downloadBase64File(res.data, fileName, mimeType);
   };
 
   // 스팸 차단
