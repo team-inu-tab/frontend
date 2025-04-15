@@ -24,7 +24,7 @@ function WriteContainer({
         />
 
         {/* AI 제안 영역 gptSuggestion &&*/}
-        {isAiOn && gptSuggestion && (
+        {isAiOn || gptSuggestion && (
           <div className="gptSuggestionBox">
             {gptSuggestion ? (
               <p className="gptSuggestionText">
