@@ -153,6 +153,7 @@
   font-size: 1.2em;
   outline: none;
   border: none;
+  white-space: pre-wrap;
 }
 
 .generateLoadingContainer {
