@@ -12,7 +12,7 @@ dayjs.locale("ko");
  * @param {string} isoDate - 예: "2025-02-24T19:30:00.622589"
  * @returns {string}
  */
-export const formatReceiveDate = (isoDate) => {
+export const formatRelativeDate = (isoDate) => {
   if (!isoDate) return "";
 
   const parsed = dayjs(isoDate);
@@ -26,7 +26,19 @@ export const formatReceiveDate = (isoDate) => {
     return parsed.fromNow(); // ex: "5시간 전", "어제"
   }
 
-  // 그 외는 날짜 + 시간으로 표시
+  // 그 외는 날짜로 표시
+  return parsed.format("YYYY.M.D");
+};
+
+/**
+ * 이메일 수신/발신 날짜를 포맷하는 함수
+ * @param {string} isoDate - 예: "2025-02-24T19:30:00.622589"
+ * @returns {string} - 예: "2025.2.24 19:30"
+ */
+export const formatReceiveDate = (isoDate) => {
+  if (!isoDate) return "";
+  const parsed = dayjs(isoDate);
+  if (!parsed.isValid()) return "";
   return parsed.format("YYYY.M.D H:mm");
 };
 
