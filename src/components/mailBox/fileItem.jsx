@@ -13,7 +13,8 @@ const FileItem = ({ fileName, emailId, attachmentId, isPreview }) => {
   const handleClick = async () => {
     try {
       await getFile({ emailId, attachmentId, fileName });
-    } catch {
+    } catch (err) {
+      console.log(err);
       toast.error("파일 다운로드에 실패했습니다.");
     }
   };
