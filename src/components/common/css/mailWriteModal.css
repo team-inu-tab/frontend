@@ -1,23 +1,25 @@
-.mailTitle{
+/* 기본 스타일 (모바일 우선 접근 방식) */
+.mailTitle {
     width: 90%;
     height: 29px;
     position: absolute;
     top: 4%;
     left: 5%;
-    border:none;
+    border: none;
     outline: none;
-    font-family: 'SUIT';
+    font-family: "SUIT";
     font-size: 1.25rem;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
 }
-.mailTitle::placeholder{
+
+.mailTitle::placeholder {
     color: #3E3D3D;
-    font-family: 'SUIT';
+    font-family: "SUIT";
 }
 
-.recieverTitleContainer{
+.recieverTitleContainer {
     display: flex;
     position: absolute;
     top: 10%;
@@ -33,14 +35,14 @@
     z-index: 1;
 }
 
-.recieverLabel{
+.recieverLabel {
     font-weight: lighter;
     color: #3E3D3D;
-    font-family: 'SUIT';
+    font-family: "SUIT";
     font-size: 0.75rem;
 }
 
-.recieverTitle{
+.recieverTitle {
     position: absolute;
     display: inline-block;
     margin-left: 2%;
@@ -49,7 +51,7 @@
     white-space: nowrap;
     font-weight: bold;
     color: #3E3D3D;
-    border:none;
+    border: none;
     outline: none;
     background-color: rgba(205, 217, 245, 0.1);
     font-size: 0.75rem;
@@ -59,12 +61,12 @@
 .tagify.recieverTitle {
     border: none;
     outline: none;
-  }
+}
 
 .tagify {
     width: auto;
-    min-height: 44px; 
-    display: inline-block; 
+    min-height: 44px;
+    display: inline-block;
     border: none;
     outline: none;
     white-space: nowrap;
@@ -107,7 +109,7 @@
 
 .tagify__tag-text {
     color: #FFFFFF;
-    font-family: 'SUIT';
+    font-family: "SUIT";
     font-weight: bold;
     font-size: 0.75rem;
 }
@@ -137,7 +139,7 @@
     outline: none;
 }
 
-.attachedContainer{
+.attachedContainer {
     display: flex;
     position: absolute;
     top: 16%;
@@ -153,7 +155,7 @@
     z-index: 1;
 }
 
-.attatchedIcon{
+.attatchedIcon {
     position: absolute;
     display: flex;
     top: 24%;
@@ -162,13 +164,13 @@
     height: auto;
 }
 
-.attachedLabel{
+.attachedLabel {
     position: absolute;
     display: flex;
     top: 2.8%;
     left: 4%;
     color: #3E3D3D;
-    font-family: 'SUIT';
+    font-family: "SUIT";
     font-size: 0.8125rem;
     font-style: normal;
     font-weight: 400;
@@ -186,10 +188,10 @@
 .aiOnLogo {
     position: absolute;
     display: inline-block;
-    transform: translateY(-50%);
     width: 0.63475rem;
     height: 0.6875rem;
-    top: 0.8rem;
+    top: 0.92rem;
+    left: 0.12rem;
 }
 
 .aiText {
@@ -197,8 +199,8 @@
     display: inline-block;
     top: 10%;
     transform: translateY(-36%);
-    left: 0.54rem;
-    font-family: 'SUIT';
+    left: 1rem;
+    font-family: "SUIT";
     font-weight: bold;
     font-size: 0.875rem;
     color: #000000;
@@ -208,30 +210,30 @@
     position: absolute;
     display: inline-block;
     transform: translateY(-36%);
-    padding-left: 0.3rem;
+    left: 1rem;
     font-weight: bold;
     background: linear-gradient(
-      90deg, 
-      #D692F8 0%, 
-      #6C57F3 33%, 
-      #5F6FFC 84%, 
-      #D692F8 100%
+        90deg,
+        #D692F8 0%,
+        #6C57F3 33%,
+        #5F6FFC 84%,
+        #D692F8 100%
     );
     background-size: 200% auto;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: gradientShift 10s linear infinite;
-  }
-  
-  @keyframes gradientShift {
+}
+
+@keyframes gradientShift {
     0% {
-      background-position: 0% -100%;
+        background-position: 0% center;
     }
     100% {
-      background-position: -50% 0%;
+        background-position: 200% center;
     }
-  }
+}
 
 .aiToggleSwitch {
     position: relative;
@@ -243,7 +245,7 @@
     display: flex;
     bottom: 1.5%;
     flex-shrink: 0;
-    font-family: 'SUIT';
+    font-family: "SUIT";
     font-size: 0.6875rem;
 }
 
@@ -265,7 +267,7 @@
 .reservationButton {
     position: absolute;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     display: flex;
     border-radius: 18.5px;
     width: 124px;
@@ -283,7 +285,7 @@
     position: absolute;
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     border-radius: 18.5px;
     width: 124px;
     height: 37px;
@@ -310,7 +312,7 @@
     z-index: 2;
 }
 
-.sendCheck{
+.sendCheck {
     position: absolute;
     display: flex;
     top: 40%;
@@ -323,4 +325,121 @@
     font-weight: bold;
     top: 50%;
     left: 48%;
+}
+
+.loadingText {
+    background: linear-gradient(
+        90deg,
+        #D692F8 0%,
+        #6C57F3 33%,
+        #5F6FFC 84%,
+        #D692F8 100%
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 10s linear infinite;
+    font-family: "SUIT", sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                반응형 스타일 (화면 크기에 따른 조정)                        */
+/* -------------------------------------------------------------------------- */
+
+/* 1. 작은 화면 (모바일, 최대 1023px) */
+@media screen and (max-width: 1023px) {
+    .mailTitle {
+        width: 90%;
+        height: 26px;
+        font-size: 1.1rem;
+    }
+    .recieverTitleContainer {
+        width: 45rem;
+        height: 1.8rem;
+    }
+    .recieverTitle {
+        width: calc(100% - 150px);
+        font-size: 0.8rem;
+    }
+    .attachedContainer {
+        width: 45rem;
+        height: 3.2rem;
+    }
+    .buttonContainer {
+        width: 20vw;
+    }
+    .reservationButton, .sendButton {
+        width: 110px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+}
+
+/* 2. 일반 PC 환경 (1024px ~ 1439px) */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+    .mailTitle {
+        width: 90%;
+        height: 29px;
+        font-size: 1.25rem;
+    }
+    
+    .recieverTitleContainer {
+        width: 59.25rem;
+        height: 1.9125rem;
+    }
+
+    .recieverTitle {
+        width: calc(100% - 200px);
+        font-size: 0.875rem;
+    }
+
+    .attachedContainer {
+        width: 59.25rem;
+        height: 3.625rem;
+    }
+
+    .buttonContainer {
+        width: 25vw;
+    }
+
+    .reservationButton, .sendButton {
+        width: 124px;
+        height: 37px;
+        font-size: 0.9rem;
+    }
+}
+
+/* 3. 큰 화면 (1440px 이상) */
+@media screen and (min-width: 1440px) {
+    .mailTitle {
+        width: 90%;
+        height: 32px;
+        font-size: 1.25rem;
+        font-family: 'SUIT';
+    }
+    .recieverTitleContainer {
+        width: 59.25rem;
+        height: 2.2rem;
+    }
+    .recieverTitle {
+        width: calc(100% - 250px);
+        font-size: 1rem;
+    }
+    .attachedContainer {
+        width: 59.25rem;
+        height: 4rem;
+    }
+    .buttonContainer {
+        width: 30vw;
+    }
+    .reservationButton, .sendButton {
+        width: 150px;
+        height: 45px;
+        font-size: 1rem;
+    }
 }
