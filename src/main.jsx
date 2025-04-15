@@ -11,13 +11,13 @@ import MailWriteModal from "@components/common/mailWriteModal.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    {/* <RouterProvider router={router} /> */}
-    {/* <Toaster position="top-center" reverseOrder={false} /> */}
+    <RouterProvider router={router} />
+    <Toaster position="top-center" reverseOrder={false} />
     {/* <MailWriteModal></MailWriteModal> */}
     {/* <TextEditor></TextEditor> */}
     {/* <Signin></Signin> */}
     {/* <AddInfoComp></AddInfoComp> */}
-    <MailWriteModal/>
+    {/* <MailWriteModal/> */}
     {/* <Landing/> */}
     {/* <SendComplete/> */}
   </StrictMode>
