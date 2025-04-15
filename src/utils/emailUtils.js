@@ -1,14 +1,32 @@
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ko";
+
+dayjs.extend(relativeTime);
+dayjs.locale("ko");
 
 /**
  * 이메일 수신/발신 날짜를 포맷하는 함수
+ * - 오늘/어제 등 가까우면 상대 시간
+ * - 멀면 날짜+시간 포맷
  * @param {string} isoDate - 예: "2025-02-24T19:30:00.622589"
- * @returns {string} - 예: "2025.2.24 19:30"
+ * @returns {string}
  */
 export const formatReceiveDate = (isoDate) => {
   if (!isoDate) return "";
+
   const parsed = dayjs(isoDate);
   if (!parsed.isValid()) return "";
+
+  const now = dayjs();
+  const diffInDays = now.diff(parsed, "day");
+
+  // 오늘, 어제, 2일 전까지는 상대 시간으로 표시
+  if (diffInDays < 3) {
+    return parsed.fromNow(); // ex: "5시간 전", "어제"
+  }
+
+  // 그 외는 날짜 + 시간으로 표시
   return parsed.format("YYYY.M.D H:mm");
 };
 
