@@ -1,7 +1,11 @@
 import axios from "axios";
 import useAuthStore from "../store/useAuthStore";
+// import toast from "react-hot-toast";
 
 const BASE_URL = "https://maeilmail.co.kr/api";
+
+let isRefreshing = false;
+let refreshPromise = null;
 
 // axios 인스턴스 생성
 const api = axios.create({
@@ -10,27 +14,7 @@ const api = axios.create({
 });
 
 // 요청 인터셉터 - accessToken 자동 추가
-api.interceptors.request.use(async (config) => {
-  try {
-    const res = await fetch(`${BASE_URL}/oauth2/reissue`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (res.status === 200) {
-      const accessToken = res.headers.get("Authorization");
-      useAuthStore.getState().setAccessToken(accessToken);
-    } else {
-      throw new Error("토큰 갱신 실패");
-    }
-  } catch (error) {
-    console.error("토큰 갱신 중 오류 발생:", error);
-    throw error;
-  }
-
+api.interceptors.request.use((config) => {
   const token = useAuthStore.getState().accessToken;
   if (token) {
     config.headers["Authorization"] = token;
@@ -38,14 +22,36 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
+// // 인증 실패 시 처리
+// const handleAuthFailure = () => {
+//   toast.error("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
+//   window.location.href = "/login";
+// };
+
 export const useMailApi = () => {
   // 엑세스 토큰 가져오기/호출
   const getToken = async () => {
     let token = useAuthStore.getState().accessToken;
 
     if (!token) {
-      await refresh();
-      token = useAuthStore.getState().accessToken;
+      if (!isRefreshing) {
+        isRefreshing = true;
+        refreshPromise = refresh().finally(() => {
+          isRefreshing = false;
+        });
+      }
+
+      try {
+        await refreshPromise;
+        token = useAuthStore.getState().accessToken;
+
+        if (!token) {
+          throw new Error("토큰 획득 실패");
+        }
+      } catch (err) {
+        console.error("getToken 실패:", err);
+        throw err;
+      }
     }
 
     return token;
@@ -66,27 +72,35 @@ export const useMailApi = () => {
         const accessToken = res.headers.get("Authorization");
         if (accessToken) {
           useAuthStore.getState().setAccessToken(accessToken);
+          console.log("accessToken 갱신 완료");
           return accessToken;
+        } else {
+          console.warn("Authorization 토큰 없음");
         }
+      } else {
+        const errorMsg = await res.text();
+        console.error("리프레시 실패 응답:", errorMsg);
       }
 
+      // handleAuthFailure();
       throw new Error("토큰 갱신 실패");
     } catch (error) {
-      console.error("토큰 갱신 중 오류 발생:", error);
+      console.error("refresh 중 예외:", error);
+      // handleAuthFailure();
       throw error;
     }
   };
 
   // 받은 메일함 조회
   const fetchReceiveMails = async () => {
-    //await getToken();
+    await getToken();
     const res = await api.get("/mails/receive");
     return res.data;
   };
 
   // 보낸 메일함 조회
   const fetchSentMails = async () => {
-    //await getToken();
+    await getToken();
     const res = await api.get("/mails/send");
     return res.data;
   };
