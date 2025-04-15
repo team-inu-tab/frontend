@@ -10,7 +10,27 @@ const api = axios.create({
 });
 
 // 요청 인터셉터 - accessToken 자동 추가
-api.interceptors.request.use((config) => {
+api.interceptors.request.use(async (config) => {
+  try {
+    const res = await fetch(`${BASE_URL}/oauth2/reissue`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (res.status === 200) {
+      const accessToken = res.headers.get("Authorization");
+      useAuthStore.getState().setAccessToken(accessToken);
+    } else {
+      throw new Error("토큰 갱신 실패");
+    }
+  } catch (error) {
+    console.error("토큰 갱신 중 오류 발생:", error);
+    throw error;
+  }
+
   const token = useAuthStore.getState().accessToken;
   if (token) {
     config.headers["Authorization"] = token;
@@ -59,14 +79,14 @@ export const useMailApi = () => {
 
   // 받은 메일함 조회
   const fetchReceiveMails = async () => {
-    await getToken();
+    //await getToken();
     const res = await api.get("/mails/receive");
     return res.data;
   };
 
   // 보낸 메일함 조회
   const fetchSentMails = async () => {
-    await getToken();
+    //await getToken();
     const res = await api.get("/mails/send");
     return res.data;
   };
