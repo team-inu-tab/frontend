@@ -43,9 +43,7 @@ const MenuBar = () => {
       >
         <MenuItem title="write" isMenuBarOpen={isMenuBarOpen} />
         <SubMenu isMenuBarOpen={isMenuBarOpen} />
-        <MenuItem title="notification" isMenuBarOpen={isMenuBarOpen} />
         <MenuItem title="profile" isMenuBarOpen={isMenuBarOpen} />
-        <MenuItem title="settings" isMenuBarOpen={isMenuBarOpen} />
       </div>
     </div>
   );

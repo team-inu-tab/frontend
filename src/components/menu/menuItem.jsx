@@ -2,13 +2,11 @@ import "@components/menu/css/menuItem.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 import Write from "@assets/icons/write.svg?react";
-import Notification from "@assets/icons/notification.svg?react";
 import Profile from "@assets/icons/profile.svg?react";
-import Settings from "@assets/icons/settings.svg?react";
 
 /**
  * MenuItem - 개별 메뉴 아이템 컴포넌트
- * @param {"write" | "notification" | "profile" | "settings"} props.title - 메뉴 제목
+ * @param {"write" | "profile" } props.title - 메뉴 제목
  * @param {boolean} props.isMenuBarOpen - 메뉴바가 열려 있는지 여부
  * @returns {JSX.Element} 개별 메뉴 컴포넌트
  */
@@ -27,23 +25,11 @@ const MenuItem = ({ title, isMenuBarOpen }) => {
           titleName: "메일 쓰기",
           link: null,
         };
-      case "notification":
-        return {
-          Icon: Notification,
-          titleName: "알림",
-          link: "/notification",
-        };
       case "profile":
         return {
           Icon: Profile,
           titleName: "프로필",
           link: "/profile",
-        };
-      case "settings":
-        return {
-          Icon: Settings,
-          titleName: "설정",
-          link: "/setting",
         };
       default:
         return {
