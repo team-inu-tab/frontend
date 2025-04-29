@@ -24,6 +24,7 @@ function MailWriteModal() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [showComplete, setShowComplete] = useState(false);
   const [decodedBody, setDecodedBody] = useState("");
+  const [justAppliedGpt, setJustAppliedGpt] = useState(false);
 
   const gptTimer = useRef(null);
   const tagifyInputRef = useRef(null);
@@ -140,30 +141,32 @@ function MailWriteModal() {
   // GPT 자동 제안 호출
   useEffect(() => {
     if (!isAiOn) return;
-
     if (gptTimer.current) {
       clearTimeout(gptTimer.current);
     }
-
     if (mailBody.trim() === "") {
       setGptSuggestion("");
+      return;
+    }
+
+    if (justAppliedGpt) {
+      setJustAppliedGpt(false);
       return;
     }
 
     gptTimer.current = setTimeout(async () => {
       try {
         const result = await getChatGpt(mailBody);
-        console.log(result);
         setGptSuggestion(result);
       } catch (err) {
         console.error("GPT 호출 실패:", err);
       }
     }, 3000);
-    //
+
     return () => {
       clearTimeout(gptTimer.current);
     };
-  }, [mailBody, isAiOn]);
+  }, [mailBody, isAiOn, justAppliedGpt]);
 
   // Tab 키로 GPT 제안 적용
   const handleKeyDown = (e) => {
@@ -171,6 +174,7 @@ function MailWriteModal() {
       e.preventDefault();
       setMailBody(gptSuggestion);
       setGptSuggestion("");
+      setJustAppliedGpt(true);
     }
   };
 
@@ -273,7 +277,6 @@ function MailWriteModal() {
         <input type="checkbox" className="isToMe" />
       </div>
 
-
       {/* 첨부파일 */}
       <div className="attachedContainer">
         <input
@@ -307,7 +310,7 @@ function MailWriteModal() {
 
       {/* 메일 본문 */}
       <WriteContainer
-        className={isAiOn ? 'writeContainer on' : 'writeContainer'}
+        className={isAiOn ? "writeContainer on" : "writeContainer"}
         value={mailBody}
         onChange={setMailBody}
         htmlContent={decodedBody}
