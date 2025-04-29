@@ -1,0 +1,49 @@
+.shimmer {
+  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* 체크박스 */
+.skeleton-checkmark {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 0.2rem;
+}
+
+/* 별 아이콘 */
+.skeleton-star {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+/* 발신자 이름 자리 */
+.skeleton-sender {
+  width: 5rem;
+  height: 0.75rem;
+  border-radius: 4px;
+}
+
+/* 제목 자리 */
+.skeleton-title {
+  width: 13rem;
+  height: 0.75rem;
+  border-radius: 4px;
+}
+
+/* 수신 시간 자리 */
+.skeleton-receiveAt {
+  width: 3rem;
+  height: 0.65rem;
+  border-radius: 4px;
+}
