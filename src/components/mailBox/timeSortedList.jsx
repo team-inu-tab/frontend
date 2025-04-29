@@ -1,5 +1,6 @@
 import "@components/mailBox/css/timeSortedList.css";
 import MailListItem from "./mailListItem";
+import SkeletonMailListItem from "./skeletonMailListItem";
 import { useMailStore } from "../../store";
 
 /**
@@ -28,7 +29,11 @@ const TimeSortedList = ({ mails }) => {
       {/* 메일 목록 컨테이너 */}
       <div className="timeSortedList-container">
         {status === "loading" || mails == null ? (
-          <p>📩 메일을 불러오는 중...</p>
+          <>
+            {[...Array(5)].map((_, idx) => (
+              <SkeletonMailListItem key={idx} />
+            ))}
+          </>
         ) : mails?.length > 0 ? (
           mails.map((mail) => <MailListItem key={mail.id} mail={mail} />)
         ) : (
