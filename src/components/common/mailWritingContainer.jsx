@@ -1,5 +1,7 @@
 import "@components/common/css/mailWritingContainer.css";
 import generateImg from "@assets/icons/ai.svg";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import AiLoding from "@components/common/aiLoding.jsx";
 
 function WriteContainer({
   className,
@@ -23,21 +25,17 @@ function WriteContainer({
           onKeyDown={onKeyDown}
         />
 
-        {/* AI 제안 영역 gptSuggestion &&*/}
-        {isAiOn && (
-    <div className="gptSuggestionBox">
-      {gptSuggestion ? (
-        <p className="gptSuggestionText">
-          {gptSuggestion}
-        </p>
-      ) : (
-        <div className="generateLoadingContainer">
-          <img src={generateImg} className="generateImg" alt="로딩 이미지" />
-          <p className="loadingText">
-            생성 중 ...
+    {isAiOn && (
+      <div className="gptSuggestionBox">
+        {gptSuggestion ? (
+          <p className="gptSuggestionText">
+            {gptSuggestion}
           </p>
-        </div>
-      )}
+        ) : (
+          <div className="generateLoadingContainer">
+            <AiLoding/>
+          </div>
+    )}
     </div>
 )}
 

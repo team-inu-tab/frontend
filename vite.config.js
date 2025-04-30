@@ -8,6 +8,7 @@ export default defineConfig(({ mode }) => {
 
   const config = {
     plugins: [react(), svgr()],
+    assetsInclude: ['**/*.lottie'],
     server: {
       cors: {
         origin: isProduction ? "https://maeilmail.co.kr" : true,

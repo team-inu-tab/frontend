@@ -168,7 +168,6 @@ function MailWriteModal() {
     };
   }, [mailBody, isAiOn, justAppliedGpt]);
 
-  // Tab 키로 GPT 제안 적용
   const handleKeyDown = (e) => {
     if (e.key === "Tab" && isAiOn && gptSuggestion) {
       e.preventDefault();
