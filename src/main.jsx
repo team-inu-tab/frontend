@@ -8,6 +8,7 @@ import MailWriteModal from "@components/common/mailWriteModal.jsx";
 // import Signin from "@screens/signin.jsx";
 // import Landing from "@screens/landingScreen.jsx";
 // import SendComplete from "@screens/sendCompleteScreen.jsx";
+import AiLoding from "@components/common/aiLoding.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -20,5 +21,6 @@ createRoot(document.getElementById("root")).render(
     {/* <MailWriteModal/> */}
     {/* <Landing/> */}
     {/* <SendComplete/> */}
+    {/* <AiLoding/> */}
   </StrictMode>
 );
