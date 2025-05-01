@@ -25,19 +25,19 @@ function WriteContainer({
           onKeyDown={onKeyDown}
         />
 
-    {isAiOn && (
-      <div className="gptSuggestionBox">
-        {gptSuggestion ? (
-          <p className="gptSuggestionText">
-            {gptSuggestion}
-          </p>
-        ) : (
-          <div className="generateLoadingContainer">
-            <AiLoding/>
-          </div>
-    )}
-    </div>
-)}
+      {isAiOn && (
+        <div className="gptSuggestionBox">
+          {gptSuggestion ? (
+            <p className="gptSuggestionText">
+              {gptSuggestion}
+            </p>
+          ) : (
+            <div className="generateLoadingContainer">
+              <AiLoding/>
+            </div>
+          )}
+        </div>
+      )}
 
         {/* 원문 HTML 렌더링 영역 */}
         {htmlContent.length > 0 && (

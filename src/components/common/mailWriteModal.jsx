@@ -269,37 +269,41 @@ function MailWriteModal() {
       />
 
       {/* 받는 사람 */}
-      <div className="recieverTitleContainer">
-        <p className="recieverLabel">받는사람</p>
-        <input ref={tagifyInputRef} className="recieverTitle" />
-        <p className="toMeText">내게 쓰기</p>
-        <input type="checkbox" className="isToMe" />
-      </div>
+      <div className="infoConainer">
+        <div className="recieverTitleWrapper">
+          <span className="recieverLabel">받는사람</span>
+          <input ref={tagifyInputRef} className="recieverTitle" />
+          <div className="toMeWrapper">
+            <input type="checkbox" className="isToMe" />
+            <span className="toMeText">내게 쓰기</span>
+          </div>
+        </div>
 
-      {/* 첨부파일 */}
-      <div className="attachedContainer">
-        <input
-          type="file"
-          id="file"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-          style={{ display: "none" }}
-        />
-        <img
-          src={Link}
-          className="attatchedIcon"
-          alt="link icon"
-          onClick={() => fileInputRef.current.click()}
-        />
-        <p className="attachedLabel">
-          {selectedFile ? selectedFile.name : "DROP HERE!"}
-        </p>
+        {/* 첨부파일 */}
+        <div className="attachedWrapper">
+          <input
+            type="file"
+            id="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            style={{ display: "none" }}
+          />
+          <img
+            src={Link}
+            className="attatchedIcon"
+            alt="link icon"
+            onClick={() => fileInputRef.current.click()}
+          />
+          <p className="attachedLabel">
+            {selectedFile ? selectedFile.name : "DROP HERE!"}
+          </p>
+        </div>
       </div>
 
       {/* AI 토글 */}
       <div className="switchContainer">
         {isAiOn && <img src={aiOnLogo} className="aiOnLogo" alt="ai on logo" />}
-        <p className={`aiText ${isAiOn ? "on" : ""}`}>TabAI</p>
+        <span className={`aiText ${isAiOn ? "on" : ""}`}>TabAI</span>
         <ToggleSwitch
           className="aiToggleSwitch"
           checked={isAiOn}
