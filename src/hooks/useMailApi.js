@@ -92,51 +92,86 @@ export const useMailApi = () => {
   };
 
   // 받은 메일함 조회
-  const fetchReceiveMails = async () => {
+  const fetchReceiveMails = async (pageToken = null) => {
     await getToken();
-    const res = await api.get("/mails/receive");
+
+    const url = pageToken
+      ? `/mails/receive?pageToken=${pageToken}`
+      : `/mails/receive`;
+
+    const res = await api.get(url);
     return res.data;
   };
 
   // 보낸 메일함 조회
-  const fetchSentMails = async () => {
+  const fetchSentMails = async (pageToken = null) => {
     await getToken();
-    const res = await api.get("/mails/send");
+
+    const url = pageToken
+      ? `/mails/send?pageToken=${pageToken}`
+      : `/mails/send`;
+
+    const res = await api.get(url);
     return res.data;
   };
 
   // 임시 보관 메일함 조회
-  const fetchDraftMails = async () => {
+  const fetchDraftMails = async (pageToken = null) => {
     await getToken();
-    const res = await api.get("/mails/draft");
+
+    const url = pageToken
+      ? `/mails/draft?pageToken=${pageToken}`
+      : `/mails/draft`;
+
+    const res = await api.get(url);
     return res.data;
   };
 
   // 중요 메일함 조회
-  const fetchImportantMails = async () => {
+  const fetchImportantMails = async (pageToken = null) => {
     await getToken();
-    const res = await api.get("/mails/important");
+
+    const url = pageToken
+      ? `/mails/important?pageToken=${pageToken}`
+      : `/mails/important`;
+
+    const res = await api.get(url);
     return res.data;
   };
 
   // 내게 쓴 메일함 조회
-  const fetchSelfSentMails = async () => {
+  const fetchSelfSentMails = async (pageToken = null) => {
     await getToken();
-    const res = await api.get("/mails/self");
+
+    const url = pageToken
+      ? `/mails/self?pageToken=${pageToken}`
+      : `/mails/self`;
+
+    const res = await api.get(url);
     return res.data;
   };
 
   // 스팸 메일함 조회
-  const fetchSpamMails = async () => {
+  const fetchSpamMails = async (pageToken = null) => {
     await getToken();
-    const res = await api.get("/mails/spam");
+
+    const url = pageToken
+      ? `/mails/spam?pageToken=${pageToken}`
+      : `/mails/spam`;
+
+    const res = await api.get(url);
     return res.data;
   };
 
   // 휴지통 메일함 조회
-  const fetchDeletedMails = async () => {
+  const fetchDeletedMails = async (pageToken = null) => {
     await getToken();
-    const res = await api.get("/mails/trash");
+
+    const url = pageToken
+      ? `/mails/trash?pageToken=${pageToken}`
+      : `/mails/trash`;
+
+    const res = await api.get(url);
     return res.data;
   };
 
@@ -278,6 +313,13 @@ export const useMailApi = () => {
     return res.data;
   };
 
+  // 로그아웃
+  const logout = async () => {
+    await getToken();
+    const res = await api.post("/oauth2/logout");
+    return res.data;
+  };
+
   return {
     getToken,
     refresh,
@@ -298,6 +340,7 @@ export const useMailApi = () => {
     getMailById,
     getChatGpt,
     updateTemporary,
+    logout,
   };
 };
 

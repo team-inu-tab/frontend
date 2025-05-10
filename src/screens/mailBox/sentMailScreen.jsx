@@ -30,7 +30,7 @@ const SentMailScreen = () => {
           {/* 왼쪽: 메일 목록 */}
           <div className="MailScreen-list">
             {sortOption === SORT_OPTIONS.TIME ? (
-              <TimeSortedList mails={sentMails} />
+              <TimeSortedList mails={sentMails} boxType="sent" />
             ) : (
               <SenderGroupedList mails={groupedMails} />
             )}

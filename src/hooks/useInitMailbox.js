@@ -1,4 +1,3 @@
-// hooks/useInitMailbox.ts
 import { useMailApi } from "@/hooks/useMailApi";
 import { useMailStore } from "@/store";
 
@@ -10,23 +9,37 @@ export const useInitMailbox = () => {
   const setGroupedMails = useMailStore((s) => s.setGroupedMails);
   const setStatus = useMailStore((s) => s.setStatus);
   const setError = useMailStore((s) => s.setError);
+  const setNextPageToken = useMailStore((s) => s.setNextPageToken);
+  const appendMails = useMailStore((s) => s.appendMails);
 
-  const initMailbox = async () => {
-    setStatus("loading");
+  const initMailbox = async (pageTokens = null, append = false) => {
+    if (!append) setStatus("loading");
+
     try {
-      const receiveRes = await fetchReceiveMails();
-      const sentRes = await fetchSentMails();
+      const receiveRes = await fetchReceiveMails(pageTokens?.receive);
+      const sentRes = await fetchSentMails(pageTokens?.sent);
 
       const receiveMails = receiveRes.emails;
       const sentMails = sentRes.emails;
 
-      Promise.all([
-        setReceivedMails(receiveMails),
-        setSentMails(sentMails),
-        setGroupedMails([...receiveMails, ...sentMails]),
-      ]).then(() => {
-        setStatus("succeeded");
-      });
+      setNextPageToken("receive", receiveRes.nextPageToken);
+      setNextPageToken("sent", sentRes.nextPageToken);
+
+      if (append) {
+        appendMails("receive", receiveMails);
+        appendMails("sent", sentMails);
+      } else {
+        await Promise.all([
+          setReceivedMails(receiveMails),
+          setSentMails(sentMails),
+        ]);
+      }
+      setGroupedMails([
+        ...(append ? useMailStore.getState().receiveMails : receiveMails),
+        ...(append ? useMailStore.getState().sentMails : sentMails),
+      ]);
+
+      if (!append) setStatus("succeeded");
     } catch (error) {
       console.error("메일 초기화 실패:", error);
       setError("메일함 초기화 실패");

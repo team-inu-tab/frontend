@@ -25,6 +25,17 @@ export const useMailStore = create((set) => ({
 
   isExpanded: false, // mailDetailMax 확장 여부
 
+  // 메일함 nextToken
+  nextPageTokenByBox: {
+    receive: null,
+    sent: null,
+    deleted: null,
+    draft: null,
+    important: null,
+    selfSent: null,
+    spam: null,
+  },
+
   // 메일 리스트 설정 함수
   setReceivedMails: (mails) => set({ receiveMails: mails }),
   setSentMails: (mails) => set({ sentMails: mails }),
@@ -128,4 +139,21 @@ export const useMailStore = create((set) => ({
   toggleExpanded: () => set((state) => ({ isExpanded: !state.isExpanded })),
   // 선택된 메일, 확장 여부 초기화
   reset: () => set({ selectedMail: null, isExpanded: false }),
+
+  // 메일함 nextToken 업데이트
+  setNextPageToken: (boxType, token) =>
+    set((state) => ({
+      nextPageTokenByBox: {
+        ...state.nextPageTokenByBox,
+        [boxType]: token,
+      },
+    })),
+
+  // 메일 추가 (다음 페이지)
+  appendMails: (boxType, mails) =>
+    set((state) => {
+      const key = `${boxType}Mails`;
+      const prev = state[key] ?? [];
+      return { [key]: [...prev, ...mails] };
+    }),
 }));

@@ -30,7 +30,7 @@ const ReceiveMailScreen = () => {
           {/* 왼쪽: 메일 목록 */}
           <div className="MailScreen-list">
             {sortOption === SORT_OPTIONS.TIME ? (
-              <TimeSortedList mails={receiveMails} />
+              <TimeSortedList mails={receiveMails} boxType="receive" />
             ) : (
               <SenderGroupedList mails={groupedMails} />
             )}

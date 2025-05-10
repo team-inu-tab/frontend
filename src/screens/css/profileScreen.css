@@ -1,4 +1,4 @@
-.mailBoxLayout-wrapper {
+.ProfileScreen-wrapper {
   display: flex;
   margin: 0.4rem;
   height: 95vh;
@@ -6,34 +6,53 @@
 }
 
 /* 메일함 헤더 + 컨텐츠 스타일 */
-.mailBoxLayout-container {
+.ProfileScreen-container {
   display: flex;
   width: 100%;
   height: 100%;
   flex: 1;
   flex-direction: column;
+  padding: 1rem;
   border-radius: 1.1875rem;
   align-self: stretch;
   transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
-  background: 
-    linear-gradient(270deg, rgba(255, 255, 255, 0) 40%, #FFF 90%),
-    conic-gradient(from 133deg at 53.57% 50%,
-      #E0DFF2 0deg,
-      #D7E1F5 147.15deg, 
-      #CAD9F0 231.97deg, 
-      #D8DCF1 306.66deg, 
-      #EFEFFF 336.85deg, 
-      #E2DEF1 360deg
+  background: linear-gradient(270deg, rgba(255, 255, 255, 0) 40%, #fff 90%),
+    conic-gradient(
+      from 133deg at 53.57% 50%,
+      #e0dff2 0deg,
+      #d7e1f5 147.15deg,
+      #cad9f0 231.97deg,
+      #d8dcf1 306.66deg,
+      #efefff 336.85deg,
+      #e2def1 360deg
     );
-  box-shadow: 4px 4px 20px 0px rgba(149, 144, 213, 0.15), 
-              -4px -4px 20px 0px rgba(127, 172, 238, 0.15), 
-              0px 1px 5.2px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 4px 4px 20px 0px rgba(149, 144, 213, 0.15),
+    -4px -4px 20px 0px rgba(127, 172, 238, 0.15),
+    0px 1px 5.2px 0px rgba(0, 0, 0, 0.25);
 }
 
-/* 메일 컨텐츠 공통 스타일 */
-.mailBoxLayout-common {
-  padding: 1rem 1rem 0;
-  width: 100%;
-  box-sizing: border-box;
-  height: 80vh;
+.ProfileScreen-container button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 2rem;
+  padding: 0 0.5rem;
+  background: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  outline: none;
+
+  white-space: nowrap;
+  font-family: "SUIT", sans-serif;
+  color: #3e3d3d;
+  font-size: 0.8125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  &:hover {
+    border: 1px solid #e6e6ea;
+    border-radius: 0.5rem;
+  }
 }
