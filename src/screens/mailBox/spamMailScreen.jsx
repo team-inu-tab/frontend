@@ -24,7 +24,7 @@ const SpamMailScreen = () => {
         <>
           {/* 왼쪽: 메일 목록 */}
           <div className="MailScreen-list">
-            <TimeSortedList mails={spamMails} />
+            <TimeSortedList mails={spamMails} boxType="spam" />
           </div>
 
           {/* 오른쪽: 메일 상세 내용 */}

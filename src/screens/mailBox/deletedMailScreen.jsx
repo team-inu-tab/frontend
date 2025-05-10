@@ -24,7 +24,7 @@ const DeletedMailScreen = () => {
         <>
           {/* 왼쪽: 메일 목록 */}
           <div className="MailScreen-list">
-            <TimeSortedList mails={deletedMails} />
+            <TimeSortedList mails={deletedMails} boxType="deleted" />
           </div>
 
           {/* 오른쪽: 메일 상세 내용 */}

@@ -24,7 +24,7 @@ const DraftMailScreen = () => {
         <>
           {/* 왼쪽: 메일 목록 */}
           <div className="MailScreen-list">
-            <TimeSortedList mails={draftMails} />
+            <TimeSortedList mails={draftMails} boxType="draft" />
           </div>
 
           {/* 오른쪽: 메일 상세 내용 */}

@@ -2,13 +2,17 @@ import "@components/mailBox/css/timeSortedList.css";
 import MailListItem from "./mailListItem";
 import SkeletonMailListItem from "./skeletonMailListItem";
 import { useMailStore } from "../../store";
+import { usePaginatedMailbox } from "../../hooks/usePaginatedMailbox";
 
 /**
  * TimeSortedList - 시간순 정렬된 메일 목록을 표시하는 컴포넌트
  * @returns {JSX.Element} 시간순으로 정렬된 메일 리스트 UI
  */
-const TimeSortedList = ({ mails }) => {
+const TimeSortedList = ({ mails, boxType }) => {
   const status = useMailStore((state) => state.status);
+  const nextToken = useMailStore((s) => s.nextPageTokenByBox[boxType]);
+
+  const { fetchMoreMails } = usePaginatedMailbox();
 
   return (
     <div className="timeSortedList-wrapper">
@@ -34,8 +38,15 @@ const TimeSortedList = ({ mails }) => {
               <SkeletonMailListItem key={idx} />
             ))}
           </>
-        ) : mails?.length > 0 ? (
-          mails.map((mail) => <MailListItem key={mail.id} mail={mail} />)
+        ) : mails.length > 0 ? (
+          <>
+            {mails.map((mail) => (
+              <MailListItem key={mail.id} mail={mail} />
+            ))}
+            {nextToken && (
+              <button onClick={() => fetchMoreMails(boxType)}>더 보기</button>
+            )}
+          </>
         ) : (
           <p>📩 메일이 없습니다.</p>
         )}
