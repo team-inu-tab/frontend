@@ -49,7 +49,6 @@ const TimeSortedList = ({ mails, boxType }) => {
                 className="loadMore-wrapper"
                 onClick={() => fetchMoreMails(boxType)}
               >
-                <div className="loadMore-gradient" />
                 <Arrow className="loadMore-icon" />
               </div>
             )}
