@@ -33,7 +33,6 @@ const SenderGroupedList = ({ mails }) => {
                 initMailbox({ receive: nextReceive, sent: nextSent }, true)
               }
             >
-              <div className="loadMore-gradient" />
               <Arrow className="loadMore-icon" />
             </div>
           )}
