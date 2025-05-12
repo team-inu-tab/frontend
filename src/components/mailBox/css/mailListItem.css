@@ -102,7 +102,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 5rem;
+  width: 6rem;
 }
 .mailListItem-sender.self {
   display: none;
@@ -127,6 +127,8 @@
 }
 
 .mailListItem-receiveAt {
+  width: 3.5rem;
+  text-align: right;
   color: rgba(62, 61, 61, 0.5);
   font-size: 0.65rem;
   font-style: normal;

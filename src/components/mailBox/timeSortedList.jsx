@@ -1,4 +1,5 @@
 import "@components/mailBox/css/timeSortedList.css";
+import Arrow from "@assets/icons/arrow_more.svg?react";
 import MailListItem from "./mailListItem";
 import SkeletonMailListItem from "./skeletonMailListItem";
 import { useMailStore } from "../../store";
@@ -32,19 +33,25 @@ const TimeSortedList = ({ mails, boxType }) => {
 
       {/* 메일 목록 컨테이너 */}
       <div className="timeSortedList-container">
-        {status === "loading" || mails == null ? (
+        {status === "loading" ? (
           <>
             {[...Array(5)].map((_, idx) => (
               <SkeletonMailListItem key={idx} />
             ))}
           </>
-        ) : mails.length > 0 ? (
+        ) : mails && mails.length > 0 ? (
           <>
             {mails.map((mail) => (
               <MailListItem key={mail.id} mail={mail} />
             ))}
             {nextToken && (
-              <button onClick={() => fetchMoreMails(boxType)}>더 보기</button>
+              <div
+                className="loadMore-wrapper"
+                onClick={() => fetchMoreMails(boxType)}
+              >
+                <div className="loadMore-gradient" />
+                <Arrow className="loadMore-icon" />
+              </div>
             )}
           </>
         ) : (

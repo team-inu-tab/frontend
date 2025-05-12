@@ -1,4 +1,5 @@
 import "@components/mailBox/css/senderGroupedList.css";
+import Arrow from "@assets/icons/arrow_more.svg?react";
 import SenderGroupedItem from "./senderGroupedItem";
 import { useMailStore } from "../../store";
 import { useInitMailbox } from "../../hooks/useInitMailbox";
@@ -26,13 +27,15 @@ const SenderGroupedList = ({ mails }) => {
             />
           ))}
           {(nextReceive || nextSent) && (
-            <button
+            <div
+              className="loadMore-wrapper"
               onClick={() =>
                 initMailbox({ receive: nextReceive, sent: nextSent }, true)
               }
             >
-              더 보기
-            </button>
+              <div className="loadMore-gradient" />
+              <Arrow className="loadMore-icon" />
+            </div>
           )}
         </>
       ) : (
