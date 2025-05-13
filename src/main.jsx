@@ -9,6 +9,7 @@ import MailWriteModal from "@components/common/mailWriteModal.jsx";
 // import Landing from "@screens/landingScreen.jsx";
 // import SendComplete from "@screens/sendCompleteScreen.jsx";
 import AiLoding from "@components/common/aiLoding.jsx";
+import SendComplete from "@screens/sendCompleteScreen";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
