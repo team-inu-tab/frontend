@@ -119,7 +119,7 @@ function MailWriteModal() {
     } else {
       tagifyInst.removeAllTags();
     }
-  }, [isToMeChecked]); 
+  }, [isToMeChecked]);
 
   // ESC 키로 AI 기능 끄기
   useEffect(() => {
@@ -213,12 +213,12 @@ function MailWriteModal() {
     const formData = new FormData();
 
     const mergedBody = `
-  ${mailBody}
+      ${mailBody}
   
-  <br/><br/>
-  <!-- 원문 메일 -->
-  ${decodedBody || ""}
-  `;
+      <br/><br/>
+      <!-- 원문 메일 -->
+      ${decodedBody || ""}
+    `;
 
     let mailData = {
       toEmail: JSON.parse(recieverTitle),

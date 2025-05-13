@@ -5,17 +5,17 @@ import { useNavigate } from "react-router-dom";
 import { useWriteStore } from "../store/useWriteStore";
 
 const SendComplete = () => {
-  const navigate = useNavigate();
-  const setWriteModalOpen = useWriteStore((state) => state.setWriteModalOpen);
+  // const navigate = useNavigate();
+  // const setWriteModalOpen = useWriteStore((state) => state.setWriteModalOpen);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setWriteModalOpen(false);
-      navigate(-1);
-    }, 1000);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setWriteModalOpen(false);
+  //     navigate(-1);
+  //   }, 1000);
 
-    return () => clearTimeout(timer);
-  }, [setWriteModalOpen, navigate]);
+  //   return () => clearTimeout(timer);
+  // }, [setWriteModalOpen, navigate]);
 
   return (
     <div className="completeBackground">
