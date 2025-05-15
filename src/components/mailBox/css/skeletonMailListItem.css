@@ -29,7 +29,7 @@
 
 /* 발신자 이름 자리 */
 .skeleton-sender {
-  width: 5rem;
+  width: 6rem;
   height: 0.75rem;
   border-radius: 4px;
 }
@@ -43,7 +43,7 @@
 
 /* 수신 시간 자리 */
 .skeleton-receiveAt {
-  width: 3rem;
+  width: 3.5rem;
   height: 0.65rem;
   border-radius: 4px;
 }

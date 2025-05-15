@@ -7,15 +7,9 @@
   padding: 0.3rem;
   gap: 1.5rem;
   overflow-y: auto;
+  scrollbar-width: none;
 }
 .senderGroupedList-wrapper P {
   white-space: nowrap;
   font-size: 0.8rem;
-}
-
-/* 모바일 */
-@media (max-width: 425px) {
-  .senderGroupedList-wrapper {
-    align-items: normal;
-  }
 }
