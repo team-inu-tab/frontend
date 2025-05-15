@@ -28,18 +28,20 @@ export const useInitMailbox = () => {
       if (append) {
         appendMails("receive", receiveMails);
         appendMails("sent", sentMails);
+
+        const currentReceive = useMailStore.getState().receiveMails;
+        const currentSent = useMailStore.getState().sentMails;
+
+        setGroupedMails([...currentReceive, ...currentSent]);
       } else {
         await Promise.all([
           setReceivedMails(receiveMails),
           setSentMails(sentMails),
         ]);
-      }
-      setGroupedMails([
-        ...(append ? useMailStore.getState().receiveMails : receiveMails),
-        ...(append ? useMailStore.getState().sentMails : sentMails),
-      ]);
 
-      if (!append) setStatus("succeeded");
+        setGroupedMails([...receiveMails, ...sentMails]);
+        setStatus("succeeded");
+      }
     } catch (error) {
       console.error("메일 초기화 실패:", error);
       setError("메일함 초기화 실패");
