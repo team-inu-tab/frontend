@@ -91,7 +91,8 @@
 .mailDetail-footer {
   display: flex;
   justify-content: flex-end;
-  margin-top: 1rem;
+  align-items: center;
+  height: 2rem;
   flex-shrink: 0;
 }
 
