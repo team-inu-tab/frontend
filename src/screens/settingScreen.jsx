@@ -1,4 +1,3 @@
-import "@screens/css/settingScreen.css";
 import "@components/mailBox/css/mailBoxLayout.css";
 import MenuBar from "../components/menu/menuBar";
 import { useMenuStore } from "../store";
