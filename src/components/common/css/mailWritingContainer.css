@@ -99,8 +99,8 @@
   position: absolute;
   display: flex;
   top: 7.8%;
-  left: 48%;
-  width: 50%;
+  left: 55%;
+  width: 40%;
   height: 23.8125rem;
   padding: 4px 6px;
   color: #ccc;
@@ -142,7 +142,7 @@
   top: 7.8%;
   left: 4.7%;
   display: flex;
-  width: 42%;
+  width: 50%;
   height: 90%;
   overflow-y: auto;
   resize: none;
@@ -200,38 +200,4 @@ loadingWrapper span:nth-child(3) {
 
 .writeField::placeholder {
   font-weight: bold;
-}
-
-@media (max-width: 768px) {
-  .write-container-wrapper {
-    width: 80vw;
-    height: calc(80vw * 0.2449);
-  }
-
-  .write-container-shadow {
-    width: calc(80vw * 0.9745);
-    height: calc((80vw * 0.2449) * 0.9375);
-  }
-
-  .write-container {
-    width: 80%;
-    height: 100%;
-  }
-}
-
-@media (max-width: 576px) {
-  .write-container-wrapper {
-    width: 80vw;
-    height: calc(80vw * 0.2449);
-  }
-
-  .write-container-shadow {
-    width: calc(80vw * 0.9745);
-    height: calc((80vw * 0.2449) * 0.9375);
-  }
-
-  .write-container {
-    width: 80%;
-    height: 105%;
-  }
 }
