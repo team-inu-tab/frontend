@@ -299,18 +299,16 @@ function MailWriteModal() {
         <div className="recieverTitleWrapper">
           <span className="recieverLabel">받는사람</span>
           <input ref={tagifyInputRef} className="recieverTitle" />
-          <div className="toMeWrapper">
-            <input
-             type="checkbox" 
-             className="isToMe" 
-             checked={isToMeChecked} 
-             onChange={handleIsToMe}/>
-            <span className="toMeText">내게 쓰기</span>
-          </div>
+          <input
+            type="checkbox" 
+            className="isToMe" 
+            checked={isToMeChecked} 
+            onChange={handleIsToMe}/>
+          <span className="toMeText">내게 쓰기</span>
         </div>
 
         {/* 첨부파일 */}
-        <div className="attachedWrapper">
+        <div className="attachedWrapper" onClick={() => fileInputRef.current.click()}>
           <input
             type="file"
             id="file"
@@ -322,11 +320,10 @@ function MailWriteModal() {
             src={Link}
             className="attatchedIcon"
             alt="link icon"
-            onClick={() => fileInputRef.current.click()}
           />
-          <p className="attachedLabel">
+          <span className="attachedLabel">
             {selectedFile ? selectedFile.name : "DROP HERE!"}
-          </p>
+          </span>
         </div>
       </div>
 
