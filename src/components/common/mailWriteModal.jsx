@@ -106,6 +106,19 @@ function MailWriteModal() {
     const tagifyInst = tagifyInstanceRef.current;
     if (!tagifyInst) return;
 
+    if (mode == "reply") {
+      tagifyInst.removeAllTags();
+
+      api
+        .get("")
+        .then((res) => {
+          tagifyInst.addTags(res.data.email);
+        })
+        .catch((err) => {
+          console.error("답장 이메일 로드 실패", err);
+        })
+    }
+    
     if (isToMeChecked) {
       tagifyInst.removeAllTags();
   
@@ -117,19 +130,6 @@ function MailWriteModal() {
         .catch((err) => {
           console.error("내게 쓰기 이메일 로드 실패:", err);
        });
-    }
-
-    else if (mode == "reply") {
-      tagifyInst.removeAllTags();
-
-      api
-        .get("")
-        .then((res) => {
-          tagifyInst.addTags(res.data.email);
-        })
-        .catch((err) => {
-          console.error("답장 이메일 로드 실패", err);
-        })
     }
 
     else {
