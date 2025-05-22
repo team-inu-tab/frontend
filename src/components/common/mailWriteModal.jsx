@@ -61,9 +61,12 @@ function MailWriteModal() {
 
         // 답장
         if (mode === "reply") {
+          const tagifyInst = tagifyInstanceRef.current;
           const senderEmail = extractEmailAddress(res.sender);
+          tagifyInst.removeAllTags();
           setMailTitle(`RE: ${res.title}`);
           setRecieverTitle(JSON.stringify([{ value: senderEmail }]));
+          tagifyInst.addTags(recieverTitle);
         }
 
         // 전달
