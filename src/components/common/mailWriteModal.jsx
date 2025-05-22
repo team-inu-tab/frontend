@@ -167,6 +167,10 @@ function MailWriteModal() {
           });
 
           setIsSaved(true);
+          setTimeout(() => {
+            setIsSaved(false)
+          }, 3000)
+           
           console.log("test: 1분 간격 임시 저장 완료");
         };
 
