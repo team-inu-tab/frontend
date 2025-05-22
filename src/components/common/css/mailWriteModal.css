@@ -1,4 +1,8 @@
-/* 기본 스타일 (모바일 우선 접근 방식) */
+.autoSaveToast {
+    position: fixed;
+    top: -8%;
+    z-index: 99999;
+}
 .mailTitle {
     width: 60vw;
     height: 4vh;

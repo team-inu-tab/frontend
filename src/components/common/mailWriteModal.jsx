@@ -14,6 +14,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { parseGmailContent } from "../../utils/parseGmailContent";
 import { extractEmailAddress } from "../../utils/emailUtils";
 import toast from "react-hot-toast";
+import autoSaveToast from "@assets/icons/autoSaveToast.svg";
 
 function MailWriteModal() {
   const [isAiOn, setIsAiOn] = useState(false);
@@ -26,6 +27,7 @@ function MailWriteModal() {
   const [decodedBody, setDecodedBody] = useState("");
   const [justAppliedGpt, setJustAppliedGpt] = useState(false);
   const [isToMeChecked, setisToMeChecked] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   const gptTimer = useRef(null);
   const tagifyInputRef = useRef(null);
@@ -115,8 +117,22 @@ function MailWriteModal() {
         .catch((err) => {
           console.error("내게 쓰기 이메일 로드 실패:", err);
        });
+    }
 
-    } else {
+    else if (mode == "reply") {
+      tagifyInst.removeAllTags();
+
+      api
+        .get("")
+        .then((res) => {
+          tagifyInst.addTags(res.data.email);
+        })
+        .catch((err) => {
+          console.error("답장 이메일 로드 실패", err);
+        })
+    }
+
+    else {
       tagifyInst.removeAllTags();
     }
   }, [isToMeChecked]);
@@ -150,11 +166,13 @@ function MailWriteModal() {
             body: mailBody,
           });
 
+          setIsSaved(true);
           console.log("test: 1분 간격 임시 저장 완료");
         };
 
         saveDraft();
       } catch (err) {
+        setIsSaved(false);
         console.error("test: 임시 저장 실패:", err);
       }
     }, 60000);
@@ -286,6 +304,7 @@ function MailWriteModal() {
 
   return (
     <MailContainer>
+      {isSaved && <img src={autoSaveToast} className="autoSaveToast"/>}
       {/* 제목 입력 */}
       <input
         className="mailTitle"
