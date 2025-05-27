@@ -38,11 +38,17 @@ function MailWriteModal() {
   const location = useLocation();
   const mode = new URLSearchParams(location.search).get("mode");
 
-  const { getToken, refresh, getMailById, updateTemporary, getChatGpt, getUserEmail } =
-    useMailApi();
+  const {
+    getToken,
+    refresh,
+    getMailById,
+    updateTemporary,
+    getChatGpt,
+    getUserEmail,
+  } = useMailApi();
 
   const handleIsToMe = (e) => {
-    setisToMeChecked(e.target.checked)
+    setisToMeChecked(e.target.checked);
   };
 
   // 답장/전달 모드인 경우 기존 메일 정보 가져오기
@@ -61,7 +67,7 @@ function MailWriteModal() {
 
         // 답장
         if (mode === "reply") {
-          const senderEmail = extractEmailAddress(res.sender);
+          const senderEmail = extractEmailAddress(res.sender || res.receiver);
           setMailTitle(`RE: ${res.title}`);
           setRecieverTitle(JSON.stringify([{ value: senderEmail }]));
         }
@@ -116,12 +122,12 @@ function MailWriteModal() {
         })
         .catch((err) => {
           console.error("답장 이메일 로드 실패", err);
-        })
+        });
     }
-    
+
     if (isToMeChecked) {
       tagifyInst.removeAllTags();
-  
+
       api
         .get("/users/info/email")
         .then((res) => {
@@ -129,10 +135,8 @@ function MailWriteModal() {
         })
         .catch((err) => {
           console.error("내게 쓰기 이메일 로드 실패:", err);
-       });
-    }
-
-    else {
+        });
+    } else {
       tagifyInst.removeAllTags();
     }
   }, [isToMeChecked]);
@@ -168,9 +172,9 @@ function MailWriteModal() {
 
           setIsSaved(true);
           setTimeout(() => {
-            setIsSaved(false)
-          }, 3000)
-           
+            setIsSaved(false);
+          }, 3000);
+
           console.log("test: 1분 간격 임시 저장 완료");
         };
 
@@ -308,7 +312,7 @@ function MailWriteModal() {
 
   return (
     <MailContainer>
-      {isSaved && <img src={autoSaveToast} className="autoSaveToast"/>}
+      {isSaved && <img src={autoSaveToast} className="autoSaveToast" />}
       {/* 제목 입력 */}
       <input
         className="mailTitle"
@@ -323,15 +327,19 @@ function MailWriteModal() {
           <span className="recieverLabel">받는사람</span>
           <input ref={tagifyInputRef} className="recieverTitle" />
           <input
-            type="checkbox" 
-            className="isToMe" 
-            checked={isToMeChecked} 
-            onChange={handleIsToMe}/>
+            type="checkbox"
+            className="isToMe"
+            checked={isToMeChecked}
+            onChange={handleIsToMe}
+          />
           <span className="toMeText">내게 쓰기</span>
         </div>
 
         {/* 첨부파일 */}
-        <div className="attachedWrapper" onClick={() => fileInputRef.current.click()}>
+        <div
+          className="attachedWrapper"
+          onClick={() => fileInputRef.current.click()}
+        >
           <input
             type="file"
             id="file"
@@ -339,11 +347,7 @@ function MailWriteModal() {
             onChange={handleFileChange}
             style={{ display: "none" }}
           />
-          <img
-            src={Link}
-            className="attatchedIcon"
-            alt="link icon"
-          />
+          <img src={Link} className="attatchedIcon" alt="link icon" />
           <span className="attachedLabel">
             {selectedFile ? selectedFile.name : "DROP HERE!"}
           </span>
