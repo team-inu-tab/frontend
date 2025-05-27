@@ -61,7 +61,7 @@
 .inputLine1 {
     position: absolute;
     top: 32%;
-    width: 19.49019rem;
+    width: 62%;
     z-index: 1;
 }
 
@@ -111,7 +111,7 @@
 .inputLine2 {
     position: absolute;
     top: 44.8%;
-    width: 19.49019rem;
+    width: 62%;
     z-index: 1;
 }
 
@@ -178,7 +178,7 @@
 .inputLine3 {
     position: absolute;
     top: 58.4%;
-    width: 19.49019rem;
+    width: 62%;
     z-index: 1;
 }
 
