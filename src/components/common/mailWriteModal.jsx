@@ -68,7 +68,10 @@ function MailWriteModal() {
 
         // 답장
         if (mode === "reply") {
-          const senderEmail = extractEmailAddress(res.sender || res.receiver);
+          const senderEmail =
+            res.mailType === "sent"
+              ? extractEmailAddress(res.receiver)
+              : extractEmailAddress(res.sender);
           setMailTitle(`RE: ${res.title}`);
           setRecieverTitle(JSON.stringify([{ value: senderEmail }]));
           console.log("@@@@@@@@@@ 확인용 : 메일", senderEmail);
@@ -83,7 +86,7 @@ function MailWriteModal() {
         // 임시 메일 수정
         if (mode === "draft") {
           setMailTitle(res.title);
-          const senderEmail = extractEmailAddress(res.sender);
+          const senderEmail = extractEmailAddress(res.receiver);
           setRecieverTitle(JSON.stringify([{ value: senderEmail }]));
         }
       } catch (err) {
@@ -118,14 +121,13 @@ function MailWriteModal() {
       getMailById(mailId)
         .then((res) => {
           const senderEmail = extractEmailAddress(res.sender || res.receiver);
-          tagify.addTags(senderEmail)
+          tagify.addTags(senderEmail);
           setRecieverTitle(JSON.stringify([{ value: senderEmail }]));
         })
         .catch((err) => {
-          console.error("답장 이메일 로드 실패: ", err)
-        })
-    }
-    else if (isToMeChecked) {
+          console.error("답장 이메일 로드 실패: ", err);
+        });
+    } else if (isToMeChecked) {
       tagify.removeAllTags();
       api
         .get("/users/info/email")
@@ -135,12 +137,11 @@ function MailWriteModal() {
         .catch((err) => {
           console.error("내게 쓰기 이메일 로드 실패:", err);
         });
-    }
-    else {
+    } else {
       tagify.removeAllTags();
       setRecieverTitle("");
     }
-  }, [mode, mailId, isToMeChecked])
+  }, [mode, mailId, isToMeChecked]);
 
   // ESC 키로 AI 기능 끄기
   useEffect(() => {
