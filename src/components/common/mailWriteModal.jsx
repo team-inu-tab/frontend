@@ -94,42 +94,24 @@ function MailWriteModal() {
     fetchMailDetail();
   }, [mailId, mode]);
 
-  // 받는 사람 입력 처리 (Tagify)
   useEffect(() => {
-    if (tagifyInputRef.current) {
-      tagifyInstanceRef.current = new Tagify(tagifyInputRef.current, {});
+    const tagify = tagifyInstanceRef.current;
+    if (!tagify) return;
 
-      tagifyInstanceRef.current.on("change", (e) => {
-        setRecieverTitle(e.detail.value);
-      });
-    }
-    return () => {
-      if (tagifyInstanceRef.current) {
-        tagifyInstanceRef.current.destroy();
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    const tagifyInst = tagifyInstanceRef.current;
-    if (!tagifyInst) return;
-
-    if (mode == "reply") {
-      tagifyInst.removeAllTags();
-
-      api
-        .get("")
+    if (mode === "reply" && mailId) {
+      tagify.removeAllTags();
+      getMailById(mailId)
         .then((res) => {
-          tagifyInst.addTags(res.data.email);
+          const senderEmail = extractEmailAddress(res.sender || res.receiver);
+          tagify.addTags(senderEmail)
+          setRecieverTitle(JSON.stringify([{ value: senderEmail }]));
         })
         .catch((err) => {
-          console.error("답장 이메일 로드 실패", err);
-        });
+          console.error("답장 이메일 로드 실패: ", err)
+        })
     }
-
-    if (isToMeChecked) {
-      tagifyInst.removeAllTags();
-
+    else if (isToMeChecked) {
+      tagify.removeAllTags();
       api
         .get("/users/info/email")
         .then((res) => {
@@ -138,10 +120,12 @@ function MailWriteModal() {
         .catch((err) => {
           console.error("내게 쓰기 이메일 로드 실패:", err);
         });
-    } else {
-      tagifyInst.removeAllTags();
     }
-  }, [isToMeChecked]);
+    else {
+      tagify.removeAllTags();
+      setRecieverTitle("");
+    }
+  }, [mode, mailId, isToMeChecked])
 
   // ESC 키로 AI 기능 끄기
   useEffect(() => {
