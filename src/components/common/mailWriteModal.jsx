@@ -95,6 +95,21 @@ function MailWriteModal() {
   }, [mailId, mode]);
 
   useEffect(() => {
+    if (tagifyInputRef.current) {
+      tagifyInstanceRef.current = new Tagify(tagifyInputRef.current, {});
+
+      tagifyInstanceRef.current.on("change", (e) => {
+        setRecieverTitle(e.detail.value);
+      });
+    }
+    return () => {
+      if (tagifyInstanceRef.current) {
+        tagifyInstanceRef.current.destroy();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     const tagify = tagifyInstanceRef.current;
     if (!tagify) return;
 
