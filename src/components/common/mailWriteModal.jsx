@@ -63,6 +63,7 @@ function MailWriteModal() {
         if (res?.content) {
           const { html } = await parseGmailContent(res.content, res.id);
           setDecodedBody(html);
+          console.log("@@@@@@@@@@ 확인용 : 메일 내용", html);
         }
 
         // 답장
@@ -70,6 +71,7 @@ function MailWriteModal() {
           const senderEmail = extractEmailAddress(res.sender || res.receiver);
           setMailTitle(`RE: ${res.title}`);
           setRecieverTitle(JSON.stringify([{ value: senderEmail }]));
+          console.log("@@@@@@@@@@ 확인용 : 메일", senderEmail);
         }
 
         // 전달
